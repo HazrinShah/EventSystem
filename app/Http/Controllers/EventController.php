@@ -13,6 +13,18 @@ class EventController extends Controller
             'events' => $events,
         ]);
     }
+
+    public function userIndex(Request $request){
+        $userID = $request->user()->userID;
+
+        $events = Event::with(['rsvps' => function($q) use ($userID) {
+            $q->where('userID', $userID);
+        }])->get();
+
+        return Inertia::render('UEvent', [
+            'events' => $events,
+        ]);
+    }
     public function add(){
         return Inertia::render('ACreateEvent');
     }

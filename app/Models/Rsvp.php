@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Rsvp extends Model
 {
     
-    protected $primarykey = 'rsvpID';
+    protected $primaryKey = 'rsvpID';
     protected $fillable = ['userID', 'eventID', 'status', 'pax', 'note'];
 
 

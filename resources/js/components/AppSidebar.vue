@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { BookOpen, Calendar, FolderGit2, LayoutGrid } from 'lucide-vue-next';
+import { BookOpen, Calendar, FolderGit2, LayoutGrid, UserCheck } from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
@@ -32,7 +32,13 @@ const mainNavItems = computed<NavItem[]>(() => isAdmin.value
             title: 'Events',
             href: '/events',
             icon: Calendar,
-        },   
+        }, 
+        {
+            title: 'Rsvps',
+            href: '/rsvp',
+            icon: UserCheck,
+        },  
+
         // tambah page admin lain kat sini
     ]
     : [
@@ -43,9 +49,9 @@ const mainNavItems = computed<NavItem[]>(() => isAdmin.value
         },
         {
             title: 'Events',
-            href: '/events',
+            href: '/uevents',
             icon: Calendar,
-        },   
+        },
         // tambah page user lain kat sini
     ]
 );

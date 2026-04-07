@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Inertia\Inertia;
+use App\Models\Rsvp;
 use Illuminate\Http\Request;
 
 // ade store utk user submit rsvp. index untuk admin tgok rsvp 
@@ -37,4 +38,26 @@ class RsvpController extends Controller
 
         return back();
     }
+
+    public function index()
+    {
+        // fetch user dan event data sekali dalam satu query
+        $rsvps = Rsvp::with(['user', 'event'])->get();
+        
+        return Inertia::render('ARsvp', [
+            'rsvps' => $rsvps,
+        ]);
+    }
+
+    public function cancel($rsvpID)
+    {
+        Rsvp::where('rsvpID', $rsvpID)
+            ->where('userID', auth()->user()->userID)
+            ->firstOrFail()
+            ->delete();
+
+        return back();
+    }
+
+
 }
