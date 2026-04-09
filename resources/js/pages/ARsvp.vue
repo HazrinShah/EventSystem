@@ -42,6 +42,12 @@
                             </span>
                         </TableCell>
                         <TableCell>
+                             <Link
+                                v-if="rsvp.event" :href="`/events/${rsvp.event.eventID}/seats`"
+                                class="text-sm px-3 py-1 rounded bg-indigo-600 hover:bg-indigo-700 text-white"
+                            >
+                                Manage Seats
+                            </Link>
                             <Button v-if="rsvp.status === 'pending'" size="sm" @click="assignSeat(rsvp)">
                                 Assign Seat
                             </Button>
@@ -56,6 +62,7 @@
 
 <script setup>
 import { router } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 import { ClipboardList } from 'lucide-vue-next';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';

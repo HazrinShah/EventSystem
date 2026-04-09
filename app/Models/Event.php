@@ -8,7 +8,7 @@ class Event extends Model
 {
     protected $primaryKey = 'eventID';
     public $timestamps = true;
-    protected $fillable = ['title', 'description', 'date', 'location', 'image', 'time', 'created_by'];
+    protected $fillable = ['title', 'description', 'date', 'location', 'image', 'time', 'layoutImage', 'created_by'];
 
     // Creator
     public function creator()

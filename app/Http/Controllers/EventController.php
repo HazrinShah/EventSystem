@@ -37,6 +37,7 @@ class EventController extends Controller
             'location' => 'required|string',
             'image' => 'image|max:2048',
             'time' => 'required',
+            'layoutImage' => 'image|max:2048',
         ]); 
 
         // TAPI kena run ni untuk linkkan
@@ -53,6 +54,11 @@ class EventController extends Controller
             // <img src="{{ asset('storage/' . $row->picture) }}">
             // ni untuk display
             // kat vue ni
+        }
+
+        if ($request->hasFile('layoutImage')) {
+            $layoutFilePath = $request->file('layoutImage')->store('layoutImages', 'public');
+            $validated['layoutImage'] = $layoutFilePath;
         }
 
         Event::create([
@@ -73,8 +79,9 @@ class EventController extends Controller
                 'description' => 'required|string',
                 'date' => 'required|date',
                 'location' => 'required|string',
-                'image' => 'image|max:2048',
+                'image' => 'nullable|image|max:2048',
                 'time' => 'required',
+                'layoutImage' => 'nullable|image|max:2048',
             ]
         );
         
@@ -91,6 +98,14 @@ class EventController extends Controller
             // so kita pakai unset untuk ignore picture
             // kalau takde gambar baru, picture takkan update
             unset($validated['image']);
+        }
+
+        if ($request->hasFile('layoutImage')) {
+            $layoutFilePath = $request->file('layoutImage')->store('layoutImages', 'public');
+            $validated['layoutImage'] = $layoutFilePath;
+        }
+        else {
+            unset($validated['layoutImage']);
         }
 
         // update data kat dalam db

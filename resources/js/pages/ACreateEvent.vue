@@ -35,6 +35,11 @@
                             <Input type="file" id="image" accept="image/*" @input="form.image = $event.target.files[0]" class="border border-gray-300"/>
                             <span v-if="form.errors.image" class="mt-1 text-xs text-red-500">{{ form.errors.image }}</span>
                         </div>
+                        <div>
+                            <Label for="layoutImage" class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Layout Image</Label>
+                            <Input type="file" id="layoutImage" accept="image/*" @input="form.layoutImage = $event.target.files[0]" class="border border-gray-300"/>
+                            <span v-if="form.errors.layoutImage" class="mt-1 text-xs text-red-500">{{ form.errors.layoutImage }}</span>
+                        </div>
                     </div>
                     <div class="flex gap-3 pt-2">
                         <button type="submit" class="rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Create</button>
@@ -63,6 +68,7 @@ const form = useForm({
     time: '',
     location: '',
     image: null,
+    layoutImage: null,
 });
 
 defineOptions({

@@ -100,6 +100,10 @@
                         <Label>Image</Label>
                         <Input @input="editForm.image = $event.target.files[0]" type="file" accept="image/*" />
                     </div>
+                    <div class="col-span-2 space-y-1.5">
+                        <Label>Layout Image</Label>
+                        <Input @input="editForm.layoutImage = $event.target.files[0]" type="file" accept="image/*" />
+                    </div>
                 </div>
                 <DialogFooter>
                     <Button type="button" variant="outline" @click="closeEditDialog">Cancel</Button>
@@ -145,6 +149,18 @@
                         <MapPin class="h-4 w-4" />
                         <span>{{ selectedEvent.location }}</span>
                     </div>
+                    <div class="relative h-52 w-full bg-muted">
+                        <img
+                            v-if="selectedEvent?.layoutImage"
+                            :src="`/storage/${selectedEvent.layoutImage}`"
+                            :alt="selectedEvent?.title"
+                            class="h-full w-full object-cover"
+                        />
+                        <div v-else class="flex h-full w-full items-center justify-center">
+                            <ImageOff class="h-10 w-10 text-muted-foreground" />
+                        </div>
+                    </div>
+
                 </div>
 
                 <Separator />
@@ -185,10 +201,10 @@ defineOptions({
 
 // Edit
 const isEditDialogOpen = ref(false);
-const editForm = useForm({ id: null, title: '', description: '', date: '', time: '', location: '', image: null });
+const editForm = useForm({ id: null, title: '', description: '', date: '', time: '', location: '', image: null , layoutImage: null });
 
 function openEditDialog(event) {
-    Object.assign(editForm, { id: event.eventID, title: event.title, description: event.description, date: event.date, time: event.time, location: event.location, image: null });
+    Object.assign(editForm, { id: event.eventID, title: event.title, description: event.description, date: event.date, time: event.time, location: event.location, image: null, layoutImage: null });
     isEditDialogOpen.value = true;
 }
 function closeEditDialog() { isEditDialogOpen.value = false; editForm.reset(); }

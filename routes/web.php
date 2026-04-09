@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RsvpController;
+use App\Http\Controllers\SeatController;
+use App\Http\Controllers\SeatAssignmentController;
+
 
 Route::inertia('/', 'Welcome', [
     'canRegister' => Features::enabled(Features::registration()),
@@ -22,6 +25,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/events/{id}', [EventController::class, 'update']);
         Route::post('/events/{event}/delete', [EventController::class, 'delete']);
         Route::get('/rsvp', [RsvpController::class, 'index'])->name('rsvp');
+        Route::get('/events/{event}/seats', [SeatController::class, 'index'])->name('seats');
+        Route::get('/seats', [SeatController::class, 'index'])->name('seat-layout');
         
         Route::inertia('dashboard', 'ADashboard')->name('dashboard');
         Route::inertia('add-events', 'ACreateEvent')->name('add-events');

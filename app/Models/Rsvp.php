@@ -22,4 +22,9 @@ class Rsvp extends Model
     {
         return $this->belongsTo(Event::class, 'eventID', 'eventID');
     }
+
+    public function seatAssignment()
+    {
+        return $this->hasOne(SeatAssignment::class,);
+    }
 }

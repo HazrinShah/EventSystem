@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class SeatAssignment extends Model
 {
 
+    protected $primaryKey = 'assignmentID';
+
+    protected $fillable = [
+        'seatID',
+        'rsvpID',
+    ];
+
+
     // Which user has this seat
     public function user()
     {

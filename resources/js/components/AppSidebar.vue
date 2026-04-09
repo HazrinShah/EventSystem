@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { BookOpen, Calendar, FolderGit2, LayoutGrid, UserCheck } from 'lucide-vue-next';
+import { BookOpen, Calendar, FolderGit2, LayoutGrid, UserCheck, LayoutTemplate} from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
@@ -37,7 +37,12 @@ const mainNavItems = computed<NavItem[]>(() => isAdmin.value
             title: 'Rsvps',
             href: '/rsvp',
             icon: UserCheck,
-        },  
+        }, 
+        {
+            title: 'Seats',
+            href: '/seats',
+            icon: LayoutTemplate,
+        },   
 
         // tambah page admin lain kat sini
     ]
