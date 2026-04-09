@@ -42,13 +42,8 @@
                             </span>
                         </TableCell>
                         <TableCell>
-                             <Link
-                                v-if="rsvp.event" :href="`/events/${rsvp.event.eventID}/seats`"
-                                class="text-sm px-3 py-1 rounded bg-indigo-600 hover:bg-indigo-700 text-white"
-                            >
-                                Manage Seats
-                            </Link>
-                            <Button v-if="rsvp.status === 'pending'" size="sm" @click="assignSeat(rsvp)">
+                             
+                            <Button v-if="rsvp.status === 'pending' && rsvp.event" size="sm" class="cursor-pointer" @click="assignSeat(rsvp)">
                                 Assign Seat
                             </Button>
                             <span v-else class="text-xs text-muted-foreground">—</span>
@@ -79,6 +74,6 @@ defineOptions({
 
 function assignSeat(rsvp) {
     if (!confirm(`Assign seat for ${rsvp.user.name}?`)) return;
-    router.post(`/rsvp/${rsvp.rsvpID}/assign`);
+    router.visit(`/events/${rsvp.event.eventID}/seats`);
 }
 </script>

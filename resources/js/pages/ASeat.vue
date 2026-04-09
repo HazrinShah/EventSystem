@@ -61,6 +61,7 @@ const loading = ref(false)
 const message = ref('')
 
 // ─── SEAT CREATION ───────────────────────────────────────────
+
 // bila user klik kat image untuk letak seat baru, function ni akan dipanggil
 function handleImageClick(event) {
     // kalau bukan dalam mode letak seat, takde pape jadi walaupun user klik kat image
@@ -71,51 +72,73 @@ function handleImageClick(event) {
         return
     }
 
-    // getBoundingClientRect() bagi dapatkan posisi klik user kat image, then kira x_percent dan y_percent untuk simpan dalam database (supaya seat boleh diposisikan dengan betul walaupun layout image berubah saiz)
+    // getBoundingClientRect() bagi dapatkan posisi klik user kat image dalam bentuk pixel, 
+    // then kira x_percent dan y_percent untuk simpan dalam database 
+    // (supaya seat boleh diposisikan dengan betul walaupun layout image berubah saiz)
+    // penting sebab kira coordinate berkaitan dengan saiz image, bukan saiz screen atau window
     const rect = event.target.getBoundingClientRect()
     const x = event.clientX - rect.left
     const y = event.clientY - rect.top
+    // ni rumus dia
     const xPercent = (x / rect.width) * 100
     const yPercent = (y / rect.height) * 100
 
+    // panggil API untuk simpan seat baru dalam database
+    // then update local seats list dengan seat baru yang dikembalikan dari backend (res.data.seat) 
+    // supaya UI terus update tanpa reload page
     axios.post('/api/seats', {
         eventID:   props.event.eventID,
         label:     newSeatLabel.value,
         x_percent: xPercent,
         y_percent: yPercent,
     })
+    // then ni run kalau API call berjaya je
+    // res tu response dari backend, kita expect dia return seat yang baru dibuat dalam res.data.seat
     .then(res => {
+        // res tu variable yang hold semua response dri server.
+        // data plk ialah tempat yang contain semua info yang request tadi, kalau pakai axios, semua isi yg dihntr oleh server masuk dlm ni 
+        // so ni ialah kita push data seat tadi ke dalam list seats yang reactive tu, then UI akan auto update dan tunjuk seat baru tu
         seats.value.push(res.data.seat)
         newSeatLabel.value = ''
         message.value = `Seat "${res.data.seat.label}" placed successfully.`
     })
+    // catch ni run kalau API call gagal (contoh: server error, network error, validation error)
     .catch(() => {
         message.value = 'Failed to place seat. Please try again.'
     })
 }
 
 // ─── SEAT SELECTION ──────────────────────────────────────────
+
 function selectSeat(seat) {
-    if (seat.booked) return
+    if (seat.booked) return  // kalau seat dah booked, dia takleh pilih, kalau tak booked baru code bawah ni jalan
     selectedSeat.value = seat
     showAssignModal.value = true
 }
 
 // ─── SEAT ASSIGNMENT ─────────────────────────────────────────
+
 function assignSeat() {
+
+    // pastikan user dah pilih seat dan rsvp sebelum assign, kalau takde keluar message error
     if (!selectedSeat.value || !selectedRsvp.value) {
         message.value = 'Please select a seat and an RSVP.'
         return
     }
 
+    // loading.value = true untuk disable button confirm assign kat modal, supaya user tak klik banyak kali while API call tengah berjalan
     loading.value = true
 
+    // panggil API untuk assign seat based on selected seat dan rsvp
     axios.post('/api/assign-seat', {
         seatID: selectedSeat.value.seatID,
         rsvpID: selectedRsvp.value,
     })
     .then(() => {
-        const seat = seats.value.find(s => s.id === selectedSeat.value.id)
+        // kita buat ni sebab kita nak update status booked seat tu terus kat UI tanpa kena reload page
+        // kalau takde code ni, seat tu akan tetap tunjuk sebagai available walaupun dah assign
+        const seat = seats.value.find(s => s.seatID === selectedSeat.value.seatID)
+        // kalau ade dia set booked as true
         if (seat) seat.booked = true
 
         message.value = `Seat "${seat.label}" assigned successfully.`
@@ -125,6 +148,7 @@ function assignSeat() {
         message.value = err.response?.data?.message || 'Assignment failed.'
     })
     .finally(() => {
+        // enable balik button confirm assign kat modal
         loading.value = false
     })
 }
@@ -136,8 +160,9 @@ function deleteSeat(seat, event) {
 
     axios.delete(`/api/seats/${seat.seatID}`)
     .then(() => {
-        seats.value = seats.value.filter(s => s.id !== seat.id)
+        seats.value = seats.value.filter(s => s.seatID !== seat.seatID)
         message.value = `Seat "${seat.label}" deleted.`
+        closeModal()
     })
     .catch(() => {
         message.value = 'Failed to delete seat.'
@@ -178,7 +203,7 @@ function seatColor(seat) {
                 :class="isPlacingMode ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-indigo-600 hover:bg-indigo-700'"
                 class="text-white text-sm px-4 py-2 rounded"
             >
-                {{ isPlacingMode ? '🛑 Stop Placing' : '📌 Place Seats' }}
+                {{ isPlacingMode ? 'Stop Placing' : 'Place Seats' }}
             </button>
 
             <!-- Seat Label Input (only visible in placing mode) -->
@@ -252,13 +277,7 @@ function seatColor(seat) {
                     </div>
 
                     <!-- Delete Button (only in placing mode, unbooked seats) -->
-                    <button
-                        v-if="isPlacingMode && !seat.booked"
-                        @click="deleteSeat(seat, $event)"
-                        class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-3 h-3 text-xs flex items-center justify-center leading-none opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                        ×
-                    </button>
+
                 </div>
             </template>
         </div>
@@ -266,7 +285,7 @@ function seatColor(seat) {
         <!-- Assign Seat Modal -->
         <div
             v-if="showAssignModal"
-            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            class="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50"
         >
             <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
 
@@ -295,15 +314,22 @@ function seatColor(seat) {
                 <!-- Modal Actions -->
                 <div class="flex justify-end gap-3">
                     <button
+                        @click="deleteSeat(selectedSeat, $event)"
+                        class="cursor-pointer px-4 py-2 text-sm rounded bg-red-100 text-red-600 hover:bg-red-200"
+                        :disabled="loading"
+                        >
+                        Delete
+                    </button>
+                    <button
                         @click="closeModal"
-                        class="px-4 py-2 text-sm rounded bg-gray-200 hover:bg-gray-300"
+                        class="cursor-pointer px-4 py-2 text-sm rounded bg-gray-200 hover:bg-gray-300"
                     >
                         Cancel
                     </button>
                     <button
                         @click="assignSeat"
                         :disabled="loading"
-                        class="px-4 py-2 text-sm rounded bg-green-600 hover:bg-green-700 text-white disabled:opacity-50"
+                        class="cursor-pointer px-4 py-2 text-sm rounded bg-green-600 hover:bg-green-700 text-white disabled:opacity-50"
                     >
                         {{ loading ? 'Assigning...' : 'Confirm Assign' }}
                     </button>
