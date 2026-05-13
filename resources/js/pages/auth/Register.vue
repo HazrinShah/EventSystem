@@ -72,7 +72,7 @@ defineOptions({
             </div>
 
             <!-- NI UTK CREATE ADMIN JE, USER BIASA TAKYAH SEBAB DEFAULT ROLE IS USER -->
-            <!-- <div class="grid gap-2">
+            <div class="grid gap-2">
                 <Label for="role">Role</Label>
                 <select
                     id="role"
@@ -84,9 +84,10 @@ defineOptions({
                     <option value="">Select a role</option>
                     <option value="user">User</option>
                     <option value="admin">Admin</option>
+                    <option value="superadmin">Super Admin</option>
                 </select>
                 <InputError :message="errors.role" />
-            </div> -->
+            </div>
 
             <div class="grid gap-2">
                 <Label for="password">Password</Label>

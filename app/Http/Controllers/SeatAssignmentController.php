@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SeatAssignment;
 use App\Models\Rsvp;
+use App\Models\Seat;
 
 class SeatAssignmentController extends Controller
 {
@@ -17,38 +18,30 @@ class SeatAssignmentController extends Controller
         ]);
 
     // check if seat tu dah ada assignment ke user lain
-    $assignedSeat = SeatAssignment::where('seatID', $validated['seatID'])->exists();
+    $seatAlreadyAssigned = SeatAssignment::where('seatID', $validated['seatID'])->exists();
 
-    if($assignedSeat){
+    if($seatAlreadyAssigned){
         return response()->json([
             'message' => 'Seat already assigned to another user',
         ], 400); // 400 code untuk bad request
     }
 
-    // check if rsvp tu dah ada seat assignment ke seat lain
-    $assignedRSVP = SeatAssignment::where('rsvpID', $validated['rsvpID'])->exists();
-
-    if($assignedRSVP){
-        return response()->json([
-            'message' => 'RSVP already assigned to another seat',
-        ], 422); // 422 code untuk unprocessable entity
-    }
-
-
-    // kalau dua-dua check tu clear, baru create seat assignment
-
+    // create seat assignment
     $seatAssignment = SeatAssignment::create($validated);
 
-    // lepas tu update status RSVP tu jadi 'assigned' untuk bagi tau user dia dah dapat seat
+    // update data seat tu jadi booked
+    Seat::where('seatID', $validated['seatID'])->update([
+        'status' => 'booked',
+        'selected_by' => null,
+        'selected_at' => null,
+    ]);
 
+    // lepas tu update status RSVP tu jadi 'assigned' untuk bagi tau user dia dah dapat seat
     Rsvp::where('rsvpID', $validated['rsvpID'])->update(['status' => 'confirmed']);
 
     return response()->json([
         'message' => 'Seat assigned successfully',
         'seatAssignment' => $seatAssignment,
     ], 201); // 201 code untuk created
-
-
-
     }
 }

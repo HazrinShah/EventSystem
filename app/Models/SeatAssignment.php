@@ -15,22 +15,16 @@ class SeatAssignment extends Model
     ];
 
 
-    // Which user has this seat
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'userID', 'userID');
-    }
-
     // Which seat is assigned
     public function seat()
     {
         return $this->belongsTo(Seat::class, 'seatID', 'seatID');
     }
 
-    // Which event this assignment belongs to
-    public function event()
+    // Which RSVP this assignment belongs to
+    public function rsvp()
     {
-        return $this->belongsTo(Event::class, 'eventID', 'eventID');
+        return $this->belongsTo(RSVP::class, 'rsvpID', 'rsvpID');
     }
 
 }

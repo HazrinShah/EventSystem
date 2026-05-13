@@ -8,7 +8,7 @@ class Event extends Model
 {
     protected $primaryKey = 'eventID';
     public $timestamps = true;
-    protected $fillable = ['title', 'description', 'date', 'location', 'image', 'time', 'layoutImage', 'created_by'];
+    protected $fillable = ['title', 'description', 'date', 'location', 'image', 'time', 'layoutImage', 'created_by', 'seat_limit'];
 
     // Creator
     public function creator()
@@ -48,5 +48,11 @@ class Event extends Model
     {
         return $this->hasMany(Notification::class, 'eventID', 'eventID');
     }
+
+    public function assignedAdmins()
+    {
+        return $this->belongsToMany(User::class, 'event_admins', 'eventID', 'userID');
+    }
+
 
 }

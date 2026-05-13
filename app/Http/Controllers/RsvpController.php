@@ -36,18 +36,29 @@ class RsvpController extends Controller
             'status' => 'pending',
         ]);
 
-        return back();
+        return redirect()->route('seat.select', ['event' => $validated['eventID']]);
     }
 
-    public function index()
-    {
-        // fetch user dan event data sekali dalam satu query
-        $rsvps = Rsvp::with(['user', 'event'])->get();
-        
-        return Inertia::render('ARsvp', [
-            'rsvps' => $rsvps,
-        ]);
-    }
+    // public function index(Request $request)
+    // {
+    //     $user = $request->user();
+    //     if($user->role === 'superadmin'){
+    //         $rsvps = Rsvp::with(['user', 'event'])->get();
+    //     } else if ($user->role === 'admin'){
+    //     // admin bole tengok rsvp event dia created atau assigned to je
+    //     $rsvps = Rsvp::with(['user', 'event'])
+    //         ->whereHas('event', function ($q) use ($user) {
+    //             $q->where('created_by', $user->userID)
+    //             ->orWhereHas('assignedAdmins', fn($q2) => $q2->where('event_admins.userID', $user->userID));
+    //         })
+    //         ->get();
+    //     }
+    //     else {
+    //         $rsvps = RSVP::with([])
+    //     }
+
+    //     return Inertia::render('ARsvp', ['rsvps' => $rsvps]);
+    // }
 
     public function cancel($rsvpID)
     {

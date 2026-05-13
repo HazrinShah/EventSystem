@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { BookOpen, Calendar, FolderGit2, LayoutGrid, UserCheck, LayoutTemplate} from 'lucide-vue-next';
+import { BookOpen, Calendar, Users, FolderGit2, LayoutGrid, UserCheck, LayoutTemplate} from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
@@ -19,47 +19,73 @@ import { dashboard, udashboard } from '@/routes';
 import type { NavItem } from '@/types';
 
 const page = usePage();
+const isSuperAdmin = computed(() => page.props.auth.user?.role === 'superadmin');
 const isAdmin = computed(() => page.props.auth.user?.role === 'admin');
 
-const mainNavItems = computed<NavItem[]>(() => isAdmin.value
-    ? [
-        {
-            title: 'Dashboard',
-            href: dashboard(),
-            icon: LayoutGrid,
-        },
-        {
-            title: 'Events',
-            href: '/events',
-            icon: Calendar,
-        }, 
-        {
-            title: 'Rsvps',
-            href: '/rsvp',
-            icon: UserCheck,
-        }, 
-        {
-            title: 'Seats',
-            href: '/seats',
-            icon: LayoutTemplate,
-        },   
+const mainNavItems = computed<NavItem[]>(() => {
+    if (isSuperAdmin.value) return [
+        { title: 'Dashboard', href: '/sadashboard', icon: LayoutGrid },
+        { title: 'Events',    href: '/events',      icon: Calendar },
+        { title: 'RSVPs',     href: '/rsvp',        icon: UserCheck },
+        { title: 'Seats',     href: '/seats',       icon: LayoutTemplate },
+        { title: 'Admins',    href: '/admin-users', icon: Users },
+    ]// tambah page superadmin lain kat sini
 
-        // tambah page admin lain kat sini
-    ]
-    : [
-        {
-            title: 'Dashboard',
-            href: udashboard(),
-            icon: LayoutGrid,
-        },
-        {
-            title: 'Events',
-            href: '/uevents',
-            icon: Calendar,
-        },
-        // tambah page user lain kat sini
-    ]
-);
+    if (isAdmin.value) return [
+        { title: 'Dashboard', href: '/dashboard', icon: LayoutGrid },
+        { title: 'Events',    href: '/events',    icon: Calendar },
+        { title: 'RSVPs',     href: '/rsvp',      icon: UserCheck },
+        { title: 'Seats',     href: '/seats',     icon: LayoutTemplate },
+    ]// tambah page admin lain kat sini
+
+    return [
+        { title: 'Dashboard', href: '/udashboard', icon: LayoutGrid },
+        { title: 'Events',    href: '/uevents',    icon: Calendar },
+    ];
+});
+
+
+
+
+// isAdmin.value
+//     ? [
+//         {
+//             title: 'Dashboard',
+//             href: dashboard(),
+//             icon: LayoutGrid,
+//         },
+//         {
+//             title: 'Events',
+//             href: '/events',
+//             icon: Calendar,
+//         }, 
+//         {
+//             title: 'Rsvps',
+//             href: '/rsvp',
+//             icon: UserCheck,
+//         }, 
+//         {
+//             title: 'Seats',
+//             href: '/seats',
+//             icon: LayoutTemplate,
+//         },   
+
+//         // tambah page admin lain kat sini
+//     ]
+//     : [
+//         {
+//             title: 'Dashboard',
+//             href: udashboard(),
+//             icon: LayoutGrid,
+//         },
+//         {
+//             title: 'Events',
+//             href: '/uevents',
+//             icon: Calendar,
+//         },
+//         // tambah page user lain kat sini
+//     ]
+// );
 
 const footerNavItems: NavItem[] = [
     {
@@ -81,7 +107,7 @@ const footerNavItems: NavItem[] = [
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <Link :href="isAdmin ? dashboard() : udashboard()">
+                        <Link :href="isSuperAdmin ? '/sadashboard' : isAdmin ? '/dashboard' : '/udashboard'">
                             <AppLogo />
                         </Link>
                     </SidebarMenuButton>
