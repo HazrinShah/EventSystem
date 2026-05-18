@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\SeatController::store
- * @see app/Http/Controllers/SeatController.php:111
+ * @see app/Http/Controllers/SeatController.php:148
  * @route '/api/seats'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\SeatController::store
- * @see app/Http/Controllers/SeatController.php:111
+ * @see app/Http/Controllers/SeatController.php:148
  * @route '/api/seats'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\SeatController::store
- * @see app/Http/Controllers/SeatController.php:111
+ * @see app/Http/Controllers/SeatController.php:148
  * @route '/api/seats'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\SeatController::store
- * @see app/Http/Controllers/SeatController.php:111
+ * @see app/Http/Controllers/SeatController.php:148
  * @route '/api/seats'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\SeatController::store
- * @see app/Http/Controllers/SeatController.php:111
+ * @see app/Http/Controllers/SeatController.php:148
  * @route '/api/seats'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -56,7 +56,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\SeatController::destroy
- * @see app/Http/Controllers/SeatController.php:156
+ * @see app/Http/Controllers/SeatController.php:193
  * @route '/api/seats/{seat}'
  */
 export const destroy = (args: { seat: number | { seatID: number } } | [seat: number | { seatID: number } ] | number | { seatID: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -71,7 +71,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\SeatController::destroy
- * @see app/Http/Controllers/SeatController.php:156
+ * @see app/Http/Controllers/SeatController.php:193
  * @route '/api/seats/{seat}'
  */
 destroy.url = (args: { seat: number | { seatID: number } } | [seat: number | { seatID: number } ] | number | { seatID: number }, options?: RouteQueryOptions) => {
@@ -104,7 +104,7 @@ destroy.url = (args: { seat: number | { seatID: number } } | [seat: number | { s
 
 /**
 * @see \App\Http\Controllers\SeatController::destroy
- * @see app/Http/Controllers/SeatController.php:156
+ * @see app/Http/Controllers/SeatController.php:193
  * @route '/api/seats/{seat}'
  */
 destroy.delete = (args: { seat: number | { seatID: number } } | [seat: number | { seatID: number } ] | number | { seatID: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -114,7 +114,7 @@ destroy.delete = (args: { seat: number | { seatID: number } } | [seat: number | 
 
     /**
 * @see \App\Http\Controllers\SeatController::destroy
- * @see app/Http/Controllers/SeatController.php:156
+ * @see app/Http/Controllers/SeatController.php:193
  * @route '/api/seats/{seat}'
  */
     const destroyForm = (args: { seat: number | { seatID: number } } | [seat: number | { seatID: number } ] | number | { seatID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -129,7 +129,7 @@ destroy.delete = (args: { seat: number | { seatID: number } } | [seat: number | 
 
             /**
 * @see \App\Http\Controllers\SeatController::destroy
- * @see app/Http/Controllers/SeatController.php:156
+ * @see app/Http/Controllers/SeatController.php:193
  * @route '/api/seats/{seat}'
  */
         destroyForm.delete = (args: { seat: number | { seatID: number } } | [seat: number | { seatID: number } ] | number | { seatID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -145,7 +145,7 @@ destroy.delete = (args: { seat: number | { seatID: number } } | [seat: number | 
     destroy.form = destroyForm
 /**
 * @see \App\Http\Controllers\SeatController::destroyAll
- * @see app/Http/Controllers/SeatController.php:170
+ * @see app/Http/Controllers/SeatController.php:207
  * @route '/api/events/{event}/seats'
  */
 export const destroyAll = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -160,7 +160,7 @@ destroyAll.definition = {
 
 /**
 * @see \App\Http\Controllers\SeatController::destroyAll
- * @see app/Http/Controllers/SeatController.php:170
+ * @see app/Http/Controllers/SeatController.php:207
  * @route '/api/events/{event}/seats'
  */
 destroyAll.url = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions) => {
@@ -193,7 +193,7 @@ destroyAll.url = (args: { event: number | { eventID: number } } | [event: number
 
 /**
 * @see \App\Http\Controllers\SeatController::destroyAll
- * @see app/Http/Controllers/SeatController.php:170
+ * @see app/Http/Controllers/SeatController.php:207
  * @route '/api/events/{event}/seats'
  */
 destroyAll.delete = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -203,7 +203,7 @@ destroyAll.delete = (args: { event: number | { eventID: number } } | [event: num
 
     /**
 * @see \App\Http\Controllers\SeatController::destroyAll
- * @see app/Http/Controllers/SeatController.php:170
+ * @see app/Http/Controllers/SeatController.php:207
  * @route '/api/events/{event}/seats'
  */
     const destroyAllForm = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -218,7 +218,7 @@ destroyAll.delete = (args: { event: number | { eventID: number } } | [event: num
 
             /**
 * @see \App\Http\Controllers\SeatController::destroyAll
- * @see app/Http/Controllers/SeatController.php:170
+ * @see app/Http/Controllers/SeatController.php:207
  * @route '/api/events/{event}/seats'
  */
         destroyAllForm.delete = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -234,7 +234,7 @@ destroyAll.delete = (args: { event: number | { eventID: number } } | [event: num
     destroyAll.form = destroyAllForm
 /**
 * @see \App\Http\Controllers\SeatController::selectSeat
- * @see app/Http/Controllers/SeatController.php:183
+ * @see app/Http/Controllers/SeatController.php:220
  * @route '/api/seats/{seat}/select'
  */
 export const selectSeat = (args: { seat: number | { seatID: number } } | [seat: number | { seatID: number } ] | number | { seatID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -249,7 +249,7 @@ selectSeat.definition = {
 
 /**
 * @see \App\Http\Controllers\SeatController::selectSeat
- * @see app/Http/Controllers/SeatController.php:183
+ * @see app/Http/Controllers/SeatController.php:220
  * @route '/api/seats/{seat}/select'
  */
 selectSeat.url = (args: { seat: number | { seatID: number } } | [seat: number | { seatID: number } ] | number | { seatID: number }, options?: RouteQueryOptions) => {
@@ -282,7 +282,7 @@ selectSeat.url = (args: { seat: number | { seatID: number } } | [seat: number | 
 
 /**
 * @see \App\Http\Controllers\SeatController::selectSeat
- * @see app/Http/Controllers/SeatController.php:183
+ * @see app/Http/Controllers/SeatController.php:220
  * @route '/api/seats/{seat}/select'
  */
 selectSeat.post = (args: { seat: number | { seatID: number } } | [seat: number | { seatID: number } ] | number | { seatID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -292,7 +292,7 @@ selectSeat.post = (args: { seat: number | { seatID: number } } | [seat: number |
 
     /**
 * @see \App\Http\Controllers\SeatController::selectSeat
- * @see app/Http/Controllers/SeatController.php:183
+ * @see app/Http/Controllers/SeatController.php:220
  * @route '/api/seats/{seat}/select'
  */
     const selectSeatForm = (args: { seat: number | { seatID: number } } | [seat: number | { seatID: number } ] | number | { seatID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -302,7 +302,7 @@ selectSeat.post = (args: { seat: number | { seatID: number } } | [seat: number |
 
             /**
 * @see \App\Http\Controllers\SeatController::selectSeat
- * @see app/Http/Controllers/SeatController.php:183
+ * @see app/Http/Controllers/SeatController.php:220
  * @route '/api/seats/{seat}/select'
  */
         selectSeatForm.post = (args: { seat: number | { seatID: number } } | [seat: number | { seatID: number } ] | number | { seatID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -313,7 +313,7 @@ selectSeat.post = (args: { seat: number | { seatID: number } } | [seat: number |
     selectSeat.form = selectSeatForm
 /**
 * @see \App\Http\Controllers\SeatController::releaseSeat
- * @see app/Http/Controllers/SeatController.php:238
+ * @see app/Http/Controllers/SeatController.php:275
  * @route '/api/seats/{seat}/release'
  */
 export const releaseSeat = (args: { seat: number | { seatID: number } } | [seat: number | { seatID: number } ] | number | { seatID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -328,7 +328,7 @@ releaseSeat.definition = {
 
 /**
 * @see \App\Http\Controllers\SeatController::releaseSeat
- * @see app/Http/Controllers/SeatController.php:238
+ * @see app/Http/Controllers/SeatController.php:275
  * @route '/api/seats/{seat}/release'
  */
 releaseSeat.url = (args: { seat: number | { seatID: number } } | [seat: number | { seatID: number } ] | number | { seatID: number }, options?: RouteQueryOptions) => {
@@ -361,7 +361,7 @@ releaseSeat.url = (args: { seat: number | { seatID: number } } | [seat: number |
 
 /**
 * @see \App\Http\Controllers\SeatController::releaseSeat
- * @see app/Http/Controllers/SeatController.php:238
+ * @see app/Http/Controllers/SeatController.php:275
  * @route '/api/seats/{seat}/release'
  */
 releaseSeat.post = (args: { seat: number | { seatID: number } } | [seat: number | { seatID: number } ] | number | { seatID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -371,7 +371,7 @@ releaseSeat.post = (args: { seat: number | { seatID: number } } | [seat: number 
 
     /**
 * @see \App\Http\Controllers\SeatController::releaseSeat
- * @see app/Http/Controllers/SeatController.php:238
+ * @see app/Http/Controllers/SeatController.php:275
  * @route '/api/seats/{seat}/release'
  */
     const releaseSeatForm = (args: { seat: number | { seatID: number } } | [seat: number | { seatID: number } ] | number | { seatID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -381,7 +381,7 @@ releaseSeat.post = (args: { seat: number | { seatID: number } } | [seat: number 
 
             /**
 * @see \App\Http\Controllers\SeatController::releaseSeat
- * @see app/Http/Controllers/SeatController.php:238
+ * @see app/Http/Controllers/SeatController.php:275
  * @route '/api/seats/{seat}/release'
  */
         releaseSeatForm.post = (args: { seat: number | { seatID: number } } | [seat: number | { seatID: number } ] | number | { seatID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -392,7 +392,7 @@ releaseSeat.post = (args: { seat: number | { seatID: number } } | [seat: number 
     releaseSeat.form = releaseSeatForm
 /**
 * @see \App\Http\Controllers\SeatController::statusPoll
- * @see app/Http/Controllers/SeatController.php:263
+ * @see app/Http/Controllers/SeatController.php:300
  * @route '/api/events/{event}/seat-status'
  */
 export const statusPoll = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -407,7 +407,7 @@ statusPoll.definition = {
 
 /**
 * @see \App\Http\Controllers\SeatController::statusPoll
- * @see app/Http/Controllers/SeatController.php:263
+ * @see app/Http/Controllers/SeatController.php:300
  * @route '/api/events/{event}/seat-status'
  */
 statusPoll.url = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions) => {
@@ -440,7 +440,7 @@ statusPoll.url = (args: { event: number | { eventID: number } } | [event: number
 
 /**
 * @see \App\Http\Controllers\SeatController::statusPoll
- * @see app/Http/Controllers/SeatController.php:263
+ * @see app/Http/Controllers/SeatController.php:300
  * @route '/api/events/{event}/seat-status'
  */
 statusPoll.get = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -449,7 +449,7 @@ statusPoll.get = (args: { event: number | { eventID: number } } | [event: number
 })
 /**
 * @see \App\Http\Controllers\SeatController::statusPoll
- * @see app/Http/Controllers/SeatController.php:263
+ * @see app/Http/Controllers/SeatController.php:300
  * @route '/api/events/{event}/seat-status'
  */
 statusPoll.head = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -459,7 +459,7 @@ statusPoll.head = (args: { event: number | { eventID: number } } | [event: numbe
 
     /**
 * @see \App\Http\Controllers\SeatController::statusPoll
- * @see app/Http/Controllers/SeatController.php:263
+ * @see app/Http/Controllers/SeatController.php:300
  * @route '/api/events/{event}/seat-status'
  */
     const statusPollForm = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -469,7 +469,7 @@ statusPoll.head = (args: { event: number | { eventID: number } } | [event: numbe
 
             /**
 * @see \App\Http\Controllers\SeatController::statusPoll
- * @see app/Http/Controllers/SeatController.php:263
+ * @see app/Http/Controllers/SeatController.php:300
  * @route '/api/events/{event}/seat-status'
  */
         statusPollForm.get = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -478,7 +478,7 @@ statusPoll.head = (args: { event: number | { eventID: number } } | [event: numbe
         })
             /**
 * @see \App\Http\Controllers\SeatController::statusPoll
- * @see app/Http/Controllers/SeatController.php:263
+ * @see app/Http/Controllers/SeatController.php:300
  * @route '/api/events/{event}/seat-status'
  */
         statusPollForm.head = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -492,6 +492,108 @@ statusPoll.head = (args: { event: number | { eventID: number } } | [event: numbe
         })
     
     statusPoll.form = statusPollForm
+/**
+* @see \App\Http\Controllers\SeatController::adminStatusPoll
+ * @see app/Http/Controllers/SeatController.php:318
+ * @route '/api/events/{event}/seat-status-admin'
+ */
+export const adminStatusPoll = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: adminStatusPoll.url(args, options),
+    method: 'get',
+})
+
+adminStatusPoll.definition = {
+    methods: ["get","head"],
+    url: '/api/events/{event}/seat-status-admin',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\SeatController::adminStatusPoll
+ * @see app/Http/Controllers/SeatController.php:318
+ * @route '/api/events/{event}/seat-status-admin'
+ */
+adminStatusPoll.url = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { event: args }
+    }
+
+            if (typeof args === 'object' && !Array.isArray(args) && 'eventID' in args) {
+            args = { event: args.eventID }
+        }
+    
+    if (Array.isArray(args)) {
+        args = {
+                    event: args[0],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+                        event: typeof args.event === 'object'
+                ? args.event.eventID
+                : args.event,
+                }
+
+    return adminStatusPoll.definition.url
+            .replace('{event}', parsedArgs.event.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\SeatController::adminStatusPoll
+ * @see app/Http/Controllers/SeatController.php:318
+ * @route '/api/events/{event}/seat-status-admin'
+ */
+adminStatusPoll.get = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: adminStatusPoll.url(args, options),
+    method: 'get',
+})
+/**
+* @see \App\Http\Controllers\SeatController::adminStatusPoll
+ * @see app/Http/Controllers/SeatController.php:318
+ * @route '/api/events/{event}/seat-status-admin'
+ */
+adminStatusPoll.head = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: adminStatusPoll.url(args, options),
+    method: 'head',
+})
+
+    /**
+* @see \App\Http\Controllers\SeatController::adminStatusPoll
+ * @see app/Http/Controllers/SeatController.php:318
+ * @route '/api/events/{event}/seat-status-admin'
+ */
+    const adminStatusPollForm = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: adminStatusPoll.url(args, options),
+        method: 'get',
+    })
+
+            /**
+* @see \App\Http\Controllers\SeatController::adminStatusPoll
+ * @see app/Http/Controllers/SeatController.php:318
+ * @route '/api/events/{event}/seat-status-admin'
+ */
+        adminStatusPollForm.get = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: adminStatusPoll.url(args, options),
+            method: 'get',
+        })
+            /**
+* @see \App\Http\Controllers\SeatController::adminStatusPoll
+ * @see app/Http/Controllers/SeatController.php:318
+ * @route '/api/events/{event}/seat-status-admin'
+ */
+        adminStatusPollForm.head = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: adminStatusPoll.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    adminStatusPoll.form = adminStatusPollForm
 /**
 * @see \App\Http\Controllers\SeatController::adminIndex
  * @see app/Http/Controllers/SeatController.php:14
@@ -674,7 +776,7 @@ index.head = (args: { event: number | { eventID: number } } | [event: number | {
     index.form = indexForm
 /**
 * @see \App\Http\Controllers\SeatController::userSeatSelect
- * @see app/Http/Controllers/SeatController.php:72
+ * @see app/Http/Controllers/SeatController.php:109
  * @route '/events/{event}/select-seat'
  */
 export const userSeatSelect = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -689,7 +791,7 @@ userSeatSelect.definition = {
 
 /**
 * @see \App\Http\Controllers\SeatController::userSeatSelect
- * @see app/Http/Controllers/SeatController.php:72
+ * @see app/Http/Controllers/SeatController.php:109
  * @route '/events/{event}/select-seat'
  */
 userSeatSelect.url = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions) => {
@@ -722,7 +824,7 @@ userSeatSelect.url = (args: { event: number | { eventID: number } } | [event: nu
 
 /**
 * @see \App\Http\Controllers\SeatController::userSeatSelect
- * @see app/Http/Controllers/SeatController.php:72
+ * @see app/Http/Controllers/SeatController.php:109
  * @route '/events/{event}/select-seat'
  */
 userSeatSelect.get = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -731,7 +833,7 @@ userSeatSelect.get = (args: { event: number | { eventID: number } } | [event: nu
 })
 /**
 * @see \App\Http\Controllers\SeatController::userSeatSelect
- * @see app/Http/Controllers/SeatController.php:72
+ * @see app/Http/Controllers/SeatController.php:109
  * @route '/events/{event}/select-seat'
  */
 userSeatSelect.head = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -741,7 +843,7 @@ userSeatSelect.head = (args: { event: number | { eventID: number } } | [event: n
 
     /**
 * @see \App\Http\Controllers\SeatController::userSeatSelect
- * @see app/Http/Controllers/SeatController.php:72
+ * @see app/Http/Controllers/SeatController.php:109
  * @route '/events/{event}/select-seat'
  */
     const userSeatSelectForm = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -751,7 +853,7 @@ userSeatSelect.head = (args: { event: number | { eventID: number } } | [event: n
 
             /**
 * @see \App\Http\Controllers\SeatController::userSeatSelect
- * @see app/Http/Controllers/SeatController.php:72
+ * @see app/Http/Controllers/SeatController.php:109
  * @route '/events/{event}/select-seat'
  */
         userSeatSelectForm.get = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -760,7 +862,7 @@ userSeatSelect.head = (args: { event: number | { eventID: number } } | [event: n
         })
             /**
 * @see \App\Http\Controllers\SeatController::userSeatSelect
- * @see app/Http/Controllers/SeatController.php:72
+ * @see app/Http/Controllers/SeatController.php:109
  * @route '/events/{event}/select-seat'
  */
         userSeatSelectForm.head = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -774,6 +876,108 @@ userSeatSelect.head = (args: { event: number | { eventID: number } } | [event: n
         })
     
     userSeatSelect.form = userSeatSelectForm
-const SeatController = { store, destroy, destroyAll, selectSeat, releaseSeat, statusPoll, adminIndex, index, userSeatSelect }
+/**
+* @see \App\Http\Controllers\SeatController::userSeatView
+ * @see app/Http/Controllers/SeatController.php:72
+ * @route '/events/{event}/seat-view'
+ */
+export const userSeatView = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: userSeatView.url(args, options),
+    method: 'get',
+})
+
+userSeatView.definition = {
+    methods: ["get","head"],
+    url: '/events/{event}/seat-view',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\SeatController::userSeatView
+ * @see app/Http/Controllers/SeatController.php:72
+ * @route '/events/{event}/seat-view'
+ */
+userSeatView.url = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { event: args }
+    }
+
+            if (typeof args === 'object' && !Array.isArray(args) && 'eventID' in args) {
+            args = { event: args.eventID }
+        }
+    
+    if (Array.isArray(args)) {
+        args = {
+                    event: args[0],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+                        event: typeof args.event === 'object'
+                ? args.event.eventID
+                : args.event,
+                }
+
+    return userSeatView.definition.url
+            .replace('{event}', parsedArgs.event.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\SeatController::userSeatView
+ * @see app/Http/Controllers/SeatController.php:72
+ * @route '/events/{event}/seat-view'
+ */
+userSeatView.get = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: userSeatView.url(args, options),
+    method: 'get',
+})
+/**
+* @see \App\Http\Controllers\SeatController::userSeatView
+ * @see app/Http/Controllers/SeatController.php:72
+ * @route '/events/{event}/seat-view'
+ */
+userSeatView.head = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: userSeatView.url(args, options),
+    method: 'head',
+})
+
+    /**
+* @see \App\Http\Controllers\SeatController::userSeatView
+ * @see app/Http/Controllers/SeatController.php:72
+ * @route '/events/{event}/seat-view'
+ */
+    const userSeatViewForm = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: userSeatView.url(args, options),
+        method: 'get',
+    })
+
+            /**
+* @see \App\Http\Controllers\SeatController::userSeatView
+ * @see app/Http/Controllers/SeatController.php:72
+ * @route '/events/{event}/seat-view'
+ */
+        userSeatViewForm.get = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: userSeatView.url(args, options),
+            method: 'get',
+        })
+            /**
+* @see \App\Http\Controllers\SeatController::userSeatView
+ * @see app/Http/Controllers/SeatController.php:72
+ * @route '/events/{event}/seat-view'
+ */
+        userSeatViewForm.head = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: userSeatView.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    userSeatView.form = userSeatViewForm
+const SeatController = { store, destroy, destroyAll, selectSeat, releaseSeat, statusPoll, adminStatusPoll, adminIndex, index, userSeatSelect, userSeatView }
 
 export default SeatController

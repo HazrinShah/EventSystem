@@ -41,6 +41,7 @@ const mainNavItems = computed<NavItem[]>(() => {
     return [
         { title: 'Dashboard', href: '/udashboard', icon: LayoutGrid },
         { title: 'Events',    href: '/uevents',    icon: Calendar },
+        { title: 'My RSVPs',  href: '/my-rsvps',   icon: UserCheck },
     ];
 });
 

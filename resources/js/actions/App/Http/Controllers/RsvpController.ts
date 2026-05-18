@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\RsvpController::index
- * @see app/Http/Controllers/RsvpController.php:0
+ * @see app/Http/Controllers/RsvpController.php:42
  * @route '/rsvp'
  */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\RsvpController::index
- * @see app/Http/Controllers/RsvpController.php:0
+ * @see app/Http/Controllers/RsvpController.php:42
  * @route '/rsvp'
  */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\RsvpController::index
- * @see app/Http/Controllers/RsvpController.php:0
+ * @see app/Http/Controllers/RsvpController.php:42
  * @route '/rsvp'
  */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,7 +34,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\RsvpController::index
- * @see app/Http/Controllers/RsvpController.php:0
+ * @see app/Http/Controllers/RsvpController.php:42
  * @route '/rsvp'
  */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,7 +44,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\RsvpController::index
- * @see app/Http/Controllers/RsvpController.php:0
+ * @see app/Http/Controllers/RsvpController.php:42
  * @route '/rsvp'
  */
     const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -54,7 +54,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\RsvpController::index
- * @see app/Http/Controllers/RsvpController.php:0
+ * @see app/Http/Controllers/RsvpController.php:42
  * @route '/rsvp'
  */
         indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -63,7 +63,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\RsvpController::index
- * @see app/Http/Controllers/RsvpController.php:0
+ * @see app/Http/Controllers/RsvpController.php:42
  * @route '/rsvp'
  */
         indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -134,7 +134,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\RsvpController::cancel
- * @see app/Http/Controllers/RsvpController.php:63
+ * @see app/Http/Controllers/RsvpController.php:87
  * @route '/rsvp/{rsvpID}/cancel'
  */
 export const cancel = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -149,7 +149,7 @@ cancel.definition = {
 
 /**
 * @see \App\Http\Controllers\RsvpController::cancel
- * @see app/Http/Controllers/RsvpController.php:63
+ * @see app/Http/Controllers/RsvpController.php:87
  * @route '/rsvp/{rsvpID}/cancel'
  */
 cancel.url = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -177,7 +177,7 @@ cancel.url = (args: { rsvpID: string | number } | [rsvpID: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\RsvpController::cancel
- * @see app/Http/Controllers/RsvpController.php:63
+ * @see app/Http/Controllers/RsvpController.php:87
  * @route '/rsvp/{rsvpID}/cancel'
  */
 cancel.post = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -187,7 +187,7 @@ cancel.post = (args: { rsvpID: string | number } | [rsvpID: string | number ] | 
 
     /**
 * @see \App\Http\Controllers\RsvpController::cancel
- * @see app/Http/Controllers/RsvpController.php:63
+ * @see app/Http/Controllers/RsvpController.php:87
  * @route '/rsvp/{rsvpID}/cancel'
  */
     const cancelForm = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -197,7 +197,7 @@ cancel.post = (args: { rsvpID: string | number } | [rsvpID: string | number ] | 
 
             /**
 * @see \App\Http\Controllers\RsvpController::cancel
- * @see app/Http/Controllers/RsvpController.php:63
+ * @see app/Http/Controllers/RsvpController.php:87
  * @route '/rsvp/{rsvpID}/cancel'
  */
         cancelForm.post = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -206,6 +206,84 @@ cancel.post = (args: { rsvpID: string | number } | [rsvpID: string | number ] | 
         })
     
     cancel.form = cancelForm
-const RsvpController = { index, store, cancel }
+/**
+* @see \App\Http\Controllers\RsvpController::userIndex
+ * @see app/Http/Controllers/RsvpController.php:60
+ * @route '/my-rsvps'
+ */
+export const userIndex = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: userIndex.url(options),
+    method: 'get',
+})
+
+userIndex.definition = {
+    methods: ["get","head"],
+    url: '/my-rsvps',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\RsvpController::userIndex
+ * @see app/Http/Controllers/RsvpController.php:60
+ * @route '/my-rsvps'
+ */
+userIndex.url = (options?: RouteQueryOptions) => {
+    return userIndex.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\RsvpController::userIndex
+ * @see app/Http/Controllers/RsvpController.php:60
+ * @route '/my-rsvps'
+ */
+userIndex.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: userIndex.url(options),
+    method: 'get',
+})
+/**
+* @see \App\Http\Controllers\RsvpController::userIndex
+ * @see app/Http/Controllers/RsvpController.php:60
+ * @route '/my-rsvps'
+ */
+userIndex.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: userIndex.url(options),
+    method: 'head',
+})
+
+    /**
+* @see \App\Http\Controllers\RsvpController::userIndex
+ * @see app/Http/Controllers/RsvpController.php:60
+ * @route '/my-rsvps'
+ */
+    const userIndexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: userIndex.url(options),
+        method: 'get',
+    })
+
+            /**
+* @see \App\Http\Controllers\RsvpController::userIndex
+ * @see app/Http/Controllers/RsvpController.php:60
+ * @route '/my-rsvps'
+ */
+        userIndexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: userIndex.url(options),
+            method: 'get',
+        })
+            /**
+* @see \App\Http\Controllers\RsvpController::userIndex
+ * @see app/Http/Controllers/RsvpController.php:60
+ * @route '/my-rsvps'
+ */
+        userIndexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: userIndex.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    userIndex.form = userIndexForm
+const RsvpController = { index, store, cancel, userIndex }
 
 export default RsvpController
