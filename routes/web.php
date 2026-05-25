@@ -17,13 +17,15 @@ Route::inertia('/', 'Welcome', [
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('redirect', fn () => redirect()->route(
-        match(auth()->user()->role) {
-            'superadmin' => 'sadashboard',
-            'admin'      => 'dashboard',
-            default      => 'udashboard',
-        }
-    ))->name('redirect');
+    // for all user
+    Route::post('/rsvp/{rsvpID}/cancel', [RsvpController::class, 'cancel'])->name('rsvp.cancel');
+
+    Route::get('redirect', function () {
+        $role = auth()->user()->role;
+        if ($role === 'superadmin') return redirect()->route('sadashboard');
+        if ($role === 'admin') return redirect()->route('dashboard');
+        return redirect()->route('udashboard');
+    })->name('redirect');
 
     // Super Admin only
     Route::middleware('role:superadmin')->group(function () {
@@ -70,9 +72,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('role:user')->group(function () {
         Route::post('/rsvp', [RsvpController::class, 'store'])->name('rsvp.store');
         Route::get('/uevents', [EventController::class, 'userIndex'])->name('uevents');
-        Route::post('/rsvp/{rsvpID}/cancel', [RsvpController::class, 'cancel'])->name('rsvp.cancel');
         Route::get('/events/{event}/select-seat', [SeatController::class, 'userSeatSelect'])->name('seat.select');
-
+        Route::get('/events/{event}/seat-view', [SeatController::class, 'userSeatView'])->name('seat.view');
+        Route::get('/my-rsvps', [RsvpController::class, 'userIndex'])->name('my-rsvps');
         Route::inertia('udashboard', 'User/Dashboard/UDashboard')->name('udashboard');
     });
 });

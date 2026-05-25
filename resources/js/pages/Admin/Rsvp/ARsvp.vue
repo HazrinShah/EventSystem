@@ -14,12 +14,14 @@
 
     <div v-else class="p-6">
         <div class="rounded-lg border shadow-sm">
+            <div class="max-h-[200px] overflow-y-auto relative">
             <Table>
-                <TableHeader>
+                <TableHeader sticky top-0 bg-white z-10>
                     <TableRow>
                         <TableHead>User</TableHead>
                         <TableHead>Event</TableHead>
                         <TableHead>Pax</TableHead>
+                        <TableHead>Seat</TableHead>
                         <TableHead>Note</TableHead>
                         <TableHead>Status</TableHead>
                         <TableHead>Action</TableHead>
@@ -30,6 +32,15 @@
                         <TableCell class="font-medium">{{ rsvp.user.name }}</TableCell>
                         <TableCell>{{ rsvp.event.title }}</TableCell>
                         <TableCell>{{ rsvp.pax }}</TableCell>
+                        <TableCell class="max-w-[200px]">
+                            <div v-if="rsvp.seat_label?.length" class="flex gap-1 flex-wrap">
+                                <div v-for="label in rsvp.seat_label" :key="label"
+                                    class="px-2 py-0.5 bg-slate-100 border border-slate-200 rounded text-xs font-mono whitespace-nowrap">
+                                    {{ label }}
+                                </div>
+                            </div>
+                            <span v-else class="text-xs text-muted-foreground">—</span>
+                        </TableCell>
                         <TableCell class="text-muted-foreground">{{ rsvp.note ?? '-' }}</TableCell>
                         <TableCell>
                             <span class="rounded-full px-2 py-0.5 text-xs font-medium"
@@ -42,15 +53,32 @@
                             </span>
                         </TableCell>
                         <TableCell>
-                             
-                            <Button v-if="rsvp.status === 'pending' && rsvp.event" size="sm" class="cursor-pointer" @click="assignSeat(rsvp)">
-                                Assign Seat
-                            </Button>
-                            <span v-else class="text-xs text-muted-foreground">—</span>
+                                <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                        <Button variant="ghost" size="sm" class="text-white bg-red-500 cursor-pointer hover:bg-red-700 hover:text-white">
+                                            <CalendarX2 class="h-4 w-4 mr-1 text-white" style="transform: translateY(-0.35px);" /> Cancel
+                                        </Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                                This will cancel your RSVP for <strong>{{ rsvp.event.title }}</strong>.
+                                            </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                            <AlertDialogCancel class="bg-blue-600 text-white hover:bg-blue-700 hover:text-white cursor-pointer">No, keep it</AlertDialogCancel>
+                                            <AlertDialogAction @click="cancelRsvp(rsvp.rsvpID)" class="bg-red-600 text-white hover:bg-red-700 hover:text-white cursor-pointer">
+                                                Yes, Cancel RSVP
+                                            </AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
                         </TableCell>
                     </TableRow>
                 </TableBody>
             </Table>
+            </div>
         </div>
     </div>
 </template>
@@ -58,8 +86,13 @@
 <script setup>
 import { router } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
-import { ClipboardList } from 'lucide-vue-next';
+import { ClipboardList, Trash2, CalendarX2 } from 'lucide-vue-next';
 import { Button } from '@/components/ui/button';
+import {
+    AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+    AlertDialogDescription, AlertDialogFooter, AlertDialogHeader,
+    AlertDialogTitle, AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 defineProps({
@@ -72,8 +105,7 @@ defineOptions({
     },
 });
 
-function assignSeat(rsvp) {
-    if (!confirm(`Assign seat for ${rsvp.user.name}?`)) return;
-    router.visit(`/events/${rsvp.event.eventID}/seats`);
+function cancelRsvp(rsvpID) {
+    router.post(`/rsvp/${rsvpID}/cancel`)
 }
 </script>

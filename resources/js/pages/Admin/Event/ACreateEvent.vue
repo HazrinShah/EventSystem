@@ -47,8 +47,10 @@
                         </div>
                     </div>
                     <div class="flex gap-3 pt-2">
-                        <button type="submit" class="rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Create</button>
-                        <Link href="/events" class="rounded-md border border-gray-300 px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800">Cancel</Link>
+                        <Button type="submit" class="bg-blue-600 cursor-pointer text-black hover:bg-blue-600">Create</Button>
+                        <Link href="/events" class="inline-flex items-center justify-center rounded-md text-sm font-medium border bg-red-600 text-black hover:bg-red-600 h-9 px-4 py-2">
+                            Cancel
+                        </Link>
                     </div>
                 </form>
             </div>
@@ -61,6 +63,7 @@ import { useForm } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button';
 
 function submit() {
     form.post('/events');
@@ -85,4 +88,8 @@ defineOptions({
         ],
     },
 });
+
+function closeCreateDialog() {
+    router.visit('/events');
+}
 </script>

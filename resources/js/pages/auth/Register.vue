@@ -71,7 +71,7 @@ defineOptions({
                 <InputError :message="errors.phone" />
             </div>
 
-            <!-- NI UTK CREATE ADMIN JE, USER BIASA TAKYAH SEBAB DEFAULT ROLE IS USER -->
+            <!-- NI UTK CREATE ADMIN JE, USER BIASA TAKYAH SEBAB DEFAULT ROLE IS USER
             <div class="grid gap-2">
                 <Label for="role">Role</Label>
                 <select
@@ -87,7 +87,7 @@ defineOptions({
                     <option value="superadmin">Super Admin</option>
                 </select>
                 <InputError :message="errors.role" />
-            </div>
+            </div> -->
 
             <div class="grid gap-2">
                 <Label for="password">Password</Label>

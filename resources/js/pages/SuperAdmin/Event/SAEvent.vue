@@ -6,7 +6,7 @@
             <p class="text-sm text-muted-foreground">Manage all events and assign admins</p>
         </div>
         <Link href="/add-events">
-            <Button size="sm">
+            <Button size="sm" class="bg-green-700 cursor-pointer text-white hover:bg-green-900">
                 <Plus class="h-4 w-4 mr-2" />
                 Add Event
             </Button>
@@ -19,7 +19,7 @@
         <h3 class="text-lg font-semibold">No events yet</h3>
         <p class="text-sm text-muted-foreground mt-1 mb-4">Get started by creating your first event.</p>
         <Link href="/add-events">
-            <Button size="sm"><Plus class="h-4 w-4 mr-2" />Add Event</Button>
+            <Button size="sm" class="bg-green-700 cursor-pointer text-white hover:bg-green-900"><Plus class="h-4 w-4 mr-2" />Add Event</Button>
         </Link>
     </div>
 
@@ -58,21 +58,35 @@
                 <div v-else class="text-xs text-muted-foreground italic">No admin assigned</div>
             </CardContent>
             <CardFooter class="flex gap-2 pt-2 flex-wrap">
-                <Button @click="openViewDialog(event)" variant="outline" size="sm" class="flex-1">
+                <Button @click="openViewDialog(event)" variant="outline" size="sm" class="flex-1 cursor-pointer bg-yellow-100 border-yellow-400 hover:bg-yellow-200">
                     <Eye class="h-3.5 w-3.5 mr-1.5" />View
                 </Button>
-                <Button @click="openEditDialog(event)" variant="secondary" size="sm" class="flex-1">
+                <Button @click="openEditDialog(event)" variant="outline" size="sm" class="flex-1 cursor-pointer bg-green-100 border-green-400 hover:bg-green-200">
                     <Pencil class="h-3.5 w-3.5 mr-1.5" />Edit
                 </Button>
-                <Button @click="openAssignDialog(event)" variant="outline" size="sm" class="flex-1">
+                <Button @click="openAssignDialog(event)" variant="outline" size="sm" class="flex-1 cursor-pointer bg-blue-100 border-blue-400 hover:bg-blue-200">
                     <UserPlus class="h-3.5 w-3.5 mr-1.5" />Assign
                 </Button>
-                <Button @click="deleteEvent(event)" variant="destructive" size="sm" class="flex-1">
+                <Button @click="openDeleteDialog(event)" variant="destructive" size="sm" class="flex-1 cursor-pointer text-black hover:bg-red-600">
                     <Trash2 class="h-3.5 w-3.5 mr-1.5" />Delete
                 </Button>
             </CardFooter>
         </Card>
     </section>
+
+    <!-- Delete dialog -->
+       <Dialog :open="isDeleteDialogOpen" @update:open="val => !val && closeDeleteDialog()">
+        <DialogContent class="max-w-sm">
+            <DialogHeader>
+                <DialogTitle>Delete Event — {{ selectedEvent?.title }}</DialogTitle>
+                <DialogDescription>Are you sure you want to delete this event?</DialogDescription>
+            </DialogHeader>
+            <DialogFooter class="pt-4">
+                <Button variant="outline" @click="closeDeleteDialog" class="bg-blue-600 cursor-pointer text-black hover:bg-blue-600">Cancel</Button>
+                <Button @click="submitDelete" class="bg-red-600 cursor-pointer text-black hover:bg-red-600">Delete</Button>
+            </DialogFooter>
+        </DialogContent>
+    </Dialog>
 
     <!-- Assign Admin Dialog -->
     <Dialog :open="isAssignDialogOpen" @update:open="val => !val && closeAssignDialog()">
@@ -91,8 +105,8 @@
                 </select>
             </div>
             <DialogFooter class="pt-4">
-                <Button variant="outline" @click="closeAssignDialog">Cancel</Button>
-                <Button @click="submitAssign" :disabled="!selectedAdminID">Assign</Button>
+                <Button variant="outline" @click="closeAssignDialog" class="bg-red-600 cursor-pointer text-black hover:bg-red-600">Cancel</Button>
+                <Button @click="submitAssign" :disabled="!selectedAdminID" class="bg-blue-600 cursor-pointer text-black hover:bg-blue-600">Assign</Button>
             </DialogFooter>
         </DialogContent>
     </Dialog>
@@ -140,8 +154,8 @@
                     </div>
                 </div>
                 <DialogFooter>
-                    <Button type="button" variant="outline" @click="closeEditDialog">Cancel</Button>
-                    <Button type="submit" :disabled="editForm.processing">
+                    <Button type="button" variant="outline" @click="closeEditDialog" class="bg-red-600 cursor-pointer text-black hover:bg-red-600" >Cancel</Button>
+                    <Button type="submit" :disabled="editForm.processing" variant="outline" class="bg-blue-600 cursor-pointer hover:bg-blue-600">
                         {{ editForm.processing ? 'Saving...' : 'Save Changes' }}
                     </Button>
                 </DialogFooter>
@@ -187,7 +201,7 @@
                 </div>
             </div>
             <div class="px-6 pb-6">
-                <Button variant="outline" class="w-full" @click="closeViewDialog">Close</Button>
+                <Button variant="outline" class="w-full bg-red-600 cursor-pointer hover:bg-red-600" @click="closeViewDialog">Close</Button>
             </div>
         </DialogContent>
     </Dialog>
@@ -236,11 +250,6 @@ const selectedEvent = ref(null);
 function openViewDialog(event) { selectedEvent.value = event; isViewDialogOpen.value = true; }
 function closeViewDialog() { isViewDialogOpen.value = false; selectedEvent.value = null; }
 
-// Delete
-function deleteEvent(event) {
-    if (!confirm('Confirm delete this event?')) return;
-    router.post(`/events/${event.eventID}/delete`);
-}
 
 // Assign admin
 const isAssignDialogOpen = ref(false);
@@ -262,5 +271,25 @@ function submitAssign() {
 function removeAdmin(event, admin) {
     if (!confirm(`Remove ${admin.name} from this event?`)) return;
     router.post(`/events/${event.eventID}/remove-admin`, { userID: admin.userID });
+}
+
+// Delete
+const isDeleteDialogOpen = ref(false);
+
+function openDeleteDialog(event) {
+    selectedEvent.value = event;
+    isDeleteDialogOpen.value = true;
+}
+
+function closeDeleteDialog() {
+    isDeleteDialogOpen.value = false;
+    selectedEvent.value = null;
+}
+
+function submitDelete() {
+    if (!selectedEvent.value) return;
+    router.post(`/events/${selectedEvent.value.eventID}/delete`, {}, {
+        onSuccess: closeDeleteDialog,
+    });
 }
 </script>

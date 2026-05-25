@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     public function adminList(){
-        $admins = User::whereIn('role', ['admin', 'superadmin'])->get();
+        $admins = User::whereIn('role', ['admin'])->get();
         return Inertia::render('SuperAdmin/User/SAUserManagement', ['admins' => $admins]);
     }
 

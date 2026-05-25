@@ -69,6 +69,43 @@ class SeatController extends Controller
         ]);
     }
 
+    public function userSeatView(Event $event, Request $request)
+    {
+        $userID = $request->user()->userID;
+
+        // cek user ada RSVP untuk event ni
+        $rsvp = $event->rsvps()->where('userID', $userID)->first();
+
+        if (!$rsvp) {
+            return redirect('/my-rsvps');
+        }
+
+        // release expired selections
+        $event->seats()->where('status', 'selected')->get()->each->releaseIfExpired();
+
+        $seats = $event->seats()->get()->map(fn($seat) => [
+            'seatID'    => $seat->seatID,
+            'label'     => $seat->label,
+            'x_percent' => $seat->x_percent,
+            'y_percent' => $seat->y_percent,
+            'status'    => $seat->status,
+            'is_mine'   => (int) $seat->selected_by === (int) $userID,
+        ]);
+
+        return Inertia::render('User/Seat/USeatView', [
+            'event' => $event,
+            'seats' => $seats,
+            'rsvp'  => [
+                'rsvpID'     => $rsvp->rsvpID,
+                'pax'        => $rsvp->pax,
+                'status'     => $rsvp->status,
+                'seat_label' => $rsvp->seatAssignments()->with('seat')->get()
+                                    ->map(fn($a) => $a->seat?->label)
+                                    ->filter()->values(),
+            ],
+        ]);
+    }
+
     public function userSeatSelect(Event $event, Request $request) 
     {
         $userID = $request->user()->userID;
@@ -145,6 +182,7 @@ class SeatController extends Controller
                 'x_percent' => $seat->x_percent,
                 'y_percent' => $seat->y_percent,
                 'eventID' => $seat->eventID,
+                'status' => 'available',
                 'is_mine' => false, 
                 // sebab ni untuk admin, so dia takde seat yang dia select, 
                 // nanti bila kau buat func untuk user select seat, baru kau set is_mine tu ikut userID yang login tu
@@ -259,14 +297,12 @@ class SeatController extends Controller
 
             }
 
-            // poll every 5 sec
+            // poll every 5 sec — returns status only (for user seat select/view)
             public function statusPoll(Event $event, Request $request)
             {
                 $userID = $request->user()->userID;
-                // cek dulu kalau ade yang dah expired release dulu
                 $event->seats()->where('selected_by', $userID)->get()->each->releaseIfExpired();
 
-                // tuko format utk frontend
                 $seats = $event->seats()->get()->map(fn($seat) => [
                     'seatID'     => $seat->seatID,
                     'status'     => $seat->status,
@@ -277,7 +313,20 @@ class SeatController extends Controller
                 ]);
 
                 return response()->json(['seats' => $seats]);
+            }
 
+            // poll for admin — returns full seat data including coordinates and new seats
+            public function adminStatusPoll(Event $event)
+            {
+                $seats = $event->seats()->get()->map(fn($seat) => [
+                    'seatID'    => $seat->seatID,
+                    'label'     => $seat->label,
+                    'x_percent' => $seat->x_percent,
+                    'y_percent' => $seat->y_percent,
+                    'status'    => $seat->isSelectionExpired() ? 'available' : $seat->status,
+                ]);
+
+                return response()->json(['seats' => $seats]);
             }
 
 

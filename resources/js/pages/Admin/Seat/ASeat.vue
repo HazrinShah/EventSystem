@@ -1,6 +1,8 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import axios from 'axios'
+import { Button } from '@/components/ui/button'
+
 
 const props = defineProps({
     event: Object,
@@ -19,7 +21,6 @@ defineOptions({
 axios.defaults.withCredentials = true
 axios.defaults.withXSRFToken = true
 
-// ─── State ────────────────────────────────────────────────────
 const seats        = ref(props.seats ?? [])
 const selectedSeat = ref(null)
 const showModal    = ref(false)
@@ -27,15 +28,16 @@ const isPlacingMode = ref(false)
 const newSeatLabel  = ref('')
 const loading       = ref(false)
 const message       = ref('')
-const messageType   = ref('info') // 'info' | 'success' | 'error'
+const messageType   = ref('info')
+const lastUpdated   = ref(null)
+const flash         = ref(false)
+let pollInterval    = null
 
-// ─── Computed Stats ───────────────────────────────────────────
 const totalSeats     = computed(() => seats.value.length)
 const bookedSeats    = computed(() => seats.value.filter(s => s.status === 'booked').length)
 const selectedSeats  = computed(() => seats.value.filter(s => s.status === 'selected').length)
 const availableSeats = computed(() => seats.value.filter(s => s.status === 'available').length)
 
-// ─── Helpers ──────────────────────────────────────────────────
 function showMessage(text, type = 'info') {
     message.value = text
     messageType.value = type
@@ -54,7 +56,6 @@ function seatCursor(seat) {
     return 'cursor-pointer'
 }
 
-// ─── Place Seat ───────────────────────────────────────────────
 function handleImageClick(e) {
     if (!isPlacingMode.value) return
     if (!newSeatLabel.value.trim()) {
@@ -91,7 +92,6 @@ function handleImageClick(e) {
     })
 }
 
-// ─── Click Seat (open detail modal) ──────────────────────────
 function openSeatModal(seat) {
     if (isPlacingMode.value) return
     selectedSeat.value = seat
@@ -103,7 +103,6 @@ function closeModal() {
     selectedSeat.value = null
 }
 
-// ─── Delete Seat ──────────────────────────────────────────────
 function deleteSeat() {
     if (!selectedSeat.value || selectedSeat.value.status === 'booked') return
     loading.value = true
@@ -120,7 +119,6 @@ function deleteSeat() {
     .finally(() => { loading.value = false })
 }
 
-// ─── Delete All Seats ─────────────────────────────────────────
 function deleteAllSeats() {
     if (!confirm('Delete ALL seats for this event? This cannot be undone.')) return
     loading.value = true
@@ -135,6 +133,42 @@ function deleteAllSeats() {
     })
     .finally(() => { loading.value = false })
 }
+
+// polling
+async function fetchStatus() {
+    try {
+        const res = await axios.get(`/api/events/${props.event.eventID}/seat-status-admin`)
+        const updated = res.data.seats
+
+        // update existing seats status
+        updated.forEach(s => {
+            const existing = seats.value.find(e => e.seatID === s.seatID)
+            if (existing) {
+                existing.status = s.status
+            } else {
+                // new seat added by another admin session — push it in
+                seats.value.push(s)
+            }
+        })
+
+        // remove seats that were deleted elsewhere
+        const updatedIDs = updated.map(s => s.seatID)
+        seats.value = seats.value.filter(s => updatedIDs.includes(s.seatID))
+
+        lastUpdated.value = new Date().toLocaleTimeString()
+        flash.value = true
+        setTimeout(() => { flash.value = false }, 1500)
+    } catch (e) {
+        // silent fail
+    }
+}
+
+onMounted(() => {
+    lastUpdated.value = new Date().toLocaleTimeString()
+    pollInterval = setInterval(fetchStatus, 500)
+})
+
+onUnmounted(() => clearInterval(pollInterval))
 </script>
 
 <template>
@@ -148,14 +182,14 @@ function deleteAllSeats() {
             </div>
 
             <!-- Delete All -->
-            <button
+            <Button
                 v-if="seats.length"
                 @click="deleteAllSeats"
                 :disabled="loading"
-                class="cursor-pointer text-sm px-3 py-1.5 rounded border border-red-200 text-red-600 hover:bg-red-50 disabled:opacity-40 transition"
+                class="cursor-pointer text-sm px-3 py-1.5 bg-red-600 disabled:opacity-40 transition hover:bg-red-700 hover:text-white"
             >
                 Delete All Seats
-            </button>
+            </Button>
         </div>
 
         <!-- Stats Row -->
@@ -179,15 +213,15 @@ function deleteAllSeats() {
         </div>
 
         <!-- Feedback Message -->
-        <transition name="fade">
-            <div
+        <transition name="toast">
+            <div variant="outline"
                 v-if="message"
                 :class="{
-                    'bg-blue-50 border-blue-200 text-blue-800' : messageType === 'info',
-                    'bg-green-50 border-green-200 text-green-800' : messageType === 'success',
-                    'bg-red-50 border-red-200 text-red-800' : messageType === 'error',
+                    'border-blue-600 text-black bg-blue-100' : messageType === 'info',
+                    'border-green-600 text-black bg-green-100' : messageType === 'success',
+                    'border-red-600 text-black bg-red-100' : messageType === 'error',
                 }"
-                class="flex items-center gap-2 border rounded-lg px-4 py-2.5 text-sm"
+                class="fixed top-5 right-5 z-50 flex items-center gap-2 border rounded-lg px-4 py-2.5 text-sm"
             >
                 {{ message }}
             </div>
@@ -198,7 +232,7 @@ function deleteAllSeats() {
             <button
                 @click="isPlacingMode = !isPlacingMode"
                 :class="isPlacingMode
-                    ? 'bg-amber-500 hover:bg-amber-600 ring-2 ring-amber-300'
+                    ? 'bg-amber-500 hover:bg-amber-600'
                     : 'bg-indigo-600 hover:bg-indigo-700'"
                 class="cursor-pointer text-white text-sm font-medium px-4 py-2 rounded-lg transition"
             >
@@ -219,16 +253,22 @@ function deleteAllSeats() {
             </span>
         </div>
 
-        <!-- Legend -->
-        <div class="flex items-center gap-5 text-xs text-muted-foreground">
-            <div class="flex items-center gap-1.5">
-                <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span> Available
+        <!-- Legend + refresh indicator -->
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-5 text-xs text-muted-foreground">
+                <div class="flex items-center gap-1.5">
+                    <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span> Available
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span> Selected (held by user)
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span> Booked
+                </div>
             </div>
-            <div class="flex items-center gap-1.5">
-                <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span> Selected (held by user)
-            </div>
-            <div class="flex items-center gap-1.5">
-                <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span> Booked
+             <div class="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <span class="w-2 h-2 rounded-full inline-block bg-green-500 animate-pulse"></span>
+                Live · Updated {{ lastUpdated }}
             </div>
         </div>
 
@@ -332,9 +372,18 @@ function deleteAllSeats() {
 </template>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active { transition: opacity 0.3s; }
-.fade-enter-from, .fade-leave-to { opacity: 0; }
-
 .modal-enter-active, .modal-leave-active { transition: opacity 0.2s, transform 0.2s; }
 .modal-enter-from, .modal-leave-to { opacity: 0; transform: scale(0.95); }
+
+.toast-enter-active, .toast-leave-active { transition: all 0.4s ease}
+
+.toast-enter-from {
+  opacity: 0;
+  transform: translateX(100px);
+}
+
+.toast-leave-to {
+  opacity: 0;
+  transform: translateX(100px);
+}
 </style>

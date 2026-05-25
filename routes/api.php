@@ -17,4 +17,8 @@ Route::middleware(['web', 'auth'])->group(function () {
 
     // Polling
     Route::get('/events/{event}/seat-status', [SeatController::class, 'statusPoll']);
+    Route::get('/events/{event}/seat-status-admin', [SeatController::class, 'adminStatusPoll']);
 });
+
+// n8n polling email remainder
+Route::get('/events/reminder-tomorrow', [App\Http\Controllers\RsvpController::class, 'getTomorrowReminders']);

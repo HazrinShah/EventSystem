@@ -37,8 +37,8 @@
                         </TableCell>
                         <TableCell>
                             <Link :href="`/events/${event.eventID}/seats`">
-                                <Button size="sm" variant="outline">
-                                    <LayoutTemplate class="h-3.5 w-3.5 mr-1.5" />
+                                <Button size="sm" variant="outline" class="bg-yellow-100 border-yellow-400 text-black cursor-pointer hover:bg-yellow-200 hover:text-black">
+                                    <LayoutTemplate class="h-3.5 w-3.5 mr-1.5 text-black" />
                                     Manage Seats
                                 </Button>
                             </Link>
