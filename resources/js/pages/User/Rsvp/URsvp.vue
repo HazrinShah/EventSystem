@@ -56,6 +56,7 @@
                                 <Button
                                     v-if="rsvp.event.has_seats"
                                     variant="outline" size="sm"
+                                    class="border-blue-400 bg-blue-100 text-blue-700 hover:bg-blue-200 hover:text-blue-700 cursor-pointer"
                                     @click="router.visit(`/events/${rsvp.event.eventID}/seat-view`)"
                                 >
                                     <Eye class="h-4 w-4 mr-1" /> View
@@ -64,7 +65,8 @@
                                 <!-- Pick seat (pending only) -->
                                 <Button
                                     v-if="rsvp.status === 'pending' && rsvp.event.has_seats"
-                                    size="sm"
+                                    size="sm" variant="outline"
+                                    class="border-yellow-400 bg-yellow-100 text-yellow-700 hover:bg-yellow-200 hover:text-yellow-700 cursor-pointer"
                                     @click="router.visit(`/events/${rsvp.event.eventID}/select-seat`)"
                                 >
                                     Pick Seat
@@ -73,7 +75,7 @@
                                 <!-- Cancel RSVP -->
                                 <AlertDialog>
                                     <AlertDialogTrigger asChild>
-                                        <Button variant="ghost" size="sm" class="text-red-600 hover:text-red-700 hover:bg-red-50">
+                                        <Button variant="outline" size="sm" class="border-red-700 bg-red-100 text-red-700 hover:text-red-700 hover:bg-red-200 cursor-pointer">
                                             <Trash2 class="h-4 w-4 mr-1" /> Cancel
                                         </Button>
                                     </AlertDialogTrigger>

@@ -289,7 +289,85 @@ home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     
     home.form = homeForm
 /**
- * @see routes/web.php:23
+* @see \App\Http\Controllers\DashboardController::dashboard
+ * @see app/Http/Controllers/DashboardController.php:13
+ * @route '/dashboard'
+ */
+export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: dashboard.url(options),
+    method: 'get',
+})
+
+dashboard.definition = {
+    methods: ["get","head"],
+    url: '/dashboard',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\DashboardController::dashboard
+ * @see app/Http/Controllers/DashboardController.php:13
+ * @route '/dashboard'
+ */
+dashboard.url = (options?: RouteQueryOptions) => {
+    return dashboard.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\DashboardController::dashboard
+ * @see app/Http/Controllers/DashboardController.php:13
+ * @route '/dashboard'
+ */
+dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: dashboard.url(options),
+    method: 'get',
+})
+/**
+* @see \App\Http\Controllers\DashboardController::dashboard
+ * @see app/Http/Controllers/DashboardController.php:13
+ * @route '/dashboard'
+ */
+dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: dashboard.url(options),
+    method: 'head',
+})
+
+    /**
+* @see \App\Http\Controllers\DashboardController::dashboard
+ * @see app/Http/Controllers/DashboardController.php:13
+ * @route '/dashboard'
+ */
+    const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: dashboard.url(options),
+        method: 'get',
+    })
+
+            /**
+* @see \App\Http\Controllers\DashboardController::dashboard
+ * @see app/Http/Controllers/DashboardController.php:13
+ * @route '/dashboard'
+ */
+        dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: dashboard.url(options),
+            method: 'get',
+        })
+            /**
+* @see \App\Http\Controllers\DashboardController::dashboard
+ * @see app/Http/Controllers/DashboardController.php:13
+ * @route '/dashboard'
+ */
+        dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: dashboard.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    dashboard.form = dashboardForm
+/**
+ * @see routes/web.php:25
  * @route '/redirect'
  */
 export const redirect = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -303,7 +381,7 @@ redirect.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/web.php:23
+ * @see routes/web.php:25
  * @route '/redirect'
  */
 redirect.url = (options?: RouteQueryOptions) => {
@@ -311,7 +389,7 @@ redirect.url = (options?: RouteQueryOptions) => {
 }
 
 /**
- * @see routes/web.php:23
+ * @see routes/web.php:25
  * @route '/redirect'
  */
 redirect.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -319,7 +397,7 @@ redirect.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     method: 'get',
 })
 /**
- * @see routes/web.php:23
+ * @see routes/web.php:25
  * @route '/redirect'
  */
 redirect.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -328,7 +406,7 @@ redirect.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
     /**
- * @see routes/web.php:23
+ * @see routes/web.php:25
  * @route '/redirect'
  */
     const redirectForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -337,7 +415,7 @@ redirect.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     })
 
             /**
- * @see routes/web.php:23
+ * @see routes/web.php:25
  * @route '/redirect'
  */
         redirectForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -345,7 +423,7 @@ redirect.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             method: 'get',
         })
             /**
- * @see routes/web.php:23
+ * @see routes/web.php:25
  * @route '/redirect'
  */
         redirectForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -359,77 +437,6 @@ redirect.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
     
     redirect.form = redirectForm
-/**
- * @see routes/web.php:32
- * @route '/sadashboard'
- */
-export const sadashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: sadashboard.url(options),
-    method: 'get',
-})
-
-sadashboard.definition = {
-    methods: ["get","head"],
-    url: '/sadashboard',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
- * @see routes/web.php:32
- * @route '/sadashboard'
- */
-sadashboard.url = (options?: RouteQueryOptions) => {
-    return sadashboard.definition.url + queryParams(options)
-}
-
-/**
- * @see routes/web.php:32
- * @route '/sadashboard'
- */
-sadashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: sadashboard.url(options),
-    method: 'get',
-})
-/**
- * @see routes/web.php:32
- * @route '/sadashboard'
- */
-sadashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: sadashboard.url(options),
-    method: 'head',
-})
-
-    /**
- * @see routes/web.php:32
- * @route '/sadashboard'
- */
-    const sadashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: sadashboard.url(options),
-        method: 'get',
-    })
-
-            /**
- * @see routes/web.php:32
- * @route '/sadashboard'
- */
-        sadashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: sadashboard.url(options),
-            method: 'get',
-        })
-            /**
- * @see routes/web.php:32
- * @route '/sadashboard'
- */
-        sadashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: sadashboard.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    sadashboard.form = sadashboardForm
 /**
 * @see \App\Http\Controllers\UserController::adminUsers
  * @see app/Http/Controllers/UserController.php:12
@@ -847,84 +854,6 @@ seats.head = (args: { event: number | { eventID: number } } | [event: number | {
 /**
 * @see \Inertia\Controller::__invoke
  * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/dashboard'
- */
-export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: dashboard.url(options),
-    method: 'get',
-})
-
-dashboard.definition = {
-    methods: ["get","head"],
-    url: '/dashboard',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/dashboard'
- */
-dashboard.url = (options?: RouteQueryOptions) => {
-    return dashboard.definition.url + queryParams(options)
-}
-
-/**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/dashboard'
- */
-dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: dashboard.url(options),
-    method: 'get',
-})
-/**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/dashboard'
- */
-dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: dashboard.url(options),
-    method: 'head',
-})
-
-    /**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/dashboard'
- */
-    const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: dashboard.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/dashboard'
- */
-        dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: dashboard.url(options),
-            method: 'get',
-        })
-            /**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/dashboard'
- */
-        dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: dashboard.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    dashboard.form = dashboardForm
-/**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
  * @route '/add-events'
  */
 export const addEvents = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1156,81 +1085,3 @@ myRsvps.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
     
     myRsvps.form = myRsvpsForm
-/**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/udashboard'
- */
-export const udashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: udashboard.url(options),
-    method: 'get',
-})
-
-udashboard.definition = {
-    methods: ["get","head"],
-    url: '/udashboard',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/udashboard'
- */
-udashboard.url = (options?: RouteQueryOptions) => {
-    return udashboard.definition.url + queryParams(options)
-}
-
-/**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/udashboard'
- */
-udashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: udashboard.url(options),
-    method: 'get',
-})
-/**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/udashboard'
- */
-udashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: udashboard.url(options),
-    method: 'head',
-})
-
-    /**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/udashboard'
- */
-    const udashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: udashboard.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/udashboard'
- */
-        udashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: udashboard.url(options),
-            method: 'get',
-        })
-            /**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/udashboard'
- */
-        udashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: udashboard.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    udashboard.form = udashboardForm

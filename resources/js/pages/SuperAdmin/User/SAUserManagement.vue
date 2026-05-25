@@ -4,7 +4,7 @@
             <h1 class="text-xl font-semibold">Admin Management</h1>
             <p class="text-sm text-muted-foreground">Create, update and deactivate admin accounts</p>
         </div>
-        <Button size="sm" @click="openCreateDialog">
+        <Button size="sm" @click="openCreateDialog" class="bg-green-600 hover:bg-green-600 cursor-pointer text-white">
             <Plus class="h-4 w-4 mr-2" />Add Admin
         </Button>
     </div>
@@ -53,14 +53,14 @@
                         </TableCell>
                         <TableCell>
                             <div class="flex gap-2">
-                                <Button size="sm" variant="secondary" @click="openEditDialog(admin)">
-                                    <Pencil class="h-3.5 w-3.5" />
+                                <Button size="sm" variant="secondary" @click="openEditDialog(admin)" class="bg-blue-600 hover:bg-blue-600 cursor-pointer text-white">
+                                    <Pencil class="h-3.5 w-3.5 text-white" />Edit
                                 </Button>
-                                <Button v-if="admin.is_active" size="sm" variant="destructive" @click="deactivate(admin)">
-                                    Deactivate
+                                <Button v-if="admin.is_active" size="sm" variant="destructive" @click="confirmDeactivate(admin)" class="bg-red-600 hover:bg-red-600 cursor-pointer text-white">
+                                    <ShieldMinus class="h-3.5 w-3.5 text-white" />Deactivate
                                 </Button>
-                                <Button v-else size="sm" variant="outline" @click="reactivate(admin)">
-                                    Reactivate
+                                <Button v-else size="sm" variant="outline" @click="confirmReactivate(admin)" class="bg-green-600 hover:bg-green-600 cursor-pointer text-white hover:text-white">
+                                    <ShieldPlus class="h-3.5 w-3.5 text-white" />Reactivate
                                 </Button>
                             </div>
                         </TableCell>
@@ -105,8 +105,8 @@
                     <span v-if="createForm.errors.password" class="text-xs text-red-500">{{ createForm.errors.password }}</span>
                 </div>
                 <DialogFooter class="pt-2">
-                    <Button type="button" variant="outline" @click="closeCreateDialog">Cancel</Button>
-                    <Button type="submit" :disabled="createForm.processing">
+                    <Button type="button" variant="outline" @click="closeCreateDialog" class="bg-red-600 hover:bg-red-600 text-white cursor-pointer hover:text-white">Cancel</Button>
+                    <Button type="submit" :disabled="createForm.processing" class="bg-green-600 hover:bg-green-600 text-white cursor-pointer">
                         {{ createForm.processing ? 'Creating...' : 'Create' }}
                     </Button>
                 </DialogFooter>
@@ -144,25 +144,65 @@
                     </select>
                 </div>
                 <DialogFooter class="pt-2">
-                    <Button type="button" variant="outline" @click="closeEditDialog">Cancel</Button>
-                    <Button type="submit" :disabled="editForm.processing">
+                    <Button type="button" variant="outline" @click="closeEditDialog" class="bg-red-600 hover:bg-red-600 cursor-pointer text-white">Cancel</Button>
+                    <Button type="submit" :disabled="editForm.processing" class="bg-blue-600 hover:bg-blue-600 cursor-pointer text-white">
                         {{ editForm.processing ? 'Saving...' : 'Save Changes' }}
                     </Button>
                 </DialogFooter>
             </form>
         </DialogContent>
     </Dialog>
+
+    <!-- Deactivate Dialog -->
+    <AlertDialog :open="isDeactivateDialogOpen" @update:open="val => !val && (isDeactivateDialogOpen = false)">
+        <AlertDialogContent class="max-w-sm">
+            <AlertDialogHeader>
+                <AlertDialogTitle>Deactivate Admin</AlertDialogTitle>
+                <AlertDialogDescription>
+                    Are you sure you want to deactivate <strong>{{ selectedAdmin?.name }}</strong>? They will be logged out and cannot log in to the system.
+                </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+                <AlertDialogCancel @click="isDeactivateDialogOpen = false" class="bg-gray-100 hover:bg-gray-200 cursor-pointer">Cancel</AlertDialogCancel>
+                <AlertDialogAction @click="handleDeactivate" class="bg-red-600 text-white hover:bg-red-700 cursor-pointer">
+                    Yes, Deactivate
+                </AlertDialogAction>
+            </AlertDialogFooter>
+        </AlertDialogContent>
+    </AlertDialog>
+
+    <!-- Reactivate Dialog -->
+    <AlertDialog :open="isReactivateDialogOpen" @update:open="val => !val && (isReactivateDialogOpen = false)">
+        <AlertDialogContent class="max-w-sm">
+            <AlertDialogHeader>
+                <AlertDialogTitle>Reactivate Admin</AlertDialogTitle>
+                <AlertDialogDescription>
+                    Are you sure you want to reactivate <strong>{{ selectedAdmin?.name }}</strong>? They will be able to log in and access the system.
+                </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+                <AlertDialogCancel @click="isReactivateDialogOpen = false" class="bg-gray-100 hover:bg-gray-200 cursor-pointer">Cancel</AlertDialogCancel>
+                <AlertDialogAction @click="handleReactivate" class="bg-green-600 text-white hover:bg-green-700 cursor-pointer">
+                    Yes, Reactivate
+                </AlertDialogAction>
+            </AlertDialogFooter>
+        </AlertDialogContent>
+    </AlertDialog>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { useForm, router } from '@inertiajs/vue3';
-import { Plus, Pencil, Users } from 'lucide-vue-next';
+import { Plus, Pencil, Users, ShieldMinus, ShieldPlus } from 'lucide-vue-next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import {
+    AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+    AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle
+} from '@/components/ui/alert-dialog';
 
 defineProps({
     admins: { type: Array, default: () => [] },
@@ -199,13 +239,38 @@ function submitEdit() {
     editForm.post(`/admin-users/${editingUserID.value}`, { onSuccess: closeEditDialog });
 }
 
-// Deactivate / Reactivate
-function deactivate(admin) {
-    if (!confirm(`Deactivate ${admin.name}? They will be logged out and cannot log in.`)) return;
-    router.post(`/admin-users/${admin.userID}/deactivate`);
+// Deactivate / Reactivate Dialogs State
+const isDeactivateDialogOpen = ref(false);
+const isReactivateDialogOpen = ref(false);
+const selectedAdmin = ref(null);
+
+function confirmDeactivate(admin) {
+    selectedAdmin.value = admin;
+    isDeactivateDialogOpen.value = true;
 }
-function reactivate(admin) {
-    if (!confirm(`Reactivate ${admin.name}?`)) return;
-    router.post(`/admin-users/${admin.userID}/reactivate`);
+
+function confirmReactivate(admin) {
+    selectedAdmin.value = admin;
+    isReactivateDialogOpen.value = true;
+}
+
+function handleDeactivate() {
+    if (!selectedAdmin.value) return;
+    router.post(`/admin-users/${selectedAdmin.value.userID}/deactivate`, {}, {
+        onSuccess: () => {
+            isDeactivateDialogOpen.value = false;
+            selectedAdmin.value = null;
+        }
+    });
+}
+
+function handleReactivate() {
+    if (!selectedAdmin.value) return;
+    router.post(`/admin-users/${selectedAdmin.value.userID}/reactivate`, {}, {
+        onSuccess: () => {
+            isReactivateDialogOpen.value = false;
+            selectedAdmin.value = null;
+        }
+    });
 }
 </script>

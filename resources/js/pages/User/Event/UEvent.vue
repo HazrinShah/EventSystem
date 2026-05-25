@@ -36,7 +36,7 @@
             <CardFooter class="flex flex-col gap-2 pt-2">
                 <!-- Buttons row -->
                 <div class="flex w-full gap-2">
-                    <Button class="flex-1" size="sm" variant="outline" @click="openViewDialog(event)">
+                    <Button class="flex-1 border-yellow-400 bg-yellow-200 text-yellow-700 hover:bg-yellow-200 hover:text-yellow-700 cursor-pointer" size="sm" variant="outline" @click="openViewDialog(event)">
                         <Eye class="h-3.5 w-3.5 mr-1.5" />View
                     </Button>
                     <!-- Already RSVP'd -->
@@ -52,20 +52,20 @@
                         </span>
                     </template>
                     <!-- Not RSVP'd yet -->
-                    <Button v-else class="flex-1" size="sm" @click="openRsvpDialog(event)">
+                    <Button v-else variant="outline" class="flex-1 border-blue-400 bg-blue-200 text-blue-700 hover:bg-blue-200 hover:text-blue-700 cursor-pointer" size="sm" @click="openRsvpDialog(event)">
                         <CalendarCheck class="h-3.5 w-3.5 mr-1.5" />RSVP
                     </Button>
                 </div>
                 <!-- Status badge -->
                 <div v-if="event.rsvps?.length" class="flex w-full items-center justify-between text-xs text-muted-foreground">
                     <span>{{ event.rsvps[0].pax }} pax</span>
-                    <span class="font-medium px-2 py-0.5 rounded-full"
+                    <!-- <span class="font-medium px-2 py-0.5 rounded-full"
                         :class="{
                             'bg-green-100 text-green-700': event.rsvps[0].status === 'confirmed',
                             'bg-yellow-100 text-yellow-700': event.rsvps[0].status === 'pending',
                         }">
-                        {{ event.rsvps[0].status }}
-                    </span>
+                        {{ event.rsvps[0].status }} -->
+                    <!-- </span> -->
                 </div>
             </CardFooter>
         </Card>
@@ -103,7 +103,7 @@
                 </div>
             </div>
             <div class="px-6 pb-6">
-                <Button variant="outline" class="w-full" @click="closeViewDialog">Close</Button>
+                <Button variant="outline" class="w-full bg-red-600 text-white hover:bg-red-600 hover:text-white cursor-pointer" @click="closeViewDialog">Close</Button>
             </div>
         </DialogContent>
     </Dialog>
@@ -127,8 +127,8 @@
                     <span v-if="rsvpForm.errors.note" class="text-xs text-red-500">{{ rsvpForm.errors.note }}</span>
                 </div>
                 <DialogFooter>
-                    <Button type="button" variant="outline" @click="closeRsvpDialog">Cancel</Button>
-                    <Button type="submit" :disabled="rsvpForm.processing">
+                    <Button type="button" variant="destructive" class="bg-red-600 text-white hover:bg-red-600 hover:text-white cursor-pointer" @click="closeRsvpDialog">Cancel</Button>
+                    <Button type="submit" variant="destructive" class="bg-blue-600 text-white hover:bg-blue-600 hover:text-white cursor-pointer" :disabled="rsvpForm.processing">
                         {{ rsvpForm.processing ? 'Submitting...' : 'Submit RSVP' }}
                     </Button>
                 </DialogFooter>

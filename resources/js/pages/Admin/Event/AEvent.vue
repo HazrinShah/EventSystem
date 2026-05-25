@@ -54,13 +54,13 @@
                 </div>
             </CardContent>
             <CardFooter class="flex gap-2 pt-2">
-                <Button @click="openViewDialog(event)" variant="outline" size="sm" class="flex-1">
+                <Button @click="openViewDialog(event)" variant="outline" size="sm" class="flex-1 cursor-pointer bg-yellow-100 border-yellow-400 hover:bg-yellow-200">
                     <Eye class="h-3.5 w-3.5 mr-1.5" />View
                 </Button>
-                <Button @click="openEditDialog(event)" variant="secondary" size="sm" class="flex-1">
+                <Button @click="openEditDialog(event)" variant="outline" size="sm" class="flex-1 cursor-pointer bg-green-100 border-green-400 hover:bg-green-200">
                     <Pencil class="h-3.5 w-3.5 mr-1.5" />Edit
                 </Button>
-                <Button @click="deleteEvent(event)" variant="destructive" size="sm" class="flex-1">
+                <Button @click="deleteEvent(event)" variant="destructive" size="sm" class="flex-1 cursor-pointer bg-red-600">
                     <Trash2 class="h-3.5 w-3.5 mr-1.5" />Delete
                 </Button>
             </CardFooter>
@@ -110,8 +110,8 @@
                     </div>
                 </div>
                 <DialogFooter>
-                    <Button type="button" variant="outline" @click="closeEditDialog">Cancel</Button>
-                    <Button type="submit" :disabled="editForm.processing">
+                    <Button type="button" variant="outline" @click="closeEditDialog" class="bg-red-600 text-white hover:bg-red-600 hover:text-white cursor-pointer">Cancel</Button>
+                    <Button type="submit" :disabled="editForm.processing" class="bg-blue-600 text-white hover:bg-blue-600 hover:text-white cursor-pointer">
                         {{ editForm.processing ? 'Saving...' : 'Save Changes' }}
                     </Button>
                 </DialogFooter>
@@ -176,7 +176,7 @@
             </div>
 
             <div class="px-6 pb-6">
-                <Button variant="outline" class="w-full" @click="closeViewDialog">Close</Button>
+                <Button variant="outline" class="w-full bg-red-600 text-white hover:bg-red-600 hover:text-white cursor-pointer" @click="closeViewDialog">Close</Button>
             </div>
         </DialogContent>
     </Dialog>

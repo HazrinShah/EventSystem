@@ -14,7 +14,7 @@
 
     <div v-else class="p-6">
         <div class="rounded-lg border shadow-sm">
-            <div class="max-h-[200px] overflow-y-auto relative">
+            <div class="max-h-[650px] overflow-y-auto relative">
             <Table>
                 <TableHeader sticky top-0 bg-white z-10>
                     <TableRow>
