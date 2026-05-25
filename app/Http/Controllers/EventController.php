@@ -14,7 +14,7 @@ class EventController extends Controller
         // superadmin bole tengok semua event
         if ($user->role === 'superadmin') {
             $events = Event::with('assignedAdmins')->get();
-            $admins = \App\Models\User::whereIn('role', ['admin', 'superadmin'])->get(['userID', 'name', 'role']);
+            $admins = \App\Models\User::where('role', 'admin')->get(['userID', 'name', 'role']);
             return Inertia::render('SuperAdmin/Event/SAEvent', ['events' => $events,'admins' => $admins,]);
         }
 
@@ -144,7 +144,7 @@ class EventController extends Controller
 
     }
 
-    public function delete(Event $event){
+    public function delete(Event $event, Request $request){
           $user  = $request->user();
 
         // Only allow if superadmin, creator, or assigned admin
@@ -166,12 +166,12 @@ class EventController extends Controller
         ]);
 
         $user = \App\Models\User::findOrFail($validated['userID']);
-        if(!in_array($user->role, ['admin','superadmin'])) {
+        if(!in_array($user->role, ['admin'])) {
             return back()->withErrors(['userID' => 'Selected user is not an admin']);
         }
 
         // assign admin kat event tapi check kalau dah mmg dia admin event tu takyah buat pape, kalau tak baru buat. 
-        // admin sedia ade tu bairkan ke
+        // admin sedia ade tu bairkan je
         // syncWithoutDetaching
 
         $event->assignedAdmins()->syncWithoutDetaching([$validated['userID']]);
