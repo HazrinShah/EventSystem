@@ -7,6 +7,7 @@ use App\Http\Controllers\RsvpController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\SeatAssignmentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 use Inertia\Inertia;
 
 
@@ -18,28 +19,16 @@ Route::inertia('/', 'Welcome', [
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // for all user
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/rsvp/{rsvpID}/cancel', [RsvpController::class, 'cancel'])->name('rsvp.cancel');
 
     Route::get('redirect', function () {
-        $role = auth()->user()->role;
-        if ($role === 'superadmin') return redirect()->route('sadashboard');
-        if ($role === 'admin') return redirect()->route('dashboard');
-        return redirect()->route('udashboard');
+        return redirect()->route('dashboard');
     })->name('redirect');
 
     // Super Admin only
     Route::middleware('role:superadmin')->group(function () {
-    Route::get('/sadashboard', function () {
-        return Inertia::render('SuperAdmin/Dashboard/SADashboard', [
-            'stats' => [
-                'totalEvents' => \App\Models\Event::count(),
-                'totalAdmins' => \App\Models\User::whereIn('role', ['admin', 'superadmin'])->count(),
-                'totalUsers'  => \App\Models\User::where('role', 'user')->count(),
-                'totalRsvps'  => \App\Models\Rsvp::count(),
-            ],
-        ]);
-    })->name('sadashboard');
-    
+
         // User management
         Route::get('/admin-users', [UserController::class, 'adminList'])->name('admin-users');
         Route::post('/admin-users', [UserController::class, 'store'])->name('admin-users.store');
@@ -64,7 +53,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/seats', [SeatController::class, 'adminIndex'])->name('seat-management');
         Route::get('/events/{event}/seats', [SeatController::class, 'index'])->name('seats');
 
-        Route::inertia('dashboard', 'Admin/Dashboard/ADashboard')->name('dashboard');
         Route::inertia('add-events', 'Admin/Event/ACreateEvent')->name('add-events');
     });
 
@@ -75,7 +63,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/events/{event}/select-seat', [SeatController::class, 'userSeatSelect'])->name('seat.select');
         Route::get('/events/{event}/seat-view', [SeatController::class, 'userSeatView'])->name('seat.view');
         Route::get('/my-rsvps', [RsvpController::class, 'userIndex'])->name('my-rsvps');
-        Route::inertia('udashboard', 'User/Dashboard/UDashboard')->name('udashboard');
     });
 });
 

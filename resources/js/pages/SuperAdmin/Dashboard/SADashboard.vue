@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/vue3';
 
 defineOptions({
     layout: {
-        breadcrumbs: [{ title: 'Dashboard', href: '/sadashboard' }],
+        breadcrumbs: [{ title: 'Dashboard', href: '/dashboard' }],
     },
 });
 

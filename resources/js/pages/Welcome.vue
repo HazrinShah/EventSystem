@@ -13,12 +13,7 @@ withDefaults(
 );
 
 const page = usePage();
-const dashboardHref = computed(() => {
-    const role = page.props.auth?.user?.role
-    if (role === 'superadmin') return '/sadashboard'
-    if (role === 'admin')      return '/dashboard'
-    return '/udashboard'
-})
+const dashboardHref = computed(() => '/dashboard')
 </script>
 
 <template>

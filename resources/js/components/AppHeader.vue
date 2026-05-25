@@ -53,12 +53,7 @@ const activeItemStyles =
     'text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100';
 
 // role-aware dashboard link
-const dashboardHref = computed(() => {
-    const role = auth.value?.user?.role
-    if (role === 'superadmin') return '/sadashboard'
-    if (role === 'admin')      return '/dashboard'
-    return '/udashboard'
-})
+const dashboardHref = computed(() => '/dashboard')
 
 const mainNavItems = computed<NavItem[]>(() => [
     {

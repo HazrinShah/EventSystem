@@ -15,7 +15,6 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard, udashboard } from '@/routes';
 import type { NavItem } from '@/types';
 
 const page = usePage();
@@ -24,7 +23,7 @@ const isAdmin = computed(() => page.props.auth.user?.role === 'admin');
 
 const mainNavItems = computed<NavItem[]>(() => {
     if (isSuperAdmin.value) return [
-        { title: 'Dashboard', href: '/sadashboard', icon: LayoutGrid },
+        { title: 'Dashboard', href: '/dashboard', icon: LayoutGrid },
         { title: 'Events',    href: '/events',      icon: Calendar },
         { title: 'RSVPs',     href: '/rsvp',        icon: UserCheck },
         { title: 'Seats',     href: '/seats',       icon: LayoutTemplate },
@@ -39,7 +38,7 @@ const mainNavItems = computed<NavItem[]>(() => {
     ]// tambah page admin lain kat sini
 
     return [
-        { title: 'Dashboard', href: '/udashboard', icon: LayoutGrid },
+        { title: 'Dashboard', href: '/dashboard', icon: LayoutGrid },
         { title: 'Events',    href: '/uevents',    icon: Calendar },
         { title: 'My RSVPs',  href: '/my-rsvps',   icon: UserCheck },
     ];
@@ -108,7 +107,7 @@ const footerNavItems: NavItem[] = [
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <Link :href="isSuperAdmin ? '/sadashboard' : isAdmin ? '/dashboard' : '/udashboard'">
+                        <Link href="/dashboard">
                             <AppLogo />
                         </Link>
                     </SidebarMenuButton>
