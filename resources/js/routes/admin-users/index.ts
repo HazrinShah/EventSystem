@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\UserController::store
- * @see app/Http/Controllers/UserController.php:17
+ * @see app/Http/Controllers/UserController.php:62
  * @route '/admin-users'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\UserController::store
- * @see app/Http/Controllers/UserController.php:17
+ * @see app/Http/Controllers/UserController.php:62
  * @route '/admin-users'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\UserController::store
- * @see app/Http/Controllers/UserController.php:17
+ * @see app/Http/Controllers/UserController.php:62
  * @route '/admin-users'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\UserController::store
- * @see app/Http/Controllers/UserController.php:17
+ * @see app/Http/Controllers/UserController.php:62
  * @route '/admin-users'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\UserController::store
- * @see app/Http/Controllers/UserController.php:17
+ * @see app/Http/Controllers/UserController.php:62
  * @route '/admin-users'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -56,7 +56,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\UserController::update
- * @see app/Http/Controllers/UserController.php:33
+ * @see app/Http/Controllers/UserController.php:78
  * @route '/admin-users/{user}'
  */
 export const update = (args: { user: number | { userID: number } } | [user: number | { userID: number } ] | number | { userID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -71,7 +71,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\UserController::update
- * @see app/Http/Controllers/UserController.php:33
+ * @see app/Http/Controllers/UserController.php:78
  * @route '/admin-users/{user}'
  */
 update.url = (args: { user: number | { userID: number } } | [user: number | { userID: number } ] | number | { userID: number }, options?: RouteQueryOptions) => {
@@ -104,7 +104,7 @@ update.url = (args: { user: number | { userID: number } } | [user: number | { us
 
 /**
 * @see \App\Http\Controllers\UserController::update
- * @see app/Http/Controllers/UserController.php:33
+ * @see app/Http/Controllers/UserController.php:78
  * @route '/admin-users/{user}'
  */
 update.post = (args: { user: number | { userID: number } } | [user: number | { userID: number } ] | number | { userID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -114,7 +114,7 @@ update.post = (args: { user: number | { userID: number } } | [user: number | { u
 
     /**
 * @see \App\Http\Controllers\UserController::update
- * @see app/Http/Controllers/UserController.php:33
+ * @see app/Http/Controllers/UserController.php:78
  * @route '/admin-users/{user}'
  */
     const updateForm = (args: { user: number | { userID: number } } | [user: number | { userID: number } ] | number | { userID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -124,7 +124,7 @@ update.post = (args: { user: number | { userID: number } } | [user: number | { u
 
             /**
 * @see \App\Http\Controllers\UserController::update
- * @see app/Http/Controllers/UserController.php:33
+ * @see app/Http/Controllers/UserController.php:78
  * @route '/admin-users/{user}'
  */
         updateForm.post = (args: { user: number | { userID: number } } | [user: number | { userID: number } ] | number | { userID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -135,7 +135,7 @@ update.post = (args: { user: number | { userID: number } } | [user: number | { u
     update.form = updateForm
 /**
 * @see \App\Http\Controllers\UserController::deactivate
- * @see app/Http/Controllers/UserController.php:53
+ * @see app/Http/Controllers/UserController.php:98
  * @route '/admin-users/{user}/deactivate'
  */
 export const deactivate = (args: { user: number | { userID: number } } | [user: number | { userID: number } ] | number | { userID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -150,7 +150,7 @@ deactivate.definition = {
 
 /**
 * @see \App\Http\Controllers\UserController::deactivate
- * @see app/Http/Controllers/UserController.php:53
+ * @see app/Http/Controllers/UserController.php:98
  * @route '/admin-users/{user}/deactivate'
  */
 deactivate.url = (args: { user: number | { userID: number } } | [user: number | { userID: number } ] | number | { userID: number }, options?: RouteQueryOptions) => {
@@ -183,7 +183,7 @@ deactivate.url = (args: { user: number | { userID: number } } | [user: number | 
 
 /**
 * @see \App\Http\Controllers\UserController::deactivate
- * @see app/Http/Controllers/UserController.php:53
+ * @see app/Http/Controllers/UserController.php:98
  * @route '/admin-users/{user}/deactivate'
  */
 deactivate.post = (args: { user: number | { userID: number } } | [user: number | { userID: number } ] | number | { userID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -193,7 +193,7 @@ deactivate.post = (args: { user: number | { userID: number } } | [user: number |
 
     /**
 * @see \App\Http\Controllers\UserController::deactivate
- * @see app/Http/Controllers/UserController.php:53
+ * @see app/Http/Controllers/UserController.php:98
  * @route '/admin-users/{user}/deactivate'
  */
     const deactivateForm = (args: { user: number | { userID: number } } | [user: number | { userID: number } ] | number | { userID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -203,7 +203,7 @@ deactivate.post = (args: { user: number | { userID: number } } | [user: number |
 
             /**
 * @see \App\Http\Controllers\UserController::deactivate
- * @see app/Http/Controllers/UserController.php:53
+ * @see app/Http/Controllers/UserController.php:98
  * @route '/admin-users/{user}/deactivate'
  */
         deactivateForm.post = (args: { user: number | { userID: number } } | [user: number | { userID: number } ] | number | { userID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -214,7 +214,7 @@ deactivate.post = (args: { user: number | { userID: number } } | [user: number |
     deactivate.form = deactivateForm
 /**
 * @see \App\Http\Controllers\UserController::reactivate
- * @see app/Http/Controllers/UserController.php:58
+ * @see app/Http/Controllers/UserController.php:103
  * @route '/admin-users/{user}/reactivate'
  */
 export const reactivate = (args: { user: number | { userID: number } } | [user: number | { userID: number } ] | number | { userID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -229,7 +229,7 @@ reactivate.definition = {
 
 /**
 * @see \App\Http\Controllers\UserController::reactivate
- * @see app/Http/Controllers/UserController.php:58
+ * @see app/Http/Controllers/UserController.php:103
  * @route '/admin-users/{user}/reactivate'
  */
 reactivate.url = (args: { user: number | { userID: number } } | [user: number | { userID: number } ] | number | { userID: number }, options?: RouteQueryOptions) => {
@@ -262,7 +262,7 @@ reactivate.url = (args: { user: number | { userID: number } } | [user: number | 
 
 /**
 * @see \App\Http\Controllers\UserController::reactivate
- * @see app/Http/Controllers/UserController.php:58
+ * @see app/Http/Controllers/UserController.php:103
  * @route '/admin-users/{user}/reactivate'
  */
 reactivate.post = (args: { user: number | { userID: number } } | [user: number | { userID: number } ] | number | { userID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -272,7 +272,7 @@ reactivate.post = (args: { user: number | { userID: number } } | [user: number |
 
     /**
 * @see \App\Http\Controllers\UserController::reactivate
- * @see app/Http/Controllers/UserController.php:58
+ * @see app/Http/Controllers/UserController.php:103
  * @route '/admin-users/{user}/reactivate'
  */
     const reactivateForm = (args: { user: number | { userID: number } } | [user: number | { userID: number } ] | number | { userID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -282,7 +282,7 @@ reactivate.post = (args: { user: number | { userID: number } } | [user: number |
 
             /**
 * @see \App\Http\Controllers\UserController::reactivate
- * @see app/Http/Controllers/UserController.php:58
+ * @see app/Http/Controllers/UserController.php:103
  * @route '/admin-users/{user}/reactivate'
  */
         reactivateForm.post = (args: { user: number | { userID: number } } | [user: number | { userID: number } ] | number | { userID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
