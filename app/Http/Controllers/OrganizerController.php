@@ -11,14 +11,13 @@ class OrganizerController extends Controller
 {
     public function dashboard()
     {
-        // Get all approved proposals for this user that are currently valid
         $user = auth()->user();
         
         if (!$user->is_active_organizer) {
             abort(403, 'Unauthorized. You are not an active organizer.');
         }
 
-        // Get events created by this organizer
+        // amik event yg created by this organizer
         $events = Event::withCount('rsvps')->where('created_by', $user->userID)->latest()->get();
 
         return Inertia::render('Organizer/Dashboard/ODashboard', [
@@ -33,7 +32,7 @@ class OrganizerController extends Controller
             abort(403, 'Unauthorized. You are not an active organizer.');
         }
 
-        // Find the event and ensure it belongs to this organizer
+        // find event n make sure organizer ni punya
         $event = Event::with(['rsvps.user'])->where('created_by', $user->userID)->findOrFail($eventID);
 
         return Inertia::render('Organizer/Event/OEventManage', [
@@ -68,7 +67,7 @@ class OrganizerController extends Controller
         
         $rsvp = \App\Models\Rsvp::with(['event', 'seatAssignments'])->findOrFail($rsvpID);
         
-        // Ensure this RSVP belongs to an event created by this organizer
+        // rsvp belong to event dicipta oleh organizer ni
         if ($rsvp->event->created_by !== $user->userID) {
             abort(403, 'Unauthorized action.');
         }
