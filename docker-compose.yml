@@ -1,0 +1,56 @@
+#compose ni untuk run container web(dari docker file) n another container macam mysql serentak
+#n make sure dorang bole communicate with each other
+
+#one of the stable version
+version: '3.8' 
+
+services:
+#web ni nama dia jugak la, bole tukar pape pun asalkan nama dia sama kat atas tu
+#ni bahagian web(display interface)
+  web:
+  #build bagitau container ni takleh terus siap, kene build image dulu
+    build:
+      #context ni cari dockerfile kat current folder
+      context: .
+      #nama file rujukannya ialah Dockerfile
+      dockerfile: Dockerfile
+    #ni nama container yg akan dipaparkan
+    container_name: ems-web
+    #ni pulak port untuk connect port kat local machine(8000) dengan port container(80)
+    ports:
+      - "8000:80"
+    #baca file env aku n masukkan ke dalam container
+    env_file:
+      - .env
+    #override DB_HOST dari .env jadi 'db'
+    environment:
+      DB_HOST: db
+      DB_DATABASE: ems_database
+      DB_USERNAME: admin
+      DB_PASSWORD: admin
+    #maksudnya jgn hidupkan container web ni selagi container db tak hidup
+    depends_on:
+    - db
+
+  db:
+    #takyah buat dari 0, dowl terus dari dockerhub
+    image: mysql:8.0
+    container_name: ems-db
+    ports:
+      #kenapa guna 33060 untuk port machine ? tak pakai 3306 je ?
+      #sbb 3306 dah kene conqer oleh laragon mysql, kalau pakai conflict nanti
+      #pakai port lain yg amsih free pun bole je
+      - "3307:3306"
+    environment:
+    #kat sini username takleh root kalau tak container db ni auto stop
+      MYSQL_DATABASE: ems_database
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: admin
+
+#okey ni part paling penting untuk db part
+    volumes:
+      - db_data:/var/lib/mysql #volume supaya data tak hilang
+volumes:
+  db_data: #define volume untuk db
+
