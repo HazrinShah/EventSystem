@@ -20,6 +20,7 @@ import type { NavItem } from '@/types';
 const page = usePage();
 const isSuperAdmin = computed(() => page.props.auth.user?.role === 'superadmin');
 const isAdmin = computed(() => page.props.auth.user?.role === 'admin');
+const isActiveOrganizer = computed(() => page.props.auth.is_active_organizer);
 
 const mainNavItems = computed<NavItem[]>(() => {
     if (isSuperAdmin.value) return [
@@ -28,20 +29,33 @@ const mainNavItems = computed<NavItem[]>(() => {
         { title: 'RSVPs',     href: '/rsvp',        icon: UserCheck },
         { title: 'Seats',     href: '/seats',       icon: LayoutTemplate },
         { title: 'Admins',    href: '/admin-users', icon: Users },
+        { title: 'Proposals', href: '/admin/proposals', icon: BookOpen },
     ]// tambah page superadmin lain kat sini
 
     if (isAdmin.value) return [
         { title: 'Dashboard', href: '/dashboard', icon: LayoutGrid },
+        { title: 'Proposals', href: '/admin/proposals', icon: BookOpen },
         { title: 'Events',    href: '/events',    icon: Calendar },
         { title: 'RSVPs',     href: '/rsvp',      icon: UserCheck },
         { title: 'Seats',     href: '/seats',     icon: LayoutTemplate },
     ]// tambah page admin lain kat sini
 
-    return [
+    const userItems = [
         { title: 'Dashboard', href: '/dashboard', icon: LayoutGrid },
         { title: 'Events',    href: '/uevents',    icon: Calendar },
         { title: 'My RSVPs',  href: '/my-rsvps',   icon: UserCheck },
+        { title: 'My Proposals', href: '/my-proposals', icon: BookOpen },
     ];
+
+    // ni kalau proposal aktif ade, keluar menu orgnanizer
+    if (isActiveOrganizer.value) {
+        userItems.push({ 
+            title: 'Organizer Mode', 
+            href: '/organizer/dashboard', 
+            icon: Users 
+        });
+    }
+    return userItems;
 });
 
 

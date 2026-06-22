@@ -17,17 +17,63 @@
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Event</TableHead>
-                        <TableHead>Date & Time</TableHead>
-                        <TableHead>Location</TableHead>
-                        <TableHead>Pax</TableHead>
-                        <TableHead>Seat</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead class="text-right">Action</TableHead>
+                        <TableHead @click="sortBy('event.title')" class="cursor-pointer hover:bg-muted/50 select-none">
+                            <div class="flex items-center">
+                                Event
+                                <ArrowUp v-if="sortField === 'event.title' && sortDirection === 'asc'" class="w-3.5 h-3.5 ml-1" />
+                                <ArrowDown v-else-if="sortField === 'event.title' && sortDirection === 'desc'" class="w-3.5 h-3.5 ml-1" />
+                                <ArrowUpDown v-else class="w-3.5 h-3.5 ml-1 text-gray-400" />
+                            </div>
+                        </TableHead>
+                        <TableHead @click="sortBy('event.date')" class="cursor-pointer hover:bg-muted/50 select-none">
+                            <div class="flex items-center">
+                                Date & Time
+                                <ArrowUp v-if="sortField === 'event.date' && sortDirection === 'asc'" class="w-3.5 h-3.5 ml-1" />
+                                <ArrowDown v-else-if="sortField === 'event.date' && sortDirection === 'desc'" class="w-3.5 h-3.5 ml-1" />
+                                <ArrowUpDown v-else class="w-3.5 h-3.5 ml-1 text-gray-400" />
+                            </div>
+                        </TableHead>
+                        <TableHead @click="sortBy('event.location')" class="cursor-pointer hover:bg-muted/50 select-none">
+                            <div class="flex items-center">
+                                Location
+                                <ArrowUp v-if="sortField === 'event.location' && sortDirection === 'asc'" class="w-3.5 h-3.5 ml-1" />
+                                <ArrowDown v-else-if="sortField === 'event.location' && sortDirection === 'desc'" class="w-3.5 h-3.5 ml-1" />
+                                <ArrowUpDown v-else class="w-3.5 h-3.5 ml-1 text-gray-400" />
+                            </div>
+                        </TableHead>
+                        <TableHead @click="sortBy('pax')" class="cursor-pointer hover:bg-muted/50 select-none">
+                            <div class="flex items-center">
+                                Pax
+                                <ArrowUp v-if="sortField === 'pax' && sortDirection === 'asc'" class="w-3.5 h-3.5 ml-1" />
+                                <ArrowDown v-else-if="sortField === 'pax' && sortDirection === 'desc'" class="w-3.5 h-3.5 ml-1" />
+                                <ArrowUpDown v-else class="w-3.5 h-3.5 ml-1 text-gray-400" />
+                            </div>
+                        </TableHead>
+                        <TableHead @click="sortBy('seat_label')" class="cursor-pointer hover:bg-muted/50 select-none">
+                            <div class="flex items-center">
+                                Seat
+                                <ArrowUp v-if="sortField === 'seat_label' && sortDirection === 'asc'" class="w-3.5 h-3.5 ml-1" />
+                                <ArrowDown v-else-if="sortField === 'seat_label' && sortDirection === 'desc'" class="w-3.5 h-3.5 ml-1" />
+                                <ArrowUpDown v-else class="w-3.5 h-3.5 ml-1 text-gray-400" />
+                            </div>
+                        </TableHead>
+                        <TableHead @click="sortBy('status')" class="cursor-pointer hover:bg-muted/50 select-none">
+                            <div class="flex items-center">
+                                Status
+                                <ArrowUp v-if="sortField === 'status' && sortDirection === 'asc'" class="w-3.5 h-3.5 ml-1" />
+                                <ArrowDown v-else-if="sortField === 'status' && sortDirection === 'desc'" class="w-3.5 h-3.5 ml-1" />
+                                <ArrowUpDown v-else class="w-3.5 h-3.5 ml-1 text-gray-400" />
+                            </div>
+                        </TableHead>
+                        <TableHead class="text-right select-none">
+                            <div class="flex items-center justify-end">
+                                Action
+                            </div>
+                        </TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    <TableRow v-for="rsvp in rsvps" :key="rsvp.rsvpID">
+                    <TableRow v-for="rsvp in sortedRsvps" :key="rsvp.rsvpID">
                         <TableCell class="font-medium">{{ rsvp.event.title }}</TableCell>
                         <TableCell class="text-muted-foreground">{{ rsvp.event.date }} · {{ rsvp.event.time }}</TableCell>
                         <TableCell class="text-muted-foreground">{{ rsvp.event.location }}</TableCell>
@@ -104,8 +150,9 @@
 </template>
 
 <script setup>
+import { ref, computed } from 'vue'
 import { router } from '@inertiajs/vue3'
-import { ClipboardList, Eye, Trash2 } from 'lucide-vue-next'
+import { ClipboardList, Eye, Trash2, ArrowUp, ArrowDown, ArrowUpDown } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import {
     AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
@@ -114,7 +161,7 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 
-defineProps({
+const props = defineProps({
     rsvps: { type: Array, default: () => [] },
 })
 
@@ -127,4 +174,64 @@ defineOptions({
 function cancelRsvp(rsvpID) {
     router.post(`/rsvp/${rsvpID}/cancel`)
 }
+
+const sortField = ref('');
+const sortDirection = ref('asc');
+
+function sortBy(field) {
+    if (sortField.value === field) {
+        sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
+    } else {
+        sortField.value = field;
+        sortDirection.value = 'asc';
+    }
+}
+
+const sortedRsvps = computed(() => {
+    let result = [...props.rsvps];
+
+    if (!sortField.value) return result;
+
+    result.sort((a, b) => {
+        let valA, valB;
+
+        switch (sortField.value) {
+            case 'event.title':
+                valA = a.event?.title || '';
+                valB = b.event?.title || '';
+                break;
+            case 'event.date':
+                valA = a.event?.date || '';
+                valB = b.event?.date || '';
+                break;
+            case 'event.location':
+                valA = a.event?.location || '';
+                valB = b.event?.location || '';
+                break;
+            case 'pax':
+                valA = a.pax || 0;
+                valB = b.pax || 0;
+                break;
+            case 'seat_label':
+                valA = a.seat_label?.[0] || '';
+                valB = b.seat_label?.[0] || '';
+                break;
+            case 'status':
+                valA = a.status || '';
+                valB = b.status || '';
+                break;
+            default:
+                return 0;
+        }
+
+        if (typeof valA === 'string') valA = valA.toLowerCase();
+        if (typeof valB === 'string') valB = valB.toLowerCase();
+
+        if (valA < valB) return sortDirection.value === 'asc' ? -1 : 1;
+        if (valA > valB) return sortDirection.value === 'asc' ? 1 : -1;
+        return 0;
+    });
+
+    return result;
+});
 </script>

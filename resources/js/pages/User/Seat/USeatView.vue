@@ -2,6 +2,8 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { router } from '@inertiajs/vue3'
 import axios from 'axios'
+import { Button } from '@/components/ui/button'
+import { ArrowLeft } from 'lucide-vue-next'
 
 const props = defineProps({
     event: Object,
@@ -76,19 +78,22 @@ function seatTooltip(seat) {
 <template>
     <div class="p-6 space-y-5">
 
-        <div class="flex items-start justify-between">
+        <div class="space-y-3">
+            <Button
+                variant="ghost"
+                size="sm"
+                @click="router.visit('/my-rsvps')"
+                class="cursor-pointer -ml-2.5 bg-blue-600 text-white hover:bg-blue-600  hover:text-white"
+            >
+                <ArrowLeft class="h-4 w-4" />
+                Back
+            </Button>
             <div>
                 <h1 class="text-2xl font-bold tracking-tight">{{ event.title }}</h1>
                 <p class="text-sm text-muted-foreground mt-0.5">
-                    Seat layout — read only view
+                    Seat layout
                 </p>
             </div>
-            <button
-                @click="router.visit('/my-rsvps')"
-                class="cursor-pointer text-sm px-3 py-1.5 rounded border border-gray-200 hover:bg-gray-50 transition"
-            >
-                ← Back to My RSVPs
-            </button>
         </div>
 
         <div class="flex flex-wrap gap-4 text-sm text-muted-foreground">

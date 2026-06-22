@@ -58,4 +58,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(SeatAssignment::class, 'userID', 'userID');
     }
+
+    public function eventProposal(){
+        return $this->hasMany(EventProposal::class, 'userID','userID');
+    }
+
+    public function getIsActiveOrganizerAttribute()
+    {
+        if ($this->role !== 'user') return false;
+        
+        return EventProposal::where('userID', $this->userID)
+            ->where('status', 'approved')
+            ->where('valid_from', '<=', now())
+            ->where('valid_until', '>=', now())
+            ->exists();
+    }
 }

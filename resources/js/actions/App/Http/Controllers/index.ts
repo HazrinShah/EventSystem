@@ -4,6 +4,9 @@ import RsvpController from './RsvpController'
 import DashboardController from './DashboardController'
 import UserController from './UserController'
 import EventController from './EventController'
+import AdminProposalController from './AdminProposalController'
+import EventProposalController from './EventProposalController'
+import OrganizerController from './OrganizerController'
 import Settings from './Settings'
 const Controllers = {
     SeatController: Object.assign(SeatController, SeatController),
@@ -12,6 +15,9 @@ RsvpController: Object.assign(RsvpController, RsvpController),
 DashboardController: Object.assign(DashboardController, DashboardController),
 UserController: Object.assign(UserController, UserController),
 EventController: Object.assign(EventController, EventController),
+AdminProposalController: Object.assign(AdminProposalController, AdminProposalController),
+EventProposalController: Object.assign(EventProposalController, EventProposalController),
+OrganizerController: Object.assign(OrganizerController, OrganizerController),
 Settings: Object.assign(Settings, Settings),
 }
 

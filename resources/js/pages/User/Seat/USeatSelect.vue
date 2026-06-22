@@ -23,7 +23,7 @@ defineOptions({
 axios.defaults.withCredentials = true;
 axios.defaults.withXSRFToken = true;
 
-// ─── State ────────────────────────────────────────────────────
+// State
 const seats          = ref(props.seats ?? []);
 const loading        = ref(false);
 const confirmLoading = ref(false);
@@ -31,7 +31,7 @@ const message        = ref('');
 const messageType    = ref('info');
 const now            = ref(Date.now());
 
-// ─── Computed ─────────────────────────────────────────────────
+// Computed
 const mySeats      = computed(() => seats.value.filter(s => s.is_mine && s.status === 'selected'));
 const selectedCount = computed(() => mySeats.value.length);
 const canConfirm   = computed(() => selectedCount.value === props.rsvp.pax);
@@ -55,7 +55,7 @@ const countdownDanger = computed(() =>
     earliestExpiry.value && (earliestExpiry.value - now.value) < 60000
 );
 
-// ─── Helpers ──────────────────────────────────────────────────
+// Helpers
 function showMessage(text, type = 'info') {
     message.value = text;
     messageType.value = type;
@@ -80,7 +80,7 @@ function seatHover(seat) {
     return '';
 }
 
-// ─── Seat Actions ─────────────────────────────────────────────
+// Seat Actions
 function handleSeatClick(seat) {
     if (loading.value) return;
     if (seat.status === 'booked') return;
@@ -125,7 +125,7 @@ function releaseSeat(seat) {
         .finally(() => { loading.value = false; });
 }
 
-// ─── Confirm All Seats ────────────────────────────────────────
+// Confirm All Seats 
 async function confirmSeats() {
     if (!canConfirm.value) return;
     confirmLoading.value = true;
@@ -143,7 +143,7 @@ async function confirmSeats() {
     }
 }
 
-// ─── Real-time Poll ───────────────────────────────────────────
+// Real-time Poll 
 function pollSeats() {
     axios.get(`/api/events/${props.event.eventID}/seat-status`)
         .then(res => {
@@ -224,15 +224,15 @@ onUnmounted(() => {
         </div>
 
         <!-- Feedback Message -->
-        <transition name="fade">
+        <transition name="toast">
             <div
                 v-if="message"
                 :class="{
-                    'bg-blue-50 border-blue-200 text-blue-800'   : messageType === 'info',
-                    'bg-green-50 border-green-200 text-green-800': messageType === 'success',
-                    'bg-red-50 border-red-200 text-red-800'      : messageType === 'error',
+                    'border-blue-600 text-black bg-blue-100'   : messageType === 'info',
+                    'border-green-600 text-black bg-green-100': messageType === 'success',
+                    'border-red-600 text-black bg-red-100'      : messageType === 'error',
                 }"
-                class="flex items-center gap-2 border rounded-lg px-4 py-2.5 text-sm"
+                class="fixed top-5 right-5 z-50 flex items-center gap-2 border rounded-lg px-4 py-2.5 text-sm shadow-lg"
             >
                 {{ message }}
             </div>
@@ -306,6 +306,11 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active { transition: opacity 0.3s; }
-.fade-enter-from, .fade-leave-to { opacity: 0; }
+.toast-enter-active, .toast-leave-active { 
+    transition: all 0.4s ease; 
+}
+.toast-enter-from, .toast-leave-to { 
+    opacity: 0; 
+    transform: translateX(100px);
+}
 </style>

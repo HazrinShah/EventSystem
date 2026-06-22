@@ -9,9 +9,54 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function adminList(){
-        $admins = User::whereIn('role', ['admin'])->get();
-        return Inertia::render('SuperAdmin/User/SAUserManagement', ['admins' => $admins]);
+    public function adminList(Request $request){
+
+        $query = User::whereIn('role', ['admin', 'superadmin']);
+
+        if ($request->filled('search')) {
+            $searchTerm = '%' . $request->search . '%';
+
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('name', 'like', $searchTerm)
+                ->orWhere('email', 'like', $searchTerm);
+            });
+
+        }
+
+        $sortField = $request->input('sort_field', 'created_at');
+        $sortDirection = $request->input('sort_direction', 'desc');
+
+        $allowedSort = ['name', 'email', 'phone', 'role', 'is_active'];
+        if(in_array($sortField, $allowedSort)){
+            $query->orderBy($sortField, $sortDirection);  
+        }else{
+            $query->orderBy('created_at', 'desc');
+        }
+
+
+        if ($request->filled('status') && $request->status !== 'all') {
+            $query->where('is_active', $request->status === 'active' ? 1 : 0);
+        }
+
+        if ($request->filled('role') && $request->role !== 'all') {
+            $query->where('role', $request->role);
+        }
+
+        $perPage = $request->input('per_page', 10);
+        
+        $admins = $query->paginate($perPage)->withQueryString();
+
+        return Inertia::render('SuperAdmin/User/SAUserManagement', [
+            'admins' => $admins,
+            'filters' => [
+                'search' => $request->search,
+                'status' => $request->status,
+                'role' => $request->role,
+                'per_page' => $request->per_page,
+                'sort_field' => $sortField,
+                'sort_direction' => $sortDirection,
+            ]
+        ]);
     }
 
     public function store(Request $request){

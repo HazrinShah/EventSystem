@@ -36,7 +36,8 @@ class EventController extends Controller
         $userID = $request->user()->userID;
 
         $events = Event::with(['rsvps' => function($q) use ($userID) {
-            $q->where('userID', $userID);
+            $q->where('userID', $userID)
+              ->where('status', '!=', 'cancelled');
         }])->get();
 
         return Inertia::render('User/Event/UEvent', [
@@ -140,6 +141,9 @@ class EventController extends Controller
         // update data kat dalam db
         $event->update($validated);
         
+        if ($user->role === 'user') {
+            return redirect('/organizer/events')->with('success', 'Event updated successfully.');
+        }
         return redirect('/events')->with('success', 'event updated successfully.');
 
     }
@@ -151,11 +155,23 @@ class EventController extends Controller
         if ($user->role !== 'superadmin'
             && $event->created_by !== $user->userID
             && !$event->assignedAdmins()->where('userID', $user->userID)->exists()
+            
         ) {
             abort(403);
         }
 
+        \App\Models\SeatAssignment::whereHas('rsvp', function($query) use ($event){
+            $query->where('eventID', $event->eventID);
+        })->delete();
+
+        $event->rsvps()->delete();
+        $event->seats()->delete();
+        $event->assignedAdmins()->detach();
         $event->delete();
+
+        if ($user->role === 'user') {
+            return redirect('/organizer/events')->with('success', 'Event deleted successfully.');
+        }
         return redirect('/events')->with('success', 'event deleted successfully.');
 
     }

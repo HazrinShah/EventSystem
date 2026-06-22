@@ -11,6 +11,7 @@ export type User = {
 
 export type Auth = {
     user: User;
+    is_active_organizer?: boolean; 
 };
 
 export type TwoFactorConfigContent = {

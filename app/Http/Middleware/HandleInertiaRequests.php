@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use App\Models\EventProposal;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -33,15 +34,23 @@ class HandleInertiaRequests extends Middleware
      *
      * @return array<string, mixed>
      */
-    public function share(Request $request): array
+        public function share(Request $request): array
     {
+        $isActiveOrganizer = false;
+
+        if ($request->user()) {
+            $isActiveOrganizer = $request->user()->is_active_organizer;
+        }
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
                 'user' => $request->user(),
+                'is_active_organizer' => $isActiveOrganizer, // untuk organizer muncul masa tertentu
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
     }
+
 }

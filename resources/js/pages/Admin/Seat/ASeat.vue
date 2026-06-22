@@ -180,16 +180,6 @@ onUnmounted(() => clearInterval(pollInterval))
                 <h1 class="text-2xl font-bold tracking-tight">{{ event.title }}</h1>
                 <p class="text-sm text-muted-foreground mt-0.5">Seat layout editor — click the map to place seats</p>
             </div>
-
-            <!-- Delete All -->
-            <Button
-                v-if="seats.length"
-                @click="deleteAllSeats"
-                :disabled="loading"
-                class="cursor-pointer text-sm px-3 py-1.5 bg-red-600 disabled:opacity-40 transition hover:bg-red-700 hover:text-white"
-            >
-                Delete All Seats
-            </Button>
         </div>
 
         <!-- Stats Row -->
@@ -228,29 +218,42 @@ onUnmounted(() => clearInterval(pollInterval))
         </transition>
 
         <!-- Toolbar -->
-        <div class="flex flex-wrap items-center gap-3">
-            <button
-                @click="isPlacingMode = !isPlacingMode"
-                :class="isPlacingMode
-                    ? 'bg-amber-500 hover:bg-amber-600'
-                    : 'bg-indigo-600 hover:bg-indigo-700'"
-                class="cursor-pointer text-white text-sm font-medium px-4 py-2 rounded-lg transition"
-            >
-                {{ isPlacingMode ? '✕ Stop Placing' : '＋ Place Seats' }}
-            </button>
+        <div class="flex flex-col gap-3">
+            <div class="flex flex-wrap items-center gap-3">
+                <button
+                    @click="isPlacingMode = !isPlacingMode"
+                    :class="isPlacingMode
+                        ? 'bg-amber-500 hover:bg-amber-600'
+                        : 'bg-indigo-600 hover:bg-indigo-700'"
+                    class="cursor-pointer text-white text-sm font-medium px-4 py-2 rounded-lg transition"
+                >
+                    {{ isPlacingMode ? '✕ Stop Placing' : '＋ Place Seats' }}
+                </button>
 
-            <input
-                v-if="isPlacingMode"
-                v-model="newSeatLabel"
-                type="text"
-                placeholder="Label e.g. A1"
-                class="border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-lg px-3 py-2 text-sm w-36 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                @keydown.enter.prevent
-            />
+                <!-- Delete All -->
+                <Button
+                    v-if="seats.length"
+                    @click="deleteAllSeats"
+                    :disabled="loading"
+                    class="cursor-pointer text-sm px-3 py-1.5 bg-red-600 disabled:opacity-40 transition hover:bg-red-700 hover:text-white"
+                >
+                    Delete All Seats
+                </Button>
+            </div>
 
-            <span v-if="isPlacingMode" class="text-xs text-muted-foreground">
-                Click on the map to place a seat
-            </span>
+            <div v-if="isPlacingMode" class="flex flex-wrap items-center gap-3">
+                <input
+                    v-model="newSeatLabel"
+                    type="text"
+                    placeholder="Label e.g. A1"
+                    class="border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-lg px-3 py-2 text-sm w-36 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    @keydown.enter.prevent
+                />
+
+                <span class="text-xs text-muted-foreground">
+                    Click on the map to place a seat
+                </span>
+            </div>
         </div>
 
         <!-- Legend + refresh indicator -->

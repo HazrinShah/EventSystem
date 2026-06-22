@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\EventController::assignAdmin
- * @see app/Http/Controllers/EventController.php:163
+ * @see app/Http/Controllers/EventController.php:179
  * @route '/events/{event}/assign-admin'
  */
 export const assignAdmin = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ assignAdmin.definition = {
 
 /**
 * @see \App\Http\Controllers\EventController::assignAdmin
- * @see app/Http/Controllers/EventController.php:163
+ * @see app/Http/Controllers/EventController.php:179
  * @route '/events/{event}/assign-admin'
  */
 assignAdmin.url = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ assignAdmin.url = (args: { event: number | { eventID: number } } | [event: numbe
 
 /**
 * @see \App\Http\Controllers\EventController::assignAdmin
- * @see app/Http/Controllers/EventController.php:163
+ * @see app/Http/Controllers/EventController.php:179
  * @route '/events/{event}/assign-admin'
  */
 assignAdmin.post = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -59,7 +59,7 @@ assignAdmin.post = (args: { event: number | { eventID: number } } | [event: numb
 
     /**
 * @see \App\Http\Controllers\EventController::assignAdmin
- * @see app/Http/Controllers/EventController.php:163
+ * @see app/Http/Controllers/EventController.php:179
  * @route '/events/{event}/assign-admin'
  */
     const assignAdminForm = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -69,7 +69,7 @@ assignAdmin.post = (args: { event: number | { eventID: number } } | [event: numb
 
             /**
 * @see \App\Http\Controllers\EventController::assignAdmin
- * @see app/Http/Controllers/EventController.php:163
+ * @see app/Http/Controllers/EventController.php:179
  * @route '/events/{event}/assign-admin'
  */
         assignAdminForm.post = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -80,7 +80,7 @@ assignAdmin.post = (args: { event: number | { eventID: number } } | [event: numb
     assignAdmin.form = assignAdminForm
 /**
 * @see \App\Http\Controllers\EventController::removeAdmin
- * @see app/Http/Controllers/EventController.php:181
+ * @see app/Http/Controllers/EventController.php:197
  * @route '/events/{event}/remove-admin'
  */
 export const removeAdmin = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -95,7 +95,7 @@ removeAdmin.definition = {
 
 /**
 * @see \App\Http\Controllers\EventController::removeAdmin
- * @see app/Http/Controllers/EventController.php:181
+ * @see app/Http/Controllers/EventController.php:197
  * @route '/events/{event}/remove-admin'
  */
 removeAdmin.url = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions) => {
@@ -128,7 +128,7 @@ removeAdmin.url = (args: { event: number | { eventID: number } } | [event: numbe
 
 /**
 * @see \App\Http\Controllers\EventController::removeAdmin
- * @see app/Http/Controllers/EventController.php:181
+ * @see app/Http/Controllers/EventController.php:197
  * @route '/events/{event}/remove-admin'
  */
 removeAdmin.post = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -138,7 +138,7 @@ removeAdmin.post = (args: { event: number | { eventID: number } } | [event: numb
 
     /**
 * @see \App\Http\Controllers\EventController::removeAdmin
- * @see app/Http/Controllers/EventController.php:181
+ * @see app/Http/Controllers/EventController.php:197
  * @route '/events/{event}/remove-admin'
  */
     const removeAdminForm = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -148,7 +148,7 @@ removeAdmin.post = (args: { event: number | { eventID: number } } | [event: numb
 
             /**
 * @see \App\Http\Controllers\EventController::removeAdmin
- * @see app/Http/Controllers/EventController.php:181
+ * @see app/Http/Controllers/EventController.php:197
  * @route '/events/{event}/remove-admin'
  */
         removeAdminForm.post = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -237,7 +237,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     index.form = indexForm
 /**
 * @see \App\Http\Controllers\EventController::store
- * @see app/Http/Controllers/EventController.php:50
+ * @see app/Http/Controllers/EventController.php:51
  * @route '/events'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -252,7 +252,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\EventController::store
- * @see app/Http/Controllers/EventController.php:50
+ * @see app/Http/Controllers/EventController.php:51
  * @route '/events'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -261,7 +261,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\EventController::store
- * @see app/Http/Controllers/EventController.php:50
+ * @see app/Http/Controllers/EventController.php:51
  * @route '/events'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -271,7 +271,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\EventController::store
- * @see app/Http/Controllers/EventController.php:50
+ * @see app/Http/Controllers/EventController.php:51
  * @route '/events'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -281,7 +281,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\EventController::store
- * @see app/Http/Controllers/EventController.php:50
+ * @see app/Http/Controllers/EventController.php:51
  * @route '/events'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -292,25 +292,25 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\EventController::update
- * @see app/Http/Controllers/EventController.php:91
+ * @see app/Http/Controllers/EventController.php:92
  * @route '/events/{id}'
  */
-export const update = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: update.url(args, options),
+const update1d072c1dcd163ccc295b6a459abc71ed = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: update1d072c1dcd163ccc295b6a459abc71ed.url(args, options),
     method: 'post',
 })
 
-update.definition = {
+update1d072c1dcd163ccc295b6a459abc71ed.definition = {
     methods: ["post"],
     url: '/events/{id}',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\EventController::update
- * @see app/Http/Controllers/EventController.php:91
+ * @see app/Http/Controllers/EventController.php:92
  * @route '/events/{id}'
  */
-update.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
+update1d072c1dcd163ccc295b6a459abc71ed.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { id: args }
     }
@@ -328,63 +328,143 @@ update.url = (args: { id: string | number } | [id: string | number ] | string | 
                         id: args.id,
                 }
 
-    return update.definition.url
+    return update1d072c1dcd163ccc295b6a459abc71ed.definition.url
             .replace('{id}', parsedArgs.id.toString())
             .replace(/\/+$/, '') + queryParams(options)
 }
 
 /**
 * @see \App\Http\Controllers\EventController::update
- * @see app/Http/Controllers/EventController.php:91
+ * @see app/Http/Controllers/EventController.php:92
  * @route '/events/{id}'
  */
-update.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: update.url(args, options),
+update1d072c1dcd163ccc295b6a459abc71ed.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: update1d072c1dcd163ccc295b6a459abc71ed.url(args, options),
     method: 'post',
 })
 
     /**
 * @see \App\Http\Controllers\EventController::update
- * @see app/Http/Controllers/EventController.php:91
+ * @see app/Http/Controllers/EventController.php:92
  * @route '/events/{id}'
  */
-    const updateForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: update.url(args, options),
+    const update1d072c1dcd163ccc295b6a459abc71edForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: update1d072c1dcd163ccc295b6a459abc71ed.url(args, options),
         method: 'post',
     })
 
             /**
 * @see \App\Http\Controllers\EventController::update
- * @see app/Http/Controllers/EventController.php:91
+ * @see app/Http/Controllers/EventController.php:92
  * @route '/events/{id}'
  */
-        updateForm.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: update.url(args, options),
+        update1d072c1dcd163ccc295b6a459abc71edForm.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: update1d072c1dcd163ccc295b6a459abc71ed.url(args, options),
             method: 'post',
         })
     
-    update.form = updateForm
-/**
-* @see \App\Http\Controllers\EventController::deleteMethod
- * @see app/Http/Controllers/EventController.php:147
- * @route '/events/{event}/delete'
+    update1d072c1dcd163ccc295b6a459abc71ed.form = update1d072c1dcd163ccc295b6a459abc71edForm
+    /**
+* @see \App\Http\Controllers\EventController::update
+ * @see app/Http/Controllers/EventController.php:92
+ * @route '/organizer/events/{id}'
  */
-export const deleteMethod = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: deleteMethod.url(args, options),
+const updated860e7ffdfe4e43587bba46d483d8c5f = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: updated860e7ffdfe4e43587bba46d483d8c5f.url(args, options),
     method: 'post',
 })
 
-deleteMethod.definition = {
+updated860e7ffdfe4e43587bba46d483d8c5f.definition = {
+    methods: ["post"],
+    url: '/organizer/events/{id}',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\EventController::update
+ * @see app/Http/Controllers/EventController.php:92
+ * @route '/organizer/events/{id}'
+ */
+updated860e7ffdfe4e43587bba46d483d8c5f.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { id: args }
+    }
+
+    
+    if (Array.isArray(args)) {
+        args = {
+                    id: args[0],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+                        id: args.id,
+                }
+
+    return updated860e7ffdfe4e43587bba46d483d8c5f.definition.url
+            .replace('{id}', parsedArgs.id.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\EventController::update
+ * @see app/Http/Controllers/EventController.php:92
+ * @route '/organizer/events/{id}'
+ */
+updated860e7ffdfe4e43587bba46d483d8c5f.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: updated860e7ffdfe4e43587bba46d483d8c5f.url(args, options),
+    method: 'post',
+})
+
+    /**
+* @see \App\Http\Controllers\EventController::update
+ * @see app/Http/Controllers/EventController.php:92
+ * @route '/organizer/events/{id}'
+ */
+    const updated860e7ffdfe4e43587bba46d483d8c5fForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: updated860e7ffdfe4e43587bba46d483d8c5f.url(args, options),
+        method: 'post',
+    })
+
+            /**
+* @see \App\Http\Controllers\EventController::update
+ * @see app/Http/Controllers/EventController.php:92
+ * @route '/organizer/events/{id}'
+ */
+        updated860e7ffdfe4e43587bba46d483d8c5fForm.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: updated860e7ffdfe4e43587bba46d483d8c5f.url(args, options),
+            method: 'post',
+        })
+    
+    updated860e7ffdfe4e43587bba46d483d8c5f.form = updated860e7ffdfe4e43587bba46d483d8c5fForm
+
+export const update = {
+    '/events/{id}': update1d072c1dcd163ccc295b6a459abc71ed,
+    '/organizer/events/{id}': updated860e7ffdfe4e43587bba46d483d8c5f,
+}
+
+/**
+* @see \App\Http\Controllers\EventController::deleteMethod
+ * @see app/Http/Controllers/EventController.php:151
+ * @route '/events/{event}/delete'
+ */
+const deleteMethod505aaea3ae33e5a07e95c6b466bd22e4 = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: deleteMethod505aaea3ae33e5a07e95c6b466bd22e4.url(args, options),
+    method: 'post',
+})
+
+deleteMethod505aaea3ae33e5a07e95c6b466bd22e4.definition = {
     methods: ["post"],
     url: '/events/{event}/delete',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\EventController::deleteMethod
- * @see app/Http/Controllers/EventController.php:147
+ * @see app/Http/Controllers/EventController.php:151
  * @route '/events/{event}/delete'
  */
-deleteMethod.url = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions) => {
+deleteMethod505aaea3ae33e5a07e95c6b466bd22e4.url = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { event: args }
     }
@@ -407,42 +487,127 @@ deleteMethod.url = (args: { event: number | { eventID: number } } | [event: numb
                 : args.event,
                 }
 
-    return deleteMethod.definition.url
+    return deleteMethod505aaea3ae33e5a07e95c6b466bd22e4.definition.url
             .replace('{event}', parsedArgs.event.toString())
             .replace(/\/+$/, '') + queryParams(options)
 }
 
 /**
 * @see \App\Http\Controllers\EventController::deleteMethod
- * @see app/Http/Controllers/EventController.php:147
+ * @see app/Http/Controllers/EventController.php:151
  * @route '/events/{event}/delete'
  */
-deleteMethod.post = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: deleteMethod.url(args, options),
+deleteMethod505aaea3ae33e5a07e95c6b466bd22e4.post = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: deleteMethod505aaea3ae33e5a07e95c6b466bd22e4.url(args, options),
     method: 'post',
 })
 
     /**
 * @see \App\Http\Controllers\EventController::deleteMethod
- * @see app/Http/Controllers/EventController.php:147
+ * @see app/Http/Controllers/EventController.php:151
  * @route '/events/{event}/delete'
  */
-    const deleteMethodForm = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: deleteMethod.url(args, options),
+    const deleteMethod505aaea3ae33e5a07e95c6b466bd22e4Form = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: deleteMethod505aaea3ae33e5a07e95c6b466bd22e4.url(args, options),
         method: 'post',
     })
 
             /**
 * @see \App\Http\Controllers\EventController::deleteMethod
- * @see app/Http/Controllers/EventController.php:147
+ * @see app/Http/Controllers/EventController.php:151
  * @route '/events/{event}/delete'
  */
-        deleteMethodForm.post = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: deleteMethod.url(args, options),
+        deleteMethod505aaea3ae33e5a07e95c6b466bd22e4Form.post = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: deleteMethod505aaea3ae33e5a07e95c6b466bd22e4.url(args, options),
             method: 'post',
         })
     
-    deleteMethod.form = deleteMethodForm
+    deleteMethod505aaea3ae33e5a07e95c6b466bd22e4.form = deleteMethod505aaea3ae33e5a07e95c6b466bd22e4Form
+    /**
+* @see \App\Http\Controllers\EventController::deleteMethod
+ * @see app/Http/Controllers/EventController.php:151
+ * @route '/organizer/events/{event}/delete'
+ */
+const deleteMethod06350f93f47d37a5b2a3a15342920cb0 = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: deleteMethod06350f93f47d37a5b2a3a15342920cb0.url(args, options),
+    method: 'post',
+})
+
+deleteMethod06350f93f47d37a5b2a3a15342920cb0.definition = {
+    methods: ["post"],
+    url: '/organizer/events/{event}/delete',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\EventController::deleteMethod
+ * @see app/Http/Controllers/EventController.php:151
+ * @route '/organizer/events/{event}/delete'
+ */
+deleteMethod06350f93f47d37a5b2a3a15342920cb0.url = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { event: args }
+    }
+
+            if (typeof args === 'object' && !Array.isArray(args) && 'eventID' in args) {
+            args = { event: args.eventID }
+        }
+    
+    if (Array.isArray(args)) {
+        args = {
+                    event: args[0],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+                        event: typeof args.event === 'object'
+                ? args.event.eventID
+                : args.event,
+                }
+
+    return deleteMethod06350f93f47d37a5b2a3a15342920cb0.definition.url
+            .replace('{event}', parsedArgs.event.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\EventController::deleteMethod
+ * @see app/Http/Controllers/EventController.php:151
+ * @route '/organizer/events/{event}/delete'
+ */
+deleteMethod06350f93f47d37a5b2a3a15342920cb0.post = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: deleteMethod06350f93f47d37a5b2a3a15342920cb0.url(args, options),
+    method: 'post',
+})
+
+    /**
+* @see \App\Http\Controllers\EventController::deleteMethod
+ * @see app/Http/Controllers/EventController.php:151
+ * @route '/organizer/events/{event}/delete'
+ */
+    const deleteMethod06350f93f47d37a5b2a3a15342920cb0Form = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: deleteMethod06350f93f47d37a5b2a3a15342920cb0.url(args, options),
+        method: 'post',
+    })
+
+            /**
+* @see \App\Http\Controllers\EventController::deleteMethod
+ * @see app/Http/Controllers/EventController.php:151
+ * @route '/organizer/events/{event}/delete'
+ */
+        deleteMethod06350f93f47d37a5b2a3a15342920cb0Form.post = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: deleteMethod06350f93f47d37a5b2a3a15342920cb0.url(args, options),
+            method: 'post',
+        })
+    
+    deleteMethod06350f93f47d37a5b2a3a15342920cb0.form = deleteMethod06350f93f47d37a5b2a3a15342920cb0Form
+
+export const deleteMethod = {
+    '/events/{event}/delete': deleteMethod505aaea3ae33e5a07e95c6b466bd22e4,
+    '/organizer/events/{event}/delete': deleteMethod06350f93f47d37a5b2a3a15342920cb0,
+}
+
 /**
 * @see \App\Http\Controllers\EventController::userIndex
  * @see app/Http/Controllers/EventController.php:35

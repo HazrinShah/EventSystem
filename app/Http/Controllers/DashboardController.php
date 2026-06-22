@@ -32,6 +32,12 @@ class DashboardController extends Controller
                     'totalRsvps' => Rsvp::whereHas('event', function($query) use ($user){
                         $query->where('created_by', $user->userID);
                     })->count(),
+                    'pendingRsvps' => Rsvp::where('status', 'pending')->whereHas('event', function($query) use ($user){
+                        $query->where('created_by', $user->userID);
+                    })->count(),
+                    'confirmedRsvps' => Rsvp::where('status', 'confirmed')->whereHas('event', function($query) use ($user){
+                        $query->where('created_by', $user->userID);
+                    })->count(),
                 ],
             ]);
         }

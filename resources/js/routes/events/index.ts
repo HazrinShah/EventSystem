@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\EventController::assignAdmin
- * @see app/Http/Controllers/EventController.php:172
+ * @see app/Http/Controllers/EventController.php:179
  * @route '/events/{event}/assign-admin'
  */
 export const assignAdmin = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ assignAdmin.definition = {
 
 /**
 * @see \App\Http\Controllers\EventController::assignAdmin
- * @see app/Http/Controllers/EventController.php:172
+ * @see app/Http/Controllers/EventController.php:179
  * @route '/events/{event}/assign-admin'
  */
 assignAdmin.url = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ assignAdmin.url = (args: { event: number | { eventID: number } } | [event: numbe
 
 /**
 * @see \App\Http\Controllers\EventController::assignAdmin
- * @see app/Http/Controllers/EventController.php:172
+ * @see app/Http/Controllers/EventController.php:179
  * @route '/events/{event}/assign-admin'
  */
 assignAdmin.post = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -59,7 +59,7 @@ assignAdmin.post = (args: { event: number | { eventID: number } } | [event: numb
 
     /**
 * @see \App\Http\Controllers\EventController::assignAdmin
- * @see app/Http/Controllers/EventController.php:172
+ * @see app/Http/Controllers/EventController.php:179
  * @route '/events/{event}/assign-admin'
  */
     const assignAdminForm = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -69,7 +69,7 @@ assignAdmin.post = (args: { event: number | { eventID: number } } | [event: numb
 
             /**
 * @see \App\Http\Controllers\EventController::assignAdmin
- * @see app/Http/Controllers/EventController.php:172
+ * @see app/Http/Controllers/EventController.php:179
  * @route '/events/{event}/assign-admin'
  */
         assignAdminForm.post = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -80,7 +80,7 @@ assignAdmin.post = (args: { event: number | { eventID: number } } | [event: numb
     assignAdmin.form = assignAdminForm
 /**
 * @see \App\Http\Controllers\EventController::removeAdmin
- * @see app/Http/Controllers/EventController.php:190
+ * @see app/Http/Controllers/EventController.php:197
  * @route '/events/{event}/remove-admin'
  */
 export const removeAdmin = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -95,7 +95,7 @@ removeAdmin.definition = {
 
 /**
 * @see \App\Http\Controllers\EventController::removeAdmin
- * @see app/Http/Controllers/EventController.php:190
+ * @see app/Http/Controllers/EventController.php:197
  * @route '/events/{event}/remove-admin'
  */
 removeAdmin.url = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions) => {
@@ -128,7 +128,7 @@ removeAdmin.url = (args: { event: number | { eventID: number } } | [event: numbe
 
 /**
 * @see \App\Http\Controllers\EventController::removeAdmin
- * @see app/Http/Controllers/EventController.php:190
+ * @see app/Http/Controllers/EventController.php:197
  * @route '/events/{event}/remove-admin'
  */
 removeAdmin.post = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -138,7 +138,7 @@ removeAdmin.post = (args: { event: number | { eventID: number } } | [event: numb
 
     /**
 * @see \App\Http\Controllers\EventController::removeAdmin
- * @see app/Http/Controllers/EventController.php:190
+ * @see app/Http/Controllers/EventController.php:197
  * @route '/events/{event}/remove-admin'
  */
     const removeAdminForm = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -148,7 +148,7 @@ removeAdmin.post = (args: { event: number | { eventID: number } } | [event: numb
 
             /**
 * @see \App\Http\Controllers\EventController::removeAdmin
- * @see app/Http/Controllers/EventController.php:190
+ * @see app/Http/Controllers/EventController.php:197
  * @route '/events/{event}/remove-admin'
  */
         removeAdminForm.post = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

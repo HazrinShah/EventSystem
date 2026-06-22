@@ -85,12 +85,12 @@ function submit() {
 
             <div class="flex items-center justify-between">
                 <Label for="remember" class="flex items-center space-x-3">
-                    <Checkbox id="remember" v-model:checked="form.remember" :tabindex="3" />
+                    <Checkbox id="remember" v-model:checked="form.remember" :tabindex="3" class="data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600 text-white"/>
                     <span>Remember me</span>
                 </Label>
             </div>
 
-            <Button type="submit" class="mt-4 w-full" :tabindex="4" :disabled="form.processing" data-test="login-button">
+            <Button type="submit" class="mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold hover:text-white" :tabindex="4" :disabled="form.processing" data-test="login-button">
                 Log in
             </Button>
         </div>

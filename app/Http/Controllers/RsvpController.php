@@ -17,12 +17,9 @@ class RsvpController extends Controller
             'note' => 'nullable|string',
         ]);
 
-        // check duplicate — user dah RSVP event ni ke belum
-        // check current use logged in n amik userid dia
         $exists = Rsvp::where('userID', $request->user()->userID)
-                    // check ade tak userid tu kat dalam event id ni
                     ->where('eventID', $validated['eventID'])
-                    // kalau exist true, kalau takde false
+                    ->where('status', '!=', 'cancelled')
                     ->exists();
 
         if ($exists) {
@@ -43,7 +40,7 @@ class RsvpController extends Controller
     {
         $user = $request->user();
 
-        // 1. Panggil query RSVP berserta user, event dan seat assignments
+        // 1. Panggil query RSVP berserta user, event dan seat assignments yang aktif je
         $query = Rsvp::with(['user', 'event', 'seatAssignments.seat']);
 
         // 2. Jika login sebagai admin biasa, tapis event miliknya sahaja
@@ -53,6 +50,10 @@ class RsvpController extends Controller
                   ->orWhereHas('assignedAdmins', fn($q2) => $q2->where('event_admins.userID', $user->userID));
             });
         }
+
+        $query->orderBy('created_at', 'desc');
+
+
 
         // 3. Compile dan hantar data dengan format yang sama seperti userIndex
         $rsvps = $query->get()->map(fn($rsvp) => [
@@ -71,7 +72,9 @@ class RsvpController extends Controller
             ],
         ]);
 
-        return Inertia::render('Admin/Rsvp/ARsvp', ['rsvps' => $rsvps]);
+        return Inertia::render('Admin/Rsvp/ARsvp', [
+            'rsvps' => $rsvps
+        ]);
     }
 
 
@@ -79,7 +82,7 @@ class RsvpController extends Controller
     {
         $userID = $request->user()->userID;
 
-        $rsvps = Rsvp::with(['event', 'seatAssignments.seat'])
+        $rsvps = Rsvp::active()->with(['event', 'seatAssignments.seat'])
         ->where('userID', $userID)->latest()->get()
         ->map(fn($rsvp) => [
             'rsvpID'     => $rsvp->rsvpID,
@@ -102,15 +105,12 @@ class RsvpController extends Controller
         return Inertia::render('User/Rsvp/URsvp', ['rsvps' => $rsvps]);
     }
 
-    public function cancel(Request $request, $rsvpID)
+     public function cancel(Request $request, $rsvpID)
     {
         $rsvp = Rsvp::with(['event', 'seatAssignments'])->findOrFail($rsvpID);
         $user = $request->user();
 
-        // Only allow cancellation if:
-        // 1. The user is a superadmin
-        // 2. The user is the owner of the RSVP
-        // 3. The user is an admin who created the event or is assigned to the event
+        // (Kekalkan kod kebenaran / authorization anda di bawah)
         if ($user->role === 'user') {
             if ($rsvp->userID !== $user->userID) {
                 abort(403, 'Unauthorized action.');
@@ -125,9 +125,10 @@ class RsvpController extends Controller
             }
         } elseif ($user->role !== 'superadmin') {
             abort(403, 'Unauthorized action.');
-        }
+        } 
 
-        // release all booked seats back to available before deleting
+
+        // 1. Kembalikan kerusi yang ditempah kepada status 'available'
         foreach ($rsvp->seatAssignments as $assignment) {
             \App\Models\Seat::where('seatID', $assignment->seatID)
                 ->update([
@@ -137,11 +138,19 @@ class RsvpController extends Controller
                 ]);
         }
 
-        // seatAssignments will cascade-delete via FK when rsvp is deleted
-        $rsvp->delete();
+        // 2. Padam rekod tempat duduk (seat assignments) secara manual
+        // kerana rekod RSVP tidak dibuang dari DB (cascade delete tidak akan berjalan)
+        $rsvp->seatAssignments()->delete();
 
-        return back();
+        // 3. Kemas kini status RSVP kepada 'cancelled' dan set 'cancelled_at'
+        $rsvp->update([
+            'status' => 'cancelled',
+            'cancelled_at' => now(),
+        ]);
+
+        return back()->with('success', 'RSVP has been cancelled.');
     }
+
 
     public function getTomorrowReminders(\Illuminate\Http\Request $request){
         // 1. check token dari header request n8n

@@ -73,8 +73,11 @@ class SeatController extends Controller
     {
         $userID = $request->user()->userID;
 
-        // cek user ada RSVP untuk event ni
-        $rsvp = $event->rsvps()->where('userID', $userID)->first();
+        // cek user ada RSVP untuk event ni (tapis rsvp yang aktif sahaja)
+        $rsvp = $event->rsvps()
+            ->where('userID', $userID)
+            ->where('status', '!=', 'cancelled')
+            ->first();
 
         if (!$rsvp) {
             return redirect('/my-rsvps');

@@ -8,9 +8,15 @@ class Rsvp extends Model
 {
     
     protected $primaryKey = 'rsvpID';
-    protected $fillable = ['userID', 'eventID', 'status', 'pax', 'note'];
+    protected $fillable = ['userID', 'eventID', 'status', 'pax', 'note', 'cancelled_at'];
 
+    public function scopeActive($query){
+        return $query->whereNull('cancelled_at');
+    }
 
+    public function scopeCancelled($query){
+        return $query->whereNotNull('cancelled_at');
+    }
 
 
     public function user()

@@ -11,32 +11,28 @@ defineProps<{
 
 <template>
     <div
-        class="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10"
+        class="flex min-h-svh flex-col items-center justify-center bg-indigo-50 p-6 md:p-10"
     >
         <div class="w-full max-w-sm">
             <div class="flex flex-col gap-8">
-                <div class="flex flex-col items-center gap-4">
+                <div class="flex flex-col items-center gap-4 mb-8">
                     <Link
                         :href="home()"
                         class="flex flex-col items-center gap-2 font-medium"
                     >
-                        <div
-                            class="mb-1 flex h-9 w-9 items-center justify-center rounded-md"
-                        >
-                            <AppLogoIcon
-                                class="size-9 fill-current text-[var(--foreground)] dark:text-white"
-                            />
-                        </div>
-                        <span class="sr-only">{{ title }}</span>
+                    <img src="/storage/pictures/logoEMS.jpg" alt="" class="h-16 w-auto rounded-md">
                     </Link>
-                    <div class="space-y-2 text-center">
-                        <h1 class="text-xl font-medium">{{ title }}</h1>
-                        <p class="text-center text-sm text-muted-foreground">
+
+                    <div class="space-y-1 text-center">
+                        <h1 class="text-2xl font-bold tracking-tight text-gray-900">{{ title }}</h1>
+                        <p class="text-sm text-gray-500">
                             {{ description }}
                         </p>
                     </div>
                 </div>
-                <slot />
+                <div class="bg-white px-8 py-10 shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
+                    <slot />
+                </div>
             </div>
         </div>
     </div>

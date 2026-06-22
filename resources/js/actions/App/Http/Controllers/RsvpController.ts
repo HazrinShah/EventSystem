@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\RsvpController::getTomorrowReminders
- * @see app/Http/Controllers/RsvpController.php:146
+ * @see app/Http/Controllers/RsvpController.php:155
  * @route '/api/events/reminder-tomorrow'
  */
 export const getTomorrowReminders = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ getTomorrowReminders.definition = {
 
 /**
 * @see \App\Http\Controllers\RsvpController::getTomorrowReminders
- * @see app/Http/Controllers/RsvpController.php:146
+ * @see app/Http/Controllers/RsvpController.php:155
  * @route '/api/events/reminder-tomorrow'
  */
 getTomorrowReminders.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ getTomorrowReminders.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\RsvpController::getTomorrowReminders
- * @see app/Http/Controllers/RsvpController.php:146
+ * @see app/Http/Controllers/RsvpController.php:155
  * @route '/api/events/reminder-tomorrow'
  */
 getTomorrowReminders.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,7 +34,7 @@ getTomorrowReminders.get = (options?: RouteQueryOptions): RouteDefinition<'get'>
 })
 /**
 * @see \App\Http\Controllers\RsvpController::getTomorrowReminders
- * @see app/Http/Controllers/RsvpController.php:146
+ * @see app/Http/Controllers/RsvpController.php:155
  * @route '/api/events/reminder-tomorrow'
  */
 getTomorrowReminders.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,7 +44,7 @@ getTomorrowReminders.head = (options?: RouteQueryOptions): RouteDefinition<'head
 
     /**
 * @see \App\Http\Controllers\RsvpController::getTomorrowReminders
- * @see app/Http/Controllers/RsvpController.php:146
+ * @see app/Http/Controllers/RsvpController.php:155
  * @route '/api/events/reminder-tomorrow'
  */
     const getTomorrowRemindersForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -54,7 +54,7 @@ getTomorrowReminders.head = (options?: RouteQueryOptions): RouteDefinition<'head
 
             /**
 * @see \App\Http\Controllers\RsvpController::getTomorrowReminders
- * @see app/Http/Controllers/RsvpController.php:146
+ * @see app/Http/Controllers/RsvpController.php:155
  * @route '/api/events/reminder-tomorrow'
  */
         getTomorrowRemindersForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -63,7 +63,7 @@ getTomorrowReminders.head = (options?: RouteQueryOptions): RouteDefinition<'head
         })
             /**
 * @see \App\Http\Controllers\RsvpController::getTomorrowReminders
- * @see app/Http/Controllers/RsvpController.php:146
+ * @see app/Http/Controllers/RsvpController.php:155
  * @route '/api/events/reminder-tomorrow'
  */
         getTomorrowRemindersForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -79,7 +79,7 @@ getTomorrowReminders.head = (options?: RouteQueryOptions): RouteDefinition<'head
     getTomorrowReminders.form = getTomorrowRemindersForm
 /**
 * @see \App\Http\Controllers\RsvpController::cancel
- * @see app/Http/Controllers/RsvpController.php:105
+ * @see app/Http/Controllers/RsvpController.php:108
  * @route '/rsvp/{rsvpID}/cancel'
  */
 export const cancel = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -94,7 +94,7 @@ cancel.definition = {
 
 /**
 * @see \App\Http\Controllers\RsvpController::cancel
- * @see app/Http/Controllers/RsvpController.php:105
+ * @see app/Http/Controllers/RsvpController.php:108
  * @route '/rsvp/{rsvpID}/cancel'
  */
 cancel.url = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -122,7 +122,7 @@ cancel.url = (args: { rsvpID: string | number } | [rsvpID: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\RsvpController::cancel
- * @see app/Http/Controllers/RsvpController.php:105
+ * @see app/Http/Controllers/RsvpController.php:108
  * @route '/rsvp/{rsvpID}/cancel'
  */
 cancel.post = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -132,7 +132,7 @@ cancel.post = (args: { rsvpID: string | number } | [rsvpID: string | number ] | 
 
     /**
 * @see \App\Http\Controllers\RsvpController::cancel
- * @see app/Http/Controllers/RsvpController.php:105
+ * @see app/Http/Controllers/RsvpController.php:108
  * @route '/rsvp/{rsvpID}/cancel'
  */
     const cancelForm = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -142,7 +142,7 @@ cancel.post = (args: { rsvpID: string | number } | [rsvpID: string | number ] | 
 
             /**
 * @see \App\Http\Controllers\RsvpController::cancel
- * @see app/Http/Controllers/RsvpController.php:105
+ * @see app/Http/Controllers/RsvpController.php:108
  * @route '/rsvp/{rsvpID}/cancel'
  */
         cancelForm.post = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -153,7 +153,7 @@ cancel.post = (args: { rsvpID: string | number } | [rsvpID: string | number ] | 
     cancel.form = cancelForm
 /**
 * @see \App\Http\Controllers\RsvpController::index
- * @see app/Http/Controllers/RsvpController.php:42
+ * @see app/Http/Controllers/RsvpController.php:39
  * @route '/rsvp'
  */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -168,7 +168,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\RsvpController::index
- * @see app/Http/Controllers/RsvpController.php:42
+ * @see app/Http/Controllers/RsvpController.php:39
  * @route '/rsvp'
  */
 index.url = (options?: RouteQueryOptions) => {
@@ -177,7 +177,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\RsvpController::index
- * @see app/Http/Controllers/RsvpController.php:42
+ * @see app/Http/Controllers/RsvpController.php:39
  * @route '/rsvp'
  */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -186,7 +186,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\RsvpController::index
- * @see app/Http/Controllers/RsvpController.php:42
+ * @see app/Http/Controllers/RsvpController.php:39
  * @route '/rsvp'
  */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -196,7 +196,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\RsvpController::index
- * @see app/Http/Controllers/RsvpController.php:42
+ * @see app/Http/Controllers/RsvpController.php:39
  * @route '/rsvp'
  */
     const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -206,7 +206,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\RsvpController::index
- * @see app/Http/Controllers/RsvpController.php:42
+ * @see app/Http/Controllers/RsvpController.php:39
  * @route '/rsvp'
  */
         indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -215,7 +215,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\RsvpController::index
- * @see app/Http/Controllers/RsvpController.php:42
+ * @see app/Http/Controllers/RsvpController.php:39
  * @route '/rsvp'
  */
         indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -286,7 +286,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\RsvpController::userIndex
- * @see app/Http/Controllers/RsvpController.php:78
+ * @see app/Http/Controllers/RsvpController.php:81
  * @route '/my-rsvps'
  */
 export const userIndex = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -301,7 +301,7 @@ userIndex.definition = {
 
 /**
 * @see \App\Http\Controllers\RsvpController::userIndex
- * @see app/Http/Controllers/RsvpController.php:78
+ * @see app/Http/Controllers/RsvpController.php:81
  * @route '/my-rsvps'
  */
 userIndex.url = (options?: RouteQueryOptions) => {
@@ -310,7 +310,7 @@ userIndex.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\RsvpController::userIndex
- * @see app/Http/Controllers/RsvpController.php:78
+ * @see app/Http/Controllers/RsvpController.php:81
  * @route '/my-rsvps'
  */
 userIndex.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -319,7 +319,7 @@ userIndex.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\RsvpController::userIndex
- * @see app/Http/Controllers/RsvpController.php:78
+ * @see app/Http/Controllers/RsvpController.php:81
  * @route '/my-rsvps'
  */
 userIndex.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -329,7 +329,7 @@ userIndex.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\RsvpController::userIndex
- * @see app/Http/Controllers/RsvpController.php:78
+ * @see app/Http/Controllers/RsvpController.php:81
  * @route '/my-rsvps'
  */
     const userIndexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -339,7 +339,7 @@ userIndex.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\RsvpController::userIndex
- * @see app/Http/Controllers/RsvpController.php:78
+ * @see app/Http/Controllers/RsvpController.php:81
  * @route '/my-rsvps'
  */
         userIndexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -348,7 +348,7 @@ userIndex.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\RsvpController::userIndex
- * @see app/Http/Controllers/RsvpController.php:78
+ * @see app/Http/Controllers/RsvpController.php:81
  * @route '/my-rsvps'
  */
         userIndexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
