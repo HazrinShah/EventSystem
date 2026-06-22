@@ -1,6 +1,5 @@
 <template>
     <div class="min-h-[calc(100vh-65px)] bg-slate-50/50 pb-10">
-        <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-6 py-8 md:px-10 border-b border-slate-100 bg-white">
             <div>
                 <h1 class="text-3xl font-bold tracking-tight text-slate-900">Events Directory</h1>
@@ -8,7 +7,6 @@
             </div>
         </div>
 
-        <!-- Empty state -->
         <div v-if="!events.length" class="flex flex-col items-center justify-center py-32 text-center px-4">
             <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-5">
                 <CalendarX class="h-10 w-10 text-slate-400" />
@@ -17,11 +15,9 @@
             <p class="text-sm text-slate-500 mt-2 mb-6 max-w-sm">You haven't created any events yet via proposals.</p>
         </div>
 
-        <!-- Cards grid -->
         <section v-else class="grid grid-cols-1 gap-6 p-6 md:p-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <Card v-for="event in events" :key="event.eventID" class="group flex flex-col overflow-hidden border border-slate-200/60 shadow-sm bg-white hover:shadow-xl hover:border-slate-300/80 transition-all duration-300 rounded-2xl relative">
                 
-                <!-- Image Area -->
                 <div class="relative h-48 w-full bg-slate-100 overflow-hidden">
                     <img
                         v-if="event.image"
@@ -36,7 +32,6 @@
                         </div>
                     </div>
 
-                    <!-- Date Badge Overlay -->
                     <div class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-lg shadow-sm border border-white/20">
                         <p class="text-xs font-bold text-slate-800 uppercase tracking-wide">{{ event.date }}</p>
                     </div>
@@ -57,7 +52,6 @@
                     </div>
                 </CardContent>
 
-                <!-- Action Footer -->
                 <div class="grid grid-cols-3 border-t border-slate-100 bg-slate-50/50">
                     <button @click="openViewDialog(event)" class="cursor-pointer flex items-center justify-center gap-2 py-3 text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50/50 transition-colors">
                         <Eye class="h-4 w-4" /> View
@@ -72,7 +66,6 @@
             </Card>
         </section>
 
-        <!-- Edit Dialog -->
         <Dialog :open="isEditDialogOpen" @update:open="val => !val && closeEditDialog()">
             <DialogContent class="sm:max-w-[600px] rounded-2xl p-0 overflow-hidden border-0 shadow-2xl">
                 <div class="max-h-[90vh] overflow-y-auto w-full">
@@ -134,11 +127,9 @@
             </DialogContent>
         </Dialog>
 
-        <!-- View Dialog -->
         <Dialog :open="isViewDialogOpen" @update:open="val => !val && closeViewDialog()">
             <DialogContent class="p-0 rounded-2xl overflow-hidden border-0 shadow-2xl sm:max-w-[700px]">
                 <div class="max-h-[90vh] overflow-y-auto w-full">
-                    <!-- Cover Banner -->
                     <div class="relative h-64 sm:h-72 w-full bg-slate-100">
                         <img
                             v-if="selectedEvent?.image"
@@ -148,7 +139,6 @@
                         <div v-else class="flex h-full w-full items-center justify-center bg-slate-100">
                             <ImageOff class="h-12 w-12 text-slate-300" />
                         </div>
-                        <!-- Gradient Overlay -->
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent"></div>
                         
                         <div class="absolute bottom-0 left-0 p-6 sm:p-8 w-full">
@@ -220,7 +210,6 @@ defineOptions({
     layout: OrganizerLayout,
 });
 
-// Edit
 const isEditDialogOpen = ref(false);
 const editForm = useForm({ id: null, title: '', description: '', date: '', time: '', location: '', image: null, layoutImage: null, seat_limit: 0 });
 
@@ -245,13 +234,13 @@ function submitEdit() {
     });
 }
 
-// View
+
 const isViewDialogOpen = ref(false);
 const selectedEvent = ref(null);
 function openViewDialog(event) { selectedEvent.value = event; isViewDialogOpen.value = true; }
 function closeViewDialog() { isViewDialogOpen.value = false; selectedEvent.value = null; }
 
-// Delete
+
 function deleteEvent(event) {
     if (!confirm('Confirm delete this event?')) return;
     router.post(`/organizer/events/${event.eventID}/delete`);

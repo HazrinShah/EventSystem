@@ -31,7 +31,6 @@ const props = defineProps({
     </div>
 
     <div class="p-6 grid lg:grid-cols-3 gap-6">
-        <!-- Event Details Sidebar -->
         <div class="lg:col-span-1 space-y-6">
             <Card>
                 <CardHeader>
@@ -81,7 +80,6 @@ const props = defineProps({
             </Card>
         </div>
 
-        <!-- RSVPs Table -->
         <div class="lg:col-span-2">
             <Card class="h-full">
                 <CardHeader>

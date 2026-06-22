@@ -6,10 +6,8 @@
         </div>
     </div>
 
-    <!-- Main Content Container -->
     <div class="p-6 space-y-6">
         
-        <!-- Filters Box Container -->
         <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-3">
             <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-500">Filter & Search</h2>
             <div class="flex flex-wrap items-center gap-4 w-full">
@@ -66,7 +64,6 @@
             </div>
         </div>
 
-        <!-- Skeleton Loading State -->
         <div v-if="isLoading" class="rounded-lg border shadow-sm bg-white overflow-hidden">
             <Table>
                 <TableHeader>
@@ -94,7 +91,6 @@
             </Table>
         </div>
 
-        <!-- Table / Empty state (Visible only when not loading) -->
         <template v-else>
             <div v-if="filteredRsvps.length === 0" class="flex flex-col items-center justify-center py-24 text-center border rounded-lg bg-white shadow-sm">
                 <ClipboardList class="h-12 w-12 text-muted-foreground mb-4" />

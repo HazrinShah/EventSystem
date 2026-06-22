@@ -27,7 +27,6 @@ defineOptions({
         <div class="p-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                <!-- Total Events Card -->
                 <Link href="/organizer/events" class="block cursor-pointer">
                     <Card class="hover:shadow-md transition-shadow h-full">
                         <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -43,7 +42,6 @@ defineOptions({
                     </Card>
                 </Link>
 
-                <!-- Total RSVPs Card -->
                 <Link href="/organizer/rsvps" class="block cursor-pointer">
                     <Card class="hover:shadow-md transition-shadow h-full">
                         <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -61,7 +59,6 @@ defineOptions({
                     </Card>
                 </Link>
                 
-                <!-- Status Card -->
                 <Card class="h-full">
                     <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle class="text-sm font-medium">Account Status</CardTitle>
