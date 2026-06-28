@@ -21,7 +21,7 @@ class AdminProposalController extends Controller
     public function approve(Request $request, $proposalID)
     {
         $request->validate([
-            'valid_from' => 'required|date',
+            'valid_from' => 'required|date|after_or_equal:today',
             'valid_until' => 'required|date|after_or_equal:valid_from',
         ]);
 

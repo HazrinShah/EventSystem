@@ -3,23 +3,54 @@
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-6 py-8 md:px-10 border-b border-slate-100 bg-white">
             <div>
-                <h1 class="text-3xl font-bold tracking-tight text-slate-900">Events Directory</h1>
-                <p class="text-sm text-slate-500 mt-1 font-medium">Browse and RSVP to upcoming events</p>
+                <h1 class="text-3xl font-bold tracking-tight text-slate-900">Events History</h1>
+                <p class="text-sm text-slate-500 mt-1 font-medium">Archive of all past and current events</p>
+            </div>
+            
+            <!-- Filters -->
+            <div class="flex items-center gap-2 bg-slate-100 p-1 rounded-xl self-start sm:self-center">
+                <button
+                    @click="filterStatus = 'all'"
+                    :class="[
+                        'px-4 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer',
+                        filterStatus === 'all' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-900'
+                    ]"
+                >
+                    All
+                </button>
+                <button
+                    @click="filterStatus = 'open'"
+                    :class="[
+                        'px-4 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer',
+                        filterStatus === 'open' ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-500 hover:text-slate-900'
+                    ]"
+                >
+                    Open
+                </button>
+                <button
+                    @click="filterStatus = 'closed'"
+                    :class="[
+                        'px-4 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer',
+                        filterStatus === 'closed' ? 'bg-white text-slate-700 shadow-sm' : 'text-slate-500 hover:text-slate-900'
+                    ]"
+                >
+                    Closed
+                </button>
             </div>
         </div>
 
         <!-- Empty state -->
-        <div v-if="!events.length" class="flex flex-col items-center justify-center py-32 text-center px-4">
+        <div v-if="filteredEvents.length === 0" class="flex flex-col items-center justify-center py-32 text-center px-4">
             <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-5">
-                <CalendarX class="h-10 w-10 text-slate-400" />
+                <History class="h-10 w-10 text-slate-400" />
             </div>
-            <h3 class="text-xl font-bold text-slate-900">No events available</h3>
-            <p class="text-sm text-slate-500 mt-2 mb-6 max-w-sm">Check back later for upcoming events and experiences.</p>
+            <h3 class="text-xl font-bold text-slate-900">No events found</h3>
+            <p class="text-sm text-slate-500 mt-2 max-w-sm">No events match the selected status filter.</p>
         </div>
 
         <!-- Cards grid -->
         <section v-else class="grid grid-cols-1 gap-6 p-6 md:p-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <Card v-for="event in events" :key="event.eventID" class="group flex flex-col overflow-hidden border border-slate-200/60 shadow-sm bg-white hover:shadow-xl hover:border-slate-300/80 transition-all duration-300 rounded-2xl relative">
+            <Card v-for="event in filteredEvents" :key="event.eventID" class="group flex flex-col overflow-hidden border border-slate-200/60 shadow-sm bg-white hover:shadow-xl hover:border-slate-300/80 transition-all duration-300 rounded-2xl relative">
                 
                 <!-- Image Area -->
                 <div class="relative h-48 w-full bg-slate-100 overflow-hidden">
@@ -36,9 +67,28 @@
                         </div>
                     </div>
 
+                    <!-- Status Badge Overlay (Only in History) -->
+                    <div class="absolute top-3 right-3 shadow-sm">
+                        <span 
+                            v-if="event.status === 'open'"
+                            class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200"
+                        >
+                            Open
+                        </span>
+                        <span 
+                            v-else
+                            class="px-2.5 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200"
+                        >
+                            Closed
+                        </span>
+                    </div>
+
                     <!-- Date Badge Overlay -->
                     <div class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-lg shadow-sm border border-white/20 flex flex-col items-center">
-                        <p class="text-xs font-bold text-slate-800 uppercase tracking-wide">{{ event.start_date }} <span v-if="event.end_date && event.end_date !== event.start_date">- {{ event.end_date }}</span></p>
+                        <p class="text-xs font-bold text-slate-800 uppercase tracking-wide">
+                            {{ event.start_date }}
+                            <span v-if="event.end_date && event.end_date !== event.start_date">- {{ event.end_date }}</span>
+                        </p>
                     </div>
                 </div>
                 
@@ -64,38 +114,57 @@
                             <Eye class="h-4 w-4" /> View
                         </button>
 
-                        <div class="w-px bg-slate-200"></div>
+                        <div v-if="role === 'user'" class="w-px bg-slate-200"></div>
 
-                        <!-- If the user has a pending RSVP -->
-                        <template v-if="event.rsvps?.length && event.rsvps[0].status === 'pending'">
-                            <Link :href="`/events/${event.eventID}/select-seat`" class="flex-1">
-                                <button class="w-full h-full cursor-pointer flex items-center justify-center gap-2 py-3 text-sm font-semibold text-emerald-600 bg-emerald-50 hover:bg-emerald-100 transition-colors">
-                                    <CalendarCheck class="h-4 w-4" /> Pick Seat
+                        <!-- User Specific Actions -->
+                        <template v-if="role === 'user'">
+                            <!-- Closed Event Status/Actions -->
+                            <template v-if="event.status === 'closed'">
+                                <div v-if="event.rsvps?.length && event.rsvps[0].status === 'confirmed'" class="flex-1 flex items-center justify-center gap-2 py-3 text-sm font-semibold text-slate-500 bg-slate-100/50">
+                                    Attended
+                                </div>
+                                <div v-else class="flex-1 flex items-center justify-center gap-2 py-3 text-sm font-semibold text-slate-400 bg-slate-100/30 cursor-not-allowed">
+                                    Ended
+                                </div>
+                            </template>
+
+                            <!-- Open Event Status/Actions -->
+                            <template v-else>
+                                <template v-if="event.rsvps?.length && event.rsvps[0].status === 'pending'">
+                                    <Link :href="`/events/${event.eventID}/select-seat`" class="flex-1">
+                                        <button class="w-full h-full cursor-pointer flex items-center justify-center gap-2 py-3 text-sm font-semibold text-emerald-600 bg-emerald-50 hover:bg-emerald-100 transition-colors">
+                                            <CalendarCheck class="h-4 w-4" /> Pick Seat
+                                        </button>
+                                    </Link>
+                                </template>
+                                
+                                <template v-else-if="event.rsvps?.length && event.rsvps[0].status === 'confirmed'">
+                                    <div class="flex-1 flex items-center justify-center gap-2 py-3 text-sm font-semibold text-emerald-700 bg-emerald-50/80">
+                                        Confirmed
+                                    </div>
+                                </template>
+                                
+                                <template v-else>
+                                    <button @click="openRsvpDialog(event)" class="flex-1 cursor-pointer flex items-center justify-center gap-2 py-3 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 transition-colors">
+                                        <CalendarCheck class="h-4 w-4" /> RSVP
+                                    </button>
+                                </template>
+                            </template>
+                        </template>
+
+                        <!-- Admin / SuperAdmin actions - we just show standard info -->
+                        <template v-else>
+                            <div class="w-px bg-slate-200"></div>
+                            <Link :href="event.status === 'open' ? `/events/${event.eventID}/seats` : '#'" class="flex-1" :class="{ 'pointer-events-none opacity-40': event.status === 'closed' }">
+                                <button :disabled="event.status === 'closed'" class="w-full h-full cursor-pointer flex items-center justify-center gap-2 py-3 text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50/50 transition-colors disabled:cursor-not-allowed">
+                                    <LayoutTemplate class="h-4 w-4" /> {{ event.status === 'closed' ? 'Closed' : 'Layout' }}
                                 </button>
                             </Link>
-                        </template>
-                        
-                        <!-- If the user has a confirmed RSVP -->
-                        <template v-else-if="event.rsvps?.length && event.rsvps[0].status === 'confirmed'">
-                            <div class="flex-1 flex items-center justify-center gap-2 py-3 text-sm font-semibold text-emerald-700 bg-emerald-50/80">
-                                <span class="relative flex h-2 w-2 mr-1">
-                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                                </span>
-                                Confirmed
-                            </div>
-                        </template>
-                        
-                        <!-- If the user has no RSVP OR the RSVP is cancelled -->
-                        <template v-else>
-                            <button @click="openRsvpDialog(event)" class="flex-1 cursor-pointer flex items-center justify-center gap-2 py-3 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 transition-colors">
-                                <CalendarCheck class="h-4 w-4" /> RSVP Now
-                            </button>
                         </template>
                     </div>
                     
                     <!-- Status badge row (Only show pax if RSVP is confirmed) -->
-                    <div v-if="event.rsvps?.length && event.rsvps[0].status === 'confirmed'" class="px-5 py-2.5 bg-emerald-100/50 border-t border-emerald-100 flex items-center justify-center text-xs font-medium text-emerald-800">
+                    <div v-if="role === 'user' && event.rsvps?.length && event.rsvps[0].status === 'confirmed'" class="px-5 py-2.5 bg-emerald-100/50 border-t border-emerald-100 flex items-center justify-center text-xs font-medium text-emerald-800">
                         Attendance confirmed for {{ event.rsvps[0].pax }} pax
                     </div>
                 </div>
@@ -193,31 +262,44 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useForm, router, Link } from '@inertiajs/vue3';
-import { CalendarDays, MapPin, CalendarX, ImageOff, CalendarCheck, Eye, Clock, Info } from 'lucide-vue-next';
+import { ref, computed } from 'vue';
+import { useForm, router, Link, usePage } from '@inertiajs/vue3';
+import { CalendarDays, MapPin, CalendarX, ImageOff, CalendarCheck, Eye, Clock, Info, History, LayoutTemplate } from 'lucide-vue-next';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 
-defineProps({
+const props = defineProps({
     events: { type: Array, default: () => [] },
 });
 
 defineOptions({
     layout: {
-        breadcrumbs: [{ title: 'Events', href: '/uevents' }],
+        breadcrumbs: [{ title: 'History', href: '/history' }],
     },
 });
 
-// View
+const page = usePage();
+const role = computed(() => page.props.auth.user?.role || 'user');
+
+// Filtering
+const filterStatus = ref('all');
+
+const filteredEvents = computed(() => {
+    if (filterStatus.value === 'all') {
+        return props.events;
+    }
+    return props.events.filter(event => event.status === filterStatus.value);
+});
+
+// View dialog state
 const isViewDialogOpen = ref(false);
 const selectedEvent = ref(null);
 function openViewDialog(event) { selectedEvent.value = event; isViewDialogOpen.value = true; }
 function closeViewDialog() { isViewDialogOpen.value = false; selectedEvent.value = null; }
 
-// RSVP
+// RSVP dialog state
 const isRsvpDialogOpen = ref(false);
 const rsvpForm = useForm({ eventID: null, pax: '', note: '' });
 
@@ -233,11 +315,5 @@ function closeRsvpDialog() {
 }
 function submitRsvp() {
     rsvpForm.post('/rsvp', { onSuccess: () => closeRsvpDialog() });
-}
-
-// Cancel
-function cancelRsvp(rsvpID) {
-    if (!confirm('Cancel your RSVP?')) return;
-    router.post(`/rsvp/${rsvpID}/cancel`);
 }
 </script>

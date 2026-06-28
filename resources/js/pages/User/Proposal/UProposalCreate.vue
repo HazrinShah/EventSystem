@@ -27,14 +27,24 @@
                             <textarea v-model="form.description" rows="4" class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" required></textarea>
                         </div>
 
-                        <div>
-                            <Label class="mb-2 block text-sm font-medium">Date</Label>
-                            <Input v-model="form.date" type="date" required />
+                        <div class="sm:col-span-1">
+                            <Label class="mb-2 block text-sm font-medium">Start Date</Label>
+                            <Input v-model="form.start_date" type="date" :min="todayDate" required />
                         </div>
                         
-                        <div>
-                            <Label class="mb-2 block text-sm font-medium">Time</Label>
-                            <Input v-model="form.time" type="time" required />
+                        <div class="sm:col-span-1">
+                            <Label class="mb-2 block text-sm font-medium">End Date</Label>
+                            <Input v-model="form.end_date" type="date" :min="form.start_date || todayDate" required />
+                        </div>
+
+                        <div class="sm:col-span-1">
+                            <Label class="mb-2 block text-sm font-medium">Start Time</Label>
+                            <Input v-model="form.start_time" type="time" required />
+                        </div>
+                        
+                        <div class="sm:col-span-1">
+                            <Label class="mb-2 block text-sm font-medium">End Time</Label>
+                            <Input v-model="form.end_time" type="time" required />
                         </div>
                         
                         <div class="sm:col-span-2">
@@ -88,11 +98,15 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, FileCheck } from 'lucide-vue-next';
 
+const todayDate = new Date().toLocaleDateString('en-CA');
+
 const form = useForm({
     title: '',
     description: '',
-    date: '',
-    time: '',
+    start_date: '',
+    end_date: '',
+    start_time: '',
+    end_time: '',
     location: '',
     seat_limit: '',
     approval_document: null,

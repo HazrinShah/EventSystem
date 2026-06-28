@@ -19,6 +19,8 @@ import {
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 
+const todayDate = new Date().toLocaleDateString('en-CA');
+
 defineOptions({
     layout: {
         breadcrumbs: [{ title: 'Proposals Management', href: '/admin/proposals' }],
@@ -170,11 +172,11 @@ const submitReject = () => {
                 <div class="grid gap-4 py-4">
                     <div class="grid gap-2">
                         <Label>Organizer Access - Valid From</Label>
-                        <Input v-model="approveForm.valid_from" type="date" required />
+                        <Input v-model="approveForm.valid_from" type="date" :min="todayDate" required />
                     </div>
                     <div class="grid gap-2">
                         <Label>Organizer Access - Valid Until</Label>
-                        <Input v-model="approveForm.valid_until" type="date" required />
+                        <Input v-model="approveForm.valid_until" type="date" :min="approveForm.valid_from || todayDate" required />
                     </div>
                 </div>
                 

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\OrganizerController::manage
- * @see app/Http/Controllers/OrganizerController.php:29
+ * @see app/Http/Controllers/OrganizerController.php:28
  * @route '/organizer/events/{event}'
  */
 export const manage = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ manage.definition = {
 
 /**
 * @see \App\Http\Controllers\OrganizerController::manage
- * @see app/Http/Controllers/OrganizerController.php:29
+ * @see app/Http/Controllers/OrganizerController.php:28
  * @route '/organizer/events/{event}'
  */
 manage.url = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -44,7 +44,7 @@ manage.url = (args: { event: string | number } | [event: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\OrganizerController::manage
- * @see app/Http/Controllers/OrganizerController.php:29
+ * @see app/Http/Controllers/OrganizerController.php:28
  * @route '/organizer/events/{event}'
  */
 manage.get = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -53,7 +53,7 @@ manage.get = (args: { event: string | number } | [event: string | number ] | str
 })
 /**
 * @see \App\Http\Controllers\OrganizerController::manage
- * @see app/Http/Controllers/OrganizerController.php:29
+ * @see app/Http/Controllers/OrganizerController.php:28
  * @route '/organizer/events/{event}'
  */
 manage.head = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -63,7 +63,7 @@ manage.head = (args: { event: string | number } | [event: string | number ] | st
 
     /**
 * @see \App\Http\Controllers\OrganizerController::manage
- * @see app/Http/Controllers/OrganizerController.php:29
+ * @see app/Http/Controllers/OrganizerController.php:28
  * @route '/organizer/events/{event}'
  */
     const manageForm = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -73,7 +73,7 @@ manage.head = (args: { event: string | number } | [event: string | number ] | st
 
             /**
 * @see \App\Http\Controllers\OrganizerController::manage
- * @see app/Http/Controllers/OrganizerController.php:29
+ * @see app/Http/Controllers/OrganizerController.php:28
  * @route '/organizer/events/{event}'
  */
         manageForm.get = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ manage.head = (args: { event: string | number } | [event: string | number ] | st
         })
             /**
 * @see \App\Http\Controllers\OrganizerController::manage
- * @see app/Http/Controllers/OrganizerController.php:29
+ * @see app/Http/Controllers/OrganizerController.php:28
  * @route '/organizer/events/{event}'
  */
         manageForm.head = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

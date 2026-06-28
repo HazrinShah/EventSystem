@@ -15,15 +15,25 @@
                             <textarea id="description" v-model="form.description" rows="4" class="w-full rounded-md border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white" placeholder="Enter description"></textarea>
                             <span v-if="form.errors.description" class="mt-1 text-xs text-red-500">{{ form.errors.description }}</span>
                         </div>
-                        <div>
-                            <Label for="date" class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Date</Label>
-                            <Input type="date" id="date" v-model="form.date" class="border border-gray-300"/>
-                            <span v-if="form.errors.date" class="mt-1 text-xs text-red-500">{{ form.errors.date }}</span>
+                        <div class="col-span-2 md:col-span-1">
+                            <Label for="start_date" class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Start Date</Label>
+                            <Input type="date" id="start_date" v-model="form.start_date" :min="todayDate" class="border border-gray-300" required/>
+                            <span v-if="form.errors.start_date" class="mt-1 text-xs text-red-500">{{ form.errors.start_date }}</span>
                         </div>
-                        <div>
-                            <Label for="time" class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Time</Label>
-                            <Input type="time" id="time" v-model="form.time" class="border border-gray-300"/>
-                            <span v-if="form.errors.time" class="mt-1 text-xs text-red-500">{{ form.errors.time }}</span>
+                        <div class="col-span-2 md:col-span-1">
+                            <Label for="end_date" class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">End Date</Label>
+                            <Input type="date" id="end_date" v-model="form.end_date" :min="form.start_date || todayDate" class="border border-gray-300" required/>
+                            <span v-if="form.errors.end_date" class="mt-1 text-xs text-red-500">{{ form.errors.end_date }}</span>
+                        </div>
+                        <div class="col-span-2 md:col-span-1">
+                            <Label for="start_time" class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Start Time</Label>
+                            <Input type="time" id="start_time" v-model="form.start_time" class="border border-gray-300" required/>
+                            <span v-if="form.errors.start_time" class="mt-1 text-xs text-red-500">{{ form.errors.start_time }}</span>
+                        </div>
+                        <div class="col-span-2 md:col-span-1">
+                            <Label for="end_time" class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">End Time</Label>
+                            <Input type="time" id="end_time" v-model="form.end_time" class="border border-gray-300" required/>
+                            <span v-if="form.errors.end_time" class="mt-1 text-xs text-red-500">{{ form.errors.end_time }}</span>
                         </div>
                         <div>
                             <Label for="location" class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Location</Label>
@@ -65,6 +75,8 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button';
 
+const todayDate = new Date().toLocaleDateString('en-CA');
+
 function submit() {
     form.post('/events');
 }
@@ -72,8 +84,10 @@ function submit() {
 const form = useForm({
     title: '',
     description: '',
-    date: '',
-    time: '',
+    start_date: '',
+    end_date: '',
+    start_time: '',
+    end_time: '',
     location: '',
     image: null,
     layoutImage: null,

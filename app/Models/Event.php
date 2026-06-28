@@ -11,7 +11,24 @@ class Event extends Model
     
     protected $primaryKey = 'eventID';
     public $timestamps = true;
-    protected $fillable = ['title', 'description', 'date', 'location', 'image', 'time', 'layoutImage', 'created_by', 'seat_limit'];
+    protected $fillable = ['title', 'description', 'start_date', 'end_date', 'start_time', 'end_time', 'location', 'image', 'layoutImage', 'created_by', 'seat_limit'];
+
+    protected $casts = [
+        'start_date' => 'date:Y-m-d',
+        'end_date' => 'date:Y-m-d',
+    ];
+
+    protected $appends = ['status'];
+
+    public function getStatusAttribute(): string
+    {
+        $today = now()->toDateString();
+        if ($this->end_date && $this->end_date < $today) {
+            return 'closed';
+        }
+        return 'open';
+    }
+
 
     // Creator
     public function creator()

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\RsvpController::cancel
- * @see app/Http/Controllers/RsvpController.php:108
+ * @see app/Http/Controllers/RsvpController.php:111
  * @route '/rsvp/{rsvpID}/cancel'
  */
 export const cancel = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ cancel.definition = {
 
 /**
 * @see \App\Http\Controllers\RsvpController::cancel
- * @see app/Http/Controllers/RsvpController.php:108
+ * @see app/Http/Controllers/RsvpController.php:111
  * @route '/rsvp/{rsvpID}/cancel'
  */
 cancel.url = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -44,7 +44,7 @@ cancel.url = (args: { rsvpID: string | number } | [rsvpID: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\RsvpController::cancel
- * @see app/Http/Controllers/RsvpController.php:108
+ * @see app/Http/Controllers/RsvpController.php:111
  * @route '/rsvp/{rsvpID}/cancel'
  */
 cancel.post = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -54,7 +54,7 @@ cancel.post = (args: { rsvpID: string | number } | [rsvpID: string | number ] | 
 
     /**
 * @see \App\Http\Controllers\RsvpController::cancel
- * @see app/Http/Controllers/RsvpController.php:108
+ * @see app/Http/Controllers/RsvpController.php:111
  * @route '/rsvp/{rsvpID}/cancel'
  */
     const cancelForm = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -64,7 +64,7 @@ cancel.post = (args: { rsvpID: string | number } | [rsvpID: string | number ] | 
 
             /**
 * @see \App\Http\Controllers\RsvpController::cancel
- * @see app/Http/Controllers/RsvpController.php:108
+ * @see app/Http/Controllers/RsvpController.php:111
  * @route '/rsvp/{rsvpID}/cancel'
  */
         cancelForm.post = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

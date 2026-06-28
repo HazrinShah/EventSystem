@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\SeatController::select
- * @see app/Http/Controllers/SeatController.php:112
+ * @see app/Http/Controllers/SeatController.php:113
  * @route '/events/{event}/select-seat'
  */
 export const select = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ select.definition = {
 
 /**
 * @see \App\Http\Controllers\SeatController::select
- * @see app/Http/Controllers/SeatController.php:112
+ * @see app/Http/Controllers/SeatController.php:113
  * @route '/events/{event}/select-seat'
  */
 select.url = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ select.url = (args: { event: number | { eventID: number } } | [event: number | {
 
 /**
 * @see \App\Http\Controllers\SeatController::select
- * @see app/Http/Controllers/SeatController.php:112
+ * @see app/Http/Controllers/SeatController.php:113
  * @route '/events/{event}/select-seat'
  */
 select.get = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -58,7 +58,7 @@ select.get = (args: { event: number | { eventID: number } } | [event: number | {
 })
 /**
 * @see \App\Http\Controllers\SeatController::select
- * @see app/Http/Controllers/SeatController.php:112
+ * @see app/Http/Controllers/SeatController.php:113
  * @route '/events/{event}/select-seat'
  */
 select.head = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -68,7 +68,7 @@ select.head = (args: { event: number | { eventID: number } } | [event: number | 
 
     /**
 * @see \App\Http\Controllers\SeatController::select
- * @see app/Http/Controllers/SeatController.php:112
+ * @see app/Http/Controllers/SeatController.php:113
  * @route '/events/{event}/select-seat'
  */
     const selectForm = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -78,7 +78,7 @@ select.head = (args: { event: number | { eventID: number } } | [event: number | 
 
             /**
 * @see \App\Http\Controllers\SeatController::select
- * @see app/Http/Controllers/SeatController.php:112
+ * @see app/Http/Controllers/SeatController.php:113
  * @route '/events/{event}/select-seat'
  */
         selectForm.get = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -87,7 +87,7 @@ select.head = (args: { event: number | { eventID: number } } | [event: number | 
         })
             /**
 * @see \App\Http\Controllers\SeatController::select
- * @see app/Http/Controllers/SeatController.php:112
+ * @see app/Http/Controllers/SeatController.php:113
  * @route '/events/{event}/select-seat'
  */
         selectForm.head = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -103,7 +103,7 @@ select.head = (args: { event: number | { eventID: number } } | [event: number | 
     select.form = selectForm
 /**
 * @see \App\Http\Controllers\SeatController::view
- * @see app/Http/Controllers/SeatController.php:72
+ * @see app/Http/Controllers/SeatController.php:73
  * @route '/events/{event}/seat-view'
  */
 export const view = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -118,7 +118,7 @@ view.definition = {
 
 /**
 * @see \App\Http\Controllers\SeatController::view
- * @see app/Http/Controllers/SeatController.php:72
+ * @see app/Http/Controllers/SeatController.php:73
  * @route '/events/{event}/seat-view'
  */
 view.url = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions) => {
@@ -151,7 +151,7 @@ view.url = (args: { event: number | { eventID: number } } | [event: number | { e
 
 /**
 * @see \App\Http\Controllers\SeatController::view
- * @see app/Http/Controllers/SeatController.php:72
+ * @see app/Http/Controllers/SeatController.php:73
  * @route '/events/{event}/seat-view'
  */
 view.get = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -160,7 +160,7 @@ view.get = (args: { event: number | { eventID: number } } | [event: number | { e
 })
 /**
 * @see \App\Http\Controllers\SeatController::view
- * @see app/Http/Controllers/SeatController.php:72
+ * @see app/Http/Controllers/SeatController.php:73
  * @route '/events/{event}/seat-view'
  */
 view.head = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -170,7 +170,7 @@ view.head = (args: { event: number | { eventID: number } } | [event: number | { 
 
     /**
 * @see \App\Http\Controllers\SeatController::view
- * @see app/Http/Controllers/SeatController.php:72
+ * @see app/Http/Controllers/SeatController.php:73
  * @route '/events/{event}/seat-view'
  */
     const viewForm = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -180,7 +180,7 @@ view.head = (args: { event: number | { eventID: number } } | [event: number | { 
 
             /**
 * @see \App\Http\Controllers\SeatController::view
- * @see app/Http/Controllers/SeatController.php:72
+ * @see app/Http/Controllers/SeatController.php:73
  * @route '/events/{event}/seat-view'
  */
         viewForm.get = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -189,7 +189,7 @@ view.head = (args: { event: number | { eventID: number } } | [event: number | { 
         })
             /**
 * @see \App\Http\Controllers\SeatController::view
- * @see app/Http/Controllers/SeatController.php:72
+ * @see app/Http/Controllers/SeatController.php:73
  * @route '/events/{event}/seat-view'
  */
         viewForm.head = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

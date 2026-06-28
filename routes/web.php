@@ -22,6 +22,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // for all user
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/history', [EventController::class, 'history'])->name('events.history');
     Route::post('/rsvp/{rsvpID}/cancel', [RsvpController::class, 'cancel'])->name('rsvp.cancel');
 
     Route::get('redirect', function () {

@@ -4,6 +4,8 @@ import axios from 'axios';
 import { router } from '@inertiajs/vue3';
 import { CheckCircle, ImageOff, CalendarDays, MapPin, Clock } from 'lucide-vue-next';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
+import { toPng } from 'html-to-image';
 
 const props = defineProps({
     event: Object,
@@ -30,6 +32,8 @@ const confirmLoading = ref(false);
 const message        = ref('');
 const messageType    = ref('info');
 const now            = ref(Date.now());
+const showReceiptModal = ref(false);
+const receiptRef     = ref(null);
 
 // Computed
 const mySeats      = computed(() => seats.value.filter(s => s.is_mine && s.status === 'selected'));
@@ -136,11 +140,33 @@ async function confirmSeats() {
                 rsvpID: props.rsvp.rsvpID,
             });
         }
-        router.visit('/uevents');
+        showReceiptModal.value = true;
     } catch (err) {
         showMessage(err.response?.data?.message ?? 'Failed to confirm seats.', 'error');
         confirmLoading.value = false;
     }
+}
+
+async function downloadReceipt() {
+    if (!receiptRef.value) return;
+    try {
+        const dataUrl = await toPng(receiptRef.value, { 
+            cacheBust: true,
+            pixelRatio: 2,
+            style: { transform: 'none' }
+        });
+        const link = document.createElement('a');
+        link.download = `Receipt_${props.event.title.replace(/\s+/g, '_')}.png`;
+        link.href = dataUrl;
+        link.click();
+    } catch (error) {
+        console.error('Error generating receipt:', error);
+        alert('Failed to generate receipt. Please try again.');
+    }
+}
+
+function finishAndRedirect() {
+    router.visit('/my-rsvps');
 }
 
 // Real-time Poll 
@@ -216,7 +242,7 @@ onUnmounted(() => {
             <Button
                 @click="confirmSeats"
                 :disabled="!canConfirm || confirmLoading"
-                class="shrink-0"
+                class="shrink-0 bg-blue-600 hover:bg-blue-600 text-white hover:text-white cursor-pointer"
             >
                 <CheckCircle class="h-4 w-4 mr-1.5" />
                 {{ confirmLoading ? 'Confirming...' : 'Confirm Seats' }}
@@ -301,6 +327,67 @@ onUnmounted(() => {
                 </div>
             </template>
         </div>
+
+        <!-- Receipt Modal -->
+        <Dialog :open="showReceiptModal" @update:open="val => !val && finishAndRedirect()">
+            <DialogContent class="sm:max-w-[450px] p-0 rounded-2xl overflow-hidden border-0 shadow-2xl">
+                <div class="px-6 py-5 border-b border-slate-100 bg-white">
+                    <DialogTitle class="text-xl font-bold text-slate-900">Seat Confirmation Receipt</DialogTitle>
+                    <DialogDescription class="text-sm font-medium text-slate-500 mt-1">Thank you! Your seats are confirmed.</DialogDescription>
+                </div>
+                
+                <div class="p-6 bg-slate-50/50 flex flex-col items-center">
+                    <div ref="receiptRef" class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm w-full max-w-[350px]">
+                        <div class="text-center border-b border-slate-200 pb-4 mb-4">
+                            <div class="inline-flex items-center justify-center w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full mb-3">
+                                <CheckCircle class="w-6 h-6" />
+                            </div>
+                            <h3 class="font-bold text-lg text-slate-900">{{ event.title }}</h3>
+                            <p class="text-xs text-slate-500 mt-1 uppercase tracking-widest">RSVP-{{ rsvp.rsvpID.toString().padStart(4, '0') }}</p>
+                        </div>
+                        
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-slate-500 font-medium">Date</span>
+                                <span class="font-semibold text-slate-900">{{ event.start_date }} <span v-if="event.end_date && event.end_date !== event.start_date"> - {{ event.end_date }}</span></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500 font-medium">Time</span>
+                                <span class="font-semibold text-slate-900">{{ event.start_time }} <span v-if="event.end_time"> - {{ event.end_time }}</span></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500 font-medium">Location</span>
+                                <span class="font-semibold text-slate-900 line-clamp-1 max-w-[150px] text-right">{{ event.location }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500 font-medium">Total Pax</span>
+                                <span class="font-semibold text-slate-900">{{ rsvp.pax }}</span>
+                            </div>
+                            <div class="pt-3 border-t border-slate-100 flex justify-between items-start">
+                                <span class="text-slate-500 font-medium">Seats</span>
+                                <div class="flex flex-wrap gap-1 justify-end max-w-[150px]">
+                                    <span v-for="seat in mySeats" :key="seat.seatID" class="bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded text-xs font-bold border border-indigo-100">
+                                        {{ seat.label }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-dashed border-slate-200 text-center">
+                            <p class="text-[10px] text-slate-400 font-medium uppercase tracking-widest">Show this receipt at the entrance</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="px-6 py-4 bg-white flex justify-end gap-3 border-t border-slate-100">
+                    <Button @click="downloadReceipt" variant="outline" class="font-semibold cursor-pointer">
+                        Download Image
+                    </Button>
+                    <Button @click="finishAndRedirect" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-sm cursor-pointer">
+                        Go to My RSVPs
+                    </Button>
+                </div>
+            </DialogContent>
+        </Dialog>
 
     </div>
 </template>

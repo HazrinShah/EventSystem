@@ -16,10 +16,15 @@ RUN apt-get update && apt-get install -y \
 #install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-#copy semua code kecuali dockerignore
-#first dot - local machine punya location
-#second dot - direction folder dalam container - app folder tadi tu
-COPY . .
+# Ambil URL repository dan branch sebagai build argument
+ARG GIT_REPO_URL=https://github.com/HazrinShah/EventSystem.git
+ARG GIT_BRANCH=main
+
+# Clone repository terus ke dalam directory kerja (/app)
+RUN git clone -b ${GIT_BRANCH} ${GIT_REPO_URL} .
+
+# Salin fail .env.example kepada .env jika tiada fail .env di-clone
+RUN cp .env.example .env || touch .env
 
 #install pakej PHP (buat folder vendor/, so artisan boleh jalan!)
 RUN composer install --no-dev --optimize-autoloader
@@ -27,7 +32,6 @@ RUN composer install --no-dev --optimize-autoloader
 RUN npm install
 
 
-RUN touch .env
 RUN php artisan key:generate
 
 

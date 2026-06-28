@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function adminList(Request $request){
 
-        $query = User::whereIn('role', ['admin', 'superadmin']);
+        $query = User::query();
 
         if ($request->filled('search')) {
             $searchTerm = '%' . $request->search . '%';
@@ -97,11 +97,11 @@ class UserController extends Controller
 
     public function deactivate(User $user){
         $user->update(['is_active' => false]);
-        return back()->with('success', 'Admin deactivated.');
+        return back()->with('success', 'User deactivated.');
     }
 
     public function reactivate(User $user){
         $user->update(['is_active' => true]);
-        return back()->with('success', 'Admin reactivated.');
+        return back()->with('success', 'User reactivated.');
     }
 }

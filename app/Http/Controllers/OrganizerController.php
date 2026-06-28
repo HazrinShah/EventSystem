@@ -44,7 +44,12 @@ class OrganizerController extends Controller
     {
         $user = auth()->user();
         if (!$user->is_active_organizer) abort(403);
-        $events = Event::withCount('rsvps')->where('created_by', $user->userID)->latest()->get();
+        $today = now()->toDateString();
+        $events = Event::withCount('rsvps')
+            ->where('created_by', $user->userID)
+            ->where('end_date', '>=', $today)
+            ->latest()
+            ->get();
         return Inertia::render('Organizer/Event/OEventIndex', ['events' => $events]);
     }
 

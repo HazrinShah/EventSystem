@@ -11,12 +11,13 @@ class EventProposal extends Model
 
     protected $primaryKey = 'proposalID';
 
-    protected $fillable = ['userID', 'title', 'description', 'date', 'time',
+    protected $fillable = ['userID', 'title', 'description', 'start_date', 'end_date', 'start_time', 'end_time',
     'location', 'seat_limit', 'image', 'layoutImage', 'approval_document', 
     'status', 'admin_remarks', 'valid_from', 'valid_until', 'eventID'];
 
     protected $casts = [
-        'date' => 'date:Y-m-d',
+        'start_date' => 'date:Y-m-d',
+        'end_date' => 'date:Y-m-d',
         'valid_from' => 'datetime:Y-m-d H:i:s',
         'valid_until' => 'datetime:Y-m-d H:i:s',
     ];

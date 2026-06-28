@@ -86,7 +86,7 @@
                             </div>
                             <div class="space-y-2">
                                 <Label class="text-xs font-bold text-slate-600 uppercase tracking-wider">Date</Label>
-                                <Input v-model="editForm.date" type="date" class="rounded-xl border-slate-200 focus-visible:ring-indigo-500 bg-white shadow-sm" />
+                                <Input v-model="editForm.date" type="date" :min="todayDate" class="rounded-xl border-slate-200 focus-visible:ring-indigo-500 bg-white shadow-sm" />
                             </div>
                             <div class="space-y-2">
                                 <Label class="text-xs font-bold text-slate-600 uppercase tracking-wider">Time</Label>
@@ -198,6 +198,8 @@ import { Pencil, Trash2, Plus, Eye, CalendarDays, MapPin, CalendarX, ImageOff, C
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
+
+const todayDate = new Date().toLocaleDateString('en-CA');
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 
 import OrganizerLayout from '@/layouts/OrganizerLayout.vue';

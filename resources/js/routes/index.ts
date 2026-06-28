@@ -367,7 +367,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     
     dashboard.form = dashboardForm
 /**
- * @see routes/web.php:27
+ * @see routes/web.php:28
  * @route '/redirect'
  */
 export const redirect = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -381,7 +381,7 @@ redirect.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/web.php:27
+ * @see routes/web.php:28
  * @route '/redirect'
  */
 redirect.url = (options?: RouteQueryOptions) => {
@@ -389,7 +389,7 @@ redirect.url = (options?: RouteQueryOptions) => {
 }
 
 /**
- * @see routes/web.php:27
+ * @see routes/web.php:28
  * @route '/redirect'
  */
 redirect.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -397,7 +397,7 @@ redirect.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     method: 'get',
 })
 /**
- * @see routes/web.php:27
+ * @see routes/web.php:28
  * @route '/redirect'
  */
 redirect.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -406,7 +406,7 @@ redirect.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
     /**
- * @see routes/web.php:27
+ * @see routes/web.php:28
  * @route '/redirect'
  */
     const redirectForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -415,7 +415,7 @@ redirect.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     })
 
             /**
- * @see routes/web.php:27
+ * @see routes/web.php:28
  * @route '/redirect'
  */
         redirectForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -423,7 +423,7 @@ redirect.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             method: 'get',
         })
             /**
- * @see routes/web.php:27
+ * @see routes/web.php:28
  * @route '/redirect'
  */
         redirectForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -751,7 +751,7 @@ seatManagement.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => 
     seatManagement.form = seatManagementForm
 /**
 * @see \App\Http\Controllers\SeatController::seats
- * @see app/Http/Controllers/SeatController.php:52
+ * @see app/Http/Controllers/SeatController.php:53
  * @route '/events/{event}/seats'
  */
 export const seats = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -766,7 +766,7 @@ seats.definition = {
 
 /**
 * @see \App\Http\Controllers\SeatController::seats
- * @see app/Http/Controllers/SeatController.php:52
+ * @see app/Http/Controllers/SeatController.php:53
  * @route '/events/{event}/seats'
  */
 seats.url = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions) => {
@@ -799,7 +799,7 @@ seats.url = (args: { event: number | { eventID: number } } | [event: number | { 
 
 /**
 * @see \App\Http\Controllers\SeatController::seats
- * @see app/Http/Controllers/SeatController.php:52
+ * @see app/Http/Controllers/SeatController.php:53
  * @route '/events/{event}/seats'
  */
 seats.get = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -808,7 +808,7 @@ seats.get = (args: { event: number | { eventID: number } } | [event: number | { 
 })
 /**
 * @see \App\Http\Controllers\SeatController::seats
- * @see app/Http/Controllers/SeatController.php:52
+ * @see app/Http/Controllers/SeatController.php:53
  * @route '/events/{event}/seats'
  */
 seats.head = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -818,7 +818,7 @@ seats.head = (args: { event: number | { eventID: number } } | [event: number | {
 
     /**
 * @see \App\Http\Controllers\SeatController::seats
- * @see app/Http/Controllers/SeatController.php:52
+ * @see app/Http/Controllers/SeatController.php:53
  * @route '/events/{event}/seats'
  */
     const seatsForm = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -828,7 +828,7 @@ seats.head = (args: { event: number | { eventID: number } } | [event: number | {
 
             /**
 * @see \App\Http\Controllers\SeatController::seats
- * @see app/Http/Controllers/SeatController.php:52
+ * @see app/Http/Controllers/SeatController.php:53
  * @route '/events/{event}/seats'
  */
         seatsForm.get = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -837,7 +837,7 @@ seats.head = (args: { event: number | { eventID: number } } | [event: number | {
         })
             /**
 * @see \App\Http\Controllers\SeatController::seats
- * @see app/Http/Controllers/SeatController.php:52
+ * @see app/Http/Controllers/SeatController.php:53
  * @route '/events/{event}/seats'
  */
         seatsForm.head = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -931,7 +931,7 @@ addEvents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     addEvents.form = addEventsForm
 /**
 * @see \App\Http\Controllers\EventController::uevents
- * @see app/Http/Controllers/EventController.php:35
+ * @see app/Http/Controllers/EventController.php:49
  * @route '/uevents'
  */
 export const uevents = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -946,7 +946,7 @@ uevents.definition = {
 
 /**
 * @see \App\Http\Controllers\EventController::uevents
- * @see app/Http/Controllers/EventController.php:35
+ * @see app/Http/Controllers/EventController.php:49
  * @route '/uevents'
  */
 uevents.url = (options?: RouteQueryOptions) => {
@@ -955,7 +955,7 @@ uevents.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\EventController::uevents
- * @see app/Http/Controllers/EventController.php:35
+ * @see app/Http/Controllers/EventController.php:49
  * @route '/uevents'
  */
 uevents.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -964,7 +964,7 @@ uevents.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\EventController::uevents
- * @see app/Http/Controllers/EventController.php:35
+ * @see app/Http/Controllers/EventController.php:49
  * @route '/uevents'
  */
 uevents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -974,7 +974,7 @@ uevents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\EventController::uevents
- * @see app/Http/Controllers/EventController.php:35
+ * @see app/Http/Controllers/EventController.php:49
  * @route '/uevents'
  */
     const ueventsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -984,7 +984,7 @@ uevents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\EventController::uevents
- * @see app/Http/Controllers/EventController.php:35
+ * @see app/Http/Controllers/EventController.php:49
  * @route '/uevents'
  */
         ueventsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -993,7 +993,7 @@ uevents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\EventController::uevents
- * @see app/Http/Controllers/EventController.php:35
+ * @see app/Http/Controllers/EventController.php:49
  * @route '/uevents'
  */
         ueventsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1009,7 +1009,7 @@ uevents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     uevents.form = ueventsForm
 /**
 * @see \App\Http\Controllers\RsvpController::myRsvps
- * @see app/Http/Controllers/RsvpController.php:81
+ * @see app/Http/Controllers/RsvpController.php:82
  * @route '/my-rsvps'
  */
 export const myRsvps = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1024,7 +1024,7 @@ myRsvps.definition = {
 
 /**
 * @see \App\Http\Controllers\RsvpController::myRsvps
- * @see app/Http/Controllers/RsvpController.php:81
+ * @see app/Http/Controllers/RsvpController.php:82
  * @route '/my-rsvps'
  */
 myRsvps.url = (options?: RouteQueryOptions) => {
@@ -1033,7 +1033,7 @@ myRsvps.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\RsvpController::myRsvps
- * @see app/Http/Controllers/RsvpController.php:81
+ * @see app/Http/Controllers/RsvpController.php:82
  * @route '/my-rsvps'
  */
 myRsvps.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1042,7 +1042,7 @@ myRsvps.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\RsvpController::myRsvps
- * @see app/Http/Controllers/RsvpController.php:81
+ * @see app/Http/Controllers/RsvpController.php:82
  * @route '/my-rsvps'
  */
 myRsvps.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -1052,7 +1052,7 @@ myRsvps.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\RsvpController::myRsvps
- * @see app/Http/Controllers/RsvpController.php:81
+ * @see app/Http/Controllers/RsvpController.php:82
  * @route '/my-rsvps'
  */
     const myRsvpsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1062,7 +1062,7 @@ myRsvps.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\RsvpController::myRsvps
- * @see app/Http/Controllers/RsvpController.php:81
+ * @see app/Http/Controllers/RsvpController.php:82
  * @route '/my-rsvps'
  */
         myRsvpsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1071,7 +1071,7 @@ myRsvps.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\RsvpController::myRsvps
- * @see app/Http/Controllers/RsvpController.php:81
+ * @see app/Http/Controllers/RsvpController.php:82
  * @route '/my-rsvps'
  */
         myRsvpsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { BookOpen, Calendar, Users, FolderGit2, LayoutGrid, UserCheck, LayoutTemplate} from 'lucide-vue-next';
+import { BookOpen, Calendar, Users, FolderGit2, LayoutGrid, UserCheck, LayoutTemplate, History } from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
@@ -28,23 +28,23 @@ const mainNavItems = computed<NavItem[]>(() => {
         { title: 'Events',    href: '/events',      icon: Calendar },
         { title: 'RSVPs',     href: '/rsvp',        icon: UserCheck },
         { title: 'Seats',     href: '/seats',       icon: LayoutTemplate },
-        { title: 'Admins',    href: '/admin-users', icon: Users },
-        { title: 'Proposals', href: '/admin/proposals', icon: BookOpen },
-    ]// tambah page superadmin lain kat sini
+        { title: 'Users',     href: '/admin-users', icon: Users },
+        { title: 'History',   href: '/history',     icon: History },
+    ]
 
     if (isAdmin.value) return [
         { title: 'Dashboard', href: '/dashboard', icon: LayoutGrid },
-        { title: 'Proposals', href: '/admin/proposals', icon: BookOpen },
         { title: 'Events',    href: '/events',    icon: Calendar },
         { title: 'RSVPs',     href: '/rsvp',      icon: UserCheck },
         { title: 'Seats',     href: '/seats',     icon: LayoutTemplate },
-    ]// tambah page admin lain kat sini
+        { title: 'History',   href: '/history',   icon: History },
+    ]
 
     const userItems = [
         { title: 'Dashboard', href: '/dashboard', icon: LayoutGrid },
         { title: 'Events',    href: '/uevents',    icon: Calendar },
         { title: 'My RSVPs',  href: '/my-rsvps',   icon: UserCheck },
-        { title: 'My Proposals', href: '/my-proposals', icon: BookOpen },
+        { title: 'History',   href: '/history',   icon: History },
     ];
 
     // ni kalau proposal aktif ade, keluar menu orgnanizer
@@ -102,16 +102,16 @@ const mainNavItems = computed<NavItem[]>(() => {
 // );
 
 const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/vue-starter-kit',
-        icon: FolderGit2,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#vue',
-        icon: BookOpen,
-    },
+    // {
+    //     title: 'Repository',
+    //     href: 'https://github.com/laravel/vue-starter-kit',
+    //     icon: FolderGit2,
+    // },
+    // {
+    //     title: 'Documentation',
+    //     href: 'https://laravel.com/docs/starter-kits#vue',
+    //     icon: BookOpen,
+    // },
 ];
 </script>
 

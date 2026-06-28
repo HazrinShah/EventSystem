@@ -35,7 +35,7 @@
                 <TableBody>
                     <TableRow v-for="prop in proposals" :key="prop.proposalID">
                         <TableCell class="font-medium">{{ prop.title }}</TableCell>
-                        <TableCell class="text-muted-foreground">{{ prop.date }} · {{ prop.time }}</TableCell>
+                        <TableCell class="text-muted-foreground">{{ prop.start_date }} <span v-if="prop.end_date && prop.end_date !== prop.start_date"> - {{ prop.end_date }}</span> · {{ prop.start_time }} <span v-if="prop.end_time"> - {{ prop.end_time }}</span></TableCell>
                         <TableCell class="text-muted-foreground">{{ prop.location }}</TableCell>
                         <TableCell>
                             <span class="rounded-full px-2 py-0.5 text-xs font-medium capitalize"

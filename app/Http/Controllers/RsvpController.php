@@ -43,11 +43,12 @@ class RsvpController extends Controller
         // 1. Panggil query RSVP berserta user, event dan seat assignments yang aktif je
         $query = Rsvp::with(['user', 'event', 'seatAssignments.seat']);
 
-        // 2. Jika login sebagai admin biasa, tapis event miliknya sahaja
+        // 2. Jika login sebagai admin biasa, tapis event miliknya sahaja atau event organizer
         if ($user->role === 'admin') {
             $query->whereHas('event', function ($q) use ($user) {
                 $q->where('created_by', $user->userID)
-                  ->orWhereHas('assignedAdmins', fn($q2) => $q2->where('event_admins.userID', $user->userID));
+                  ->orWhereHas('assignedAdmins', fn($q2) => $q2->where('event_admins.userID', $user->userID))
+                  ->orWhereHas('creator', fn($q2) => $q2->where('role', 'user'));
             });
         }
 
@@ -94,8 +95,10 @@ class RsvpController extends Controller
             'event'      => [
                 'eventID'     => $rsvp->event->eventID,
                 'title'       => $rsvp->event->title,
-                'date'        => $rsvp->event->date,
-                'time'        => $rsvp->event->time,
+                'start_date'  => $rsvp->event->start_date?->toDateString(),
+                'end_date'    => $rsvp->event->end_date?->toDateString(),
+                'start_time'  => $rsvp->event->start_time,
+                'end_time'    => $rsvp->event->end_time,
                 'location'    => $rsvp->event->location,
                 'layoutImage' => $rsvp->event->layoutImage,
                 'has_seats'   => $rsvp->event->seats()->exists(),
@@ -166,7 +169,7 @@ class RsvpController extends Controller
         $rsvps = Rsvp::with('user', 'event', 'seatAssignments.seat')
         ->where('status', 'confirmed')
         ->whereHas('event', function ($query) use ($tomorrow){
-            $query->where('date', $tomorrow);
+            $query->where('start_date', $tomorrow);
         })
         ->get()
         ->map(function ($rsvp) {
@@ -179,8 +182,8 @@ class RsvpController extends Controller
                     'user_name'    => $rsvp->user->name,
                     'user_email'   => $rsvp->user->email,
                     'event_title'  => $rsvp->event->title,
-                    'event_date'   => $rsvp->event->date,
-                    'event_time'   => $rsvp->event->time,
+                    'event_date'   => $rsvp->event->start_date,
+                    'event_time'   => $rsvp->event->start_time,
                     'location'     => $rsvp->event->location,
                     'pax'          => $rsvp->pax,
                     'seats'        => implode(', ', $seatLabels),

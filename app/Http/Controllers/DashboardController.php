@@ -14,31 +14,81 @@ class DashboardController extends Controller
         $user = $request->user();
 
         if($user->role ==='superadmin'){
-        return Inertia::render('SuperAdmin/Dashboard/SADashboard', [
+            $rsvpsData = Rsvp::with('event:eventID,title')
+                ->select('rsvpID', 'eventID', 'status', 'pax', 'created_at')
+                ->orderBy('created_at', 'asc')
+                ->get()
+                ->map(function ($rsvp) {
+                    return [
+                        'rsvpID' => $rsvp->rsvpID,
+                        'eventID' => $rsvp->eventID,
+                        'eventTitle' => $rsvp->event?->title ?? 'Unknown Event',
+                        'status' => $rsvp->status,
+                        'pax' => $rsvp->pax ?? 1,
+                        'date' => $rsvp->created_at ? $rsvp->created_at->toDateString() : null,
+                    ];
+                });
 
+            $eventsList = Event::select('eventID', 'title')->get();
+
+            $usersData = User::select('userID', 'role', 'created_at')
+                ->orderBy('created_at', 'asc')
+                ->get()
+                ->map(function ($u) {
+                    return [
+                        'userID' => $u->userID,
+                        'role' => $u->role,
+                        'date' => $u->created_at ? $u->created_at->toDateString() : null,
+                    ];
+                });
+
+            return Inertia::render('SuperAdmin/Dashboard/SADashboard', [
                 'stats' => [
                     'totalEvents' => Event::count(),
                     'totalAdmins' => User::whereIn('role', ['admin', 'superadmin'])->count(),
                     'totalUsers'  => User::where('role', 'user')->count(),
                     'totalRsvps'  => Rsvp::count(),
                 ],
+                'rsvpsData' => $rsvpsData,
+                'eventsList' => $eventsList,
+                'usersData' => $usersData,
             ]);
         }
 
         if($user->role === 'admin'){
+            $eventsList = Event::where('created_by', $user->userID)
+                ->orWhereHas('assignedAdmins', fn($q) => $q->where('event_admins.userID', $user->userID))
+                ->orWhereHas('creator', fn($q) => $q->where('role', 'user'))
+                ->select('eventID', 'title')
+                ->get();
+                
+            $eventIDs = $eventsList->pluck('eventID');
+
+            $rsvpsData = Rsvp::with('event:eventID,title')
+                ->whereIn('eventID', $eventIDs)
+                ->select('rsvpID', 'eventID', 'status', 'pax', 'created_at')
+                ->orderBy('created_at', 'asc')
+                ->get()
+                ->map(function ($rsvp) {
+                    return [
+                        'rsvpID' => $rsvp->rsvpID,
+                        'eventID' => $rsvp->eventID,
+                        'eventTitle' => $rsvp->event?->title ?? 'Unknown Event',
+                        'status' => $rsvp->status,
+                        'pax' => $rsvp->pax ?? 1,
+                        'date' => $rsvp->created_at ? $rsvp->created_at->toDateString() : null,
+                    ];
+                });
+
             return Inertia::render('Admin/Dashboard/ADashboard', [
                 'stats'=> [
-                    'myEvents' => Event::where('created_by', $user->userID)->count(),
-                    'totalRsvps' => Rsvp::whereHas('event', function($query) use ($user){
-                        $query->where('created_by', $user->userID);
-                    })->count(),
-                    'pendingRsvps' => Rsvp::where('status', 'pending')->whereHas('event', function($query) use ($user){
-                        $query->where('created_by', $user->userID);
-                    })->count(),
-                    'confirmedRsvps' => Rsvp::where('status', 'confirmed')->whereHas('event', function($query) use ($user){
-                        $query->where('created_by', $user->userID);
-                    })->count(),
+                    'myEvents' => $eventsList->count(),
+                    'totalRsvps' => Rsvp::whereIn('eventID', $eventIDs)->count(),
+                    'pendingRsvps' => Rsvp::where('status', 'pending')->whereIn('eventID', $eventIDs)->count(),
+                    'confirmedRsvps' => Rsvp::where('status', 'confirmed')->whereIn('eventID', $eventIDs)->count(),
                 ],
+                'rsvpsData' => $rsvpsData,
+                'eventsList' => $eventsList,
             ]);
         }
 
@@ -48,7 +98,7 @@ class DashboardController extends Controller
                     'totalBooked' => Rsvp::where('userID', $user->userID)->count(),
                     'upcomingEvents' => Event::whereHas('rsvps', function($query) use ($user){
                         $query->where('userID', $user->userID);
-                    })->where('date', '>', now())->take(5)->get(),
+                    })->where('start_date', '>', now())->take(5)->get(),
                 ],
             ]);
         }

@@ -50,7 +50,7 @@
 
                     <!-- Date Badge Overlay -->
                     <div class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-lg shadow-sm border border-white/20">
-                        <p class="text-xs font-bold text-slate-800 uppercase tracking-wide">{{ event.date }}</p>
+                        <p class="text-xs font-bold text-slate-800 uppercase tracking-wide">{{ event.start_date }} <span v-if="event.end_date && event.end_date !== event.start_date">- {{ event.end_date }}</span></p>
                     </div>
                 </div>
                 
@@ -60,7 +60,7 @@
                     <div class="space-y-2 text-sm text-slate-500 font-medium mt-1">
                         <div class="flex items-center gap-2.5">
                             <Clock class="h-4 w-4 text-slate-400" />
-                            <span>{{ event.time }}</span>
+                            <span>{{ event.start_time }} <span v-if="event.end_time">- {{ event.end_time }}</span></span>
                         </div>
                         <div class="flex items-start gap-2.5">
                             <MapPin class="h-4 w-4 text-slate-400 shrink-0 mt-0.5" />
@@ -104,12 +104,20 @@
                                 <textarea v-model="editForm.description" rows="4" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 shadow-sm transition-shadow"></textarea>
                             </div>
                             <div class="space-y-2">
-                                <Label class="text-xs font-bold text-slate-600 uppercase tracking-wider">Date</Label>
-                                <Input v-model="editForm.date" type="date" class="rounded-xl border-slate-200 focus-visible:ring-indigo-500 bg-white shadow-sm" />
+                                <Label class="text-xs font-bold text-slate-600 uppercase tracking-wider">Start Date</Label>
+                                <Input v-model="editForm.start_date" type="date" :min="todayDate" required class="rounded-xl border-slate-200 focus-visible:ring-indigo-500 bg-white shadow-sm" />
                             </div>
                             <div class="space-y-2">
-                                <Label class="text-xs font-bold text-slate-600 uppercase tracking-wider">Time</Label>
-                                <Input v-model="editForm.time" type="time" class="rounded-xl border-slate-200 focus-visible:ring-indigo-500 bg-white shadow-sm" />
+                                <Label class="text-xs font-bold text-slate-600 uppercase tracking-wider">End Date</Label>
+                                <Input v-model="editForm.end_date" type="date" :min="editForm.start_date || todayDate" required class="rounded-xl border-slate-200 focus-visible:ring-indigo-500 bg-white shadow-sm" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label class="text-xs font-bold text-slate-600 uppercase tracking-wider">Start Time</Label>
+                                <Input v-model="editForm.start_time" type="time" required class="rounded-xl border-slate-200 focus-visible:ring-indigo-500 bg-white shadow-sm" />
+                            </div>
+                            <div class="space-y-2">
+                                <Label class="text-xs font-bold text-slate-600 uppercase tracking-wider">End Time</Label>
+                                <Input v-model="editForm.end_time" type="time" required class="rounded-xl border-slate-200 focus-visible:ring-indigo-500 bg-white shadow-sm" />
                             </div>
                             <div class="sm:col-span-2 space-y-2">
                                 <Label class="text-xs font-bold text-slate-600 uppercase tracking-wider">Location</Label>
@@ -166,9 +174,9 @@
                         <div class="absolute bottom-0 left-0 p-6 sm:p-8 w-full">
                             <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 leading-tight drop-shadow-sm">{{ selectedEvent?.title }}</h2>
                             <div class="flex flex-wrap items-center gap-4 text-white/90 text-sm font-medium">
-                                <span class="flex items-center gap-1.5"><CalendarDays class="h-4 w-4 text-white/70" /> {{ selectedEvent?.date }}</span>
+                                <span class="flex items-center gap-1.5"><CalendarDays class="h-4 w-4 text-white/70" /> {{ selectedEvent?.start_date }} <span v-if="selectedEvent?.end_date && selectedEvent?.end_date !== selectedEvent?.start_date">- {{ selectedEvent?.end_date }}</span></span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-white/40"></span>
-                                <span class="flex items-center gap-1.5"><Clock class="h-4 w-4 text-white/70" /> {{ selectedEvent?.time }}</span>
+                                <span class="flex items-center gap-1.5"><Clock class="h-4 w-4 text-white/70" /> {{ selectedEvent?.start_time }} <span v-if="selectedEvent?.end_time">- {{ selectedEvent?.end_time }}</span></span>
                             </div>
                         </div>
                     </div>
@@ -222,6 +230,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 
+const todayDate = new Date().toLocaleDateString('en-CA');
+
 defineProps({
     events: { type: Array, default: () => [] },
 });
@@ -234,14 +244,16 @@ defineOptions({
 
 // Edit
 const isEditDialogOpen = ref(false);
-const editForm = useForm({ id: null, title: '', description: '', date: '', time: '', location: '', image: null, layoutImage: null, seat_limit: 0 });
+const editForm = useForm({ id: null, title: '', description: '', start_date: '', end_date: '', start_time: '', end_time: '', location: '', image: null, layoutImage: null, seat_limit: 0 });
 
 function openEditDialog(event) {
     editForm.id = event.eventID;
     editForm.title = event.title;
     editForm.description = event.description;
-    editForm.date = event.date;
-    editForm.time = event.time;
+    editForm.start_date = event.start_date;
+    editForm.end_date = event.end_date;
+    editForm.start_time = event.start_time;
+    editForm.end_time = event.end_time;
     editForm.location = event.location;
     editForm.seat_limit = event.seat_limit ?? 0;
     editForm.image = null;

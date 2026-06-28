@@ -75,7 +75,7 @@
                 <TableBody>
                     <TableRow v-for="rsvp in sortedRsvps" :key="rsvp.rsvpID">
                         <TableCell class="font-medium">{{ rsvp.event.title }}</TableCell>
-                        <TableCell class="text-muted-foreground">{{ rsvp.event.date }} · {{ rsvp.event.time }}</TableCell>
+                        <TableCell class="text-muted-foreground">{{ rsvp.event.start_date }} <span v-if="rsvp.event.end_date && rsvp.event.end_date !== rsvp.event.start_date"> - {{ rsvp.event.end_date }}</span> · {{ rsvp.event.start_time }} <span v-if="rsvp.event.end_time"> - {{ rsvp.event.end_time }}</span></TableCell>
                         <TableCell class="text-muted-foreground">{{ rsvp.event.location }}</TableCell>
                         <TableCell>{{ rsvp.pax }}</TableCell>
                         <TableCell>
@@ -106,6 +106,16 @@
                                     @click="router.visit(`/events/${rsvp.event.eventID}/seat-view`)"
                                 >
                                     <Eye class="h-4 w-4 mr-1" /> View
+                                </Button>
+
+                                <!-- View Receipt (confirmed only) -->
+                                <Button
+                                    v-if="rsvp.status === 'confirmed'"
+                                    size="sm" variant="outline"
+                                    class="border-emerald-400 bg-emerald-100 text-emerald-700 hover:bg-emerald-200 hover:text-emerald-700 cursor-pointer"
+                                    @click="openReceipt(rsvp)"
+                                >
+                                    Receipt
                                 </Button>
 
                                 <!-- Pick seat (pending only) -->
@@ -146,20 +156,84 @@
                 </TableBody>
             </Table>
         </div>
+        
+        <!-- Receipt Modal -->
+        <Dialog :open="showReceiptModal" @update:open="val => !val && closeReceipt()">
+            <DialogContent class="sm:max-w-[450px] p-0 rounded-2xl overflow-hidden border-0 shadow-2xl">
+                <div class="px-6 py-5 border-b border-slate-100 bg-white">
+                    <DialogTitle class="text-xl font-bold text-slate-900">Seat Confirmation Receipt</DialogTitle>
+                    <DialogDescription class="text-sm font-medium text-slate-500 mt-1">Thank you! Your seats are confirmed.</DialogDescription>
+                </div>
+                
+                <div class="p-6 bg-slate-50/50 flex flex-col items-center">
+                    <div ref="receiptRef" v-if="selectedReceiptRsvp" class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm w-full max-w-[350px]">
+                        <div class="text-center border-b border-slate-200 pb-4 mb-4">
+                            <div class="inline-flex items-center justify-center w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full mb-3">
+                                <CheckCircle class="w-6 h-6" />
+                            </div>
+                            <h3 class="font-bold text-lg text-slate-900">{{ selectedReceiptRsvp.event.title }}</h3>
+                            <p class="text-xs text-slate-500 mt-1 uppercase tracking-widest">RSVP-{{ selectedReceiptRsvp.rsvpID.toString().padStart(4, '0') }}</p>
+                        </div>
+                        
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-slate-500 font-medium">Date</span>
+                                <span class="font-semibold text-slate-900">{{ selectedReceiptRsvp.event.start_date }} <span v-if="selectedReceiptRsvp.event.end_date && selectedReceiptRsvp.event.end_date !== selectedReceiptRsvp.event.start_date"> - {{ selectedReceiptRsvp.event.end_date }}</span></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500 font-medium">Time</span>
+                                <span class="font-semibold text-slate-900">{{ selectedReceiptRsvp.event.start_time }} <span v-if="selectedReceiptRsvp.event.end_time"> - {{ selectedReceiptRsvp.event.end_time }}</span></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500 font-medium">Location</span>
+                                <span class="font-semibold text-slate-900 line-clamp-1 max-w-[150px] text-right">{{ selectedReceiptRsvp.event.location }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500 font-medium">Total Pax</span>
+                                <span class="font-semibold text-slate-900">{{ selectedReceiptRsvp.pax }}</span>
+                            </div>
+                            <div class="pt-3 border-t border-slate-100 flex justify-between items-start">
+                                <span class="text-slate-500 font-medium">Seats</span>
+                                <div class="flex flex-wrap gap-1 justify-end max-w-[150px]">
+                                    <span v-for="label in selectedReceiptRsvp.seat_label" :key="label" class="bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded text-xs font-bold border border-indigo-100">
+                                        {{ label }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-dashed border-slate-200 text-center">
+                            <p class="text-[10px] text-slate-400 font-medium uppercase tracking-widest">Show this receipt at the entrance</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="px-6 py-4 bg-white flex justify-end gap-3 border-t border-slate-100">
+                    <Button @click="closeReceipt" variant="outline" class="font-semibold cursor-pointer">
+                        Close
+                    </Button>
+                    <Button @click="downloadReceipt" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-sm cursor-pointer">
+                        Download Image
+                    </Button>
+                </div>
+            </DialogContent>
+        </Dialog>
+
     </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
 import { router } from '@inertiajs/vue3'
-import { ClipboardList, Eye, Trash2, ArrowUp, ArrowDown, ArrowUpDown } from 'lucide-vue-next'
+import { ClipboardList, Eye, Trash2, ArrowUp, ArrowDown, ArrowUpDown, CheckCircle } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import {
     AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
     AlertDialogDescription, AlertDialogFooter, AlertDialogHeader,
     AlertDialogTitle, AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { toPng } from 'html-to-image'
 
 const props = defineProps({
     rsvps: { type: Array, default: () => [] },
@@ -170,6 +244,38 @@ defineOptions({
         breadcrumbs: [{ title: 'My RSVPs', href: '/my-rsvps' }],
     },
 })
+
+const showReceiptModal = ref(false);
+const selectedReceiptRsvp = ref(null);
+const receiptRef = ref(null);
+
+function openReceipt(rsvp) {
+    selectedReceiptRsvp.value = rsvp;
+    showReceiptModal.value = true;
+}
+
+function closeReceipt() {
+    showReceiptModal.value = false;
+    setTimeout(() => { selectedReceiptRsvp.value = null; }, 300);
+}
+
+async function downloadReceipt() {
+    if (!receiptRef.value || !selectedReceiptRsvp.value) return;
+    try {
+        const dataUrl = await toPng(receiptRef.value, { 
+            cacheBust: true,
+            pixelRatio: 2,
+            style: { transform: 'none' }
+        });
+        const link = document.createElement('a');
+        link.download = `Receipt_${selectedReceiptRsvp.value.event.title.replace(/\s+/g, '_')}.png`;
+        link.href = dataUrl;
+        link.click();
+    } catch (error) {
+        console.error('Error generating receipt:', error);
+        alert('Failed to generate receipt. Please try again.');
+    }
+}
 
 function cancelRsvp(rsvpID) {
     router.post(`/rsvp/${rsvpID}/cancel`)

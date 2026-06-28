@@ -10,17 +10,31 @@ class EventController extends Controller
     public function index(Request $request){
 
         $user = $request->user();
+        $today = now()->toDateString();
 
         // superadmin bole tengok semua event
         if ($user->role === 'superadmin') {
-            $events = Event::with('assignedAdmins')->get();
+            $events = Event::with(['assignedAdmins', 'creator'])
+                ->where('end_date', '>=', $today)
+                ->get()->map(function ($event) {
+                if ($event->creator && $event->creator->role === 'admin') {
+                    if (!$event->assignedAdmins->contains('userID', $event->creator->userID)) {
+                        $event->assignedAdmins->push($event->creator);
+                    }
+                }
+                return $event;
+            });
             $admins = \App\Models\User::where('role', 'admin')->get(['userID', 'name', 'role']);
             return Inertia::render('SuperAdmin/Event/SAEvent', ['events' => $events,'admins' => $admins,]);
         }
 
-        // admin bole nampak event yang dia create dan di assignkan sahaja
-        $events = Event::where('created_by', $user->userID)
-        ->orWhereHas('assignedAdmins', fn($q) => $q->where('event_admins.userID', $user->userID))
+        // admin bole nampak event yang dia create, di assignkan, dan event organizer (user)
+        $events = Event::where(function ($query) use ($user) {
+            $query->where('created_by', $user->userID)
+                  ->orWhereHas('assignedAdmins', fn($q) => $q->where('event_admins.userID', $user->userID))
+                  ->orWhereHas('creator', fn($q) => $q->where('role', 'user'));
+        })
+        ->where('end_date', '>=', $today)
         ->get();
 
         return Inertia::render('Admin/Event/AEvent', ['events' => $events]);
@@ -34,16 +48,64 @@ class EventController extends Controller
 
     public function userIndex(Request $request){
         $userID = $request->user()->userID;
+        $today = now()->toDateString();
 
         $events = Event::with(['rsvps' => function($q) use ($userID) {
             $q->where('userID', $userID)
               ->where('status', '!=', 'cancelled');
-        }])->get();
+        }])
+        ->where('end_date', '>=', $today)
+        ->get();
 
         return Inertia::render('User/Event/UEvent', [
             'events' => $events,
         ]);
     }
+
+    public function history(Request $request)
+    {
+        $user = $request->user();
+
+        if ($user->role === 'superadmin') {
+            $events = Event::with(['assignedAdmins', 'creator'])->get()->map(function ($event) {
+                if ($event->creator && $event->creator->role === 'admin') {
+                    if (!$event->assignedAdmins->contains('userID', $event->creator->userID)) {
+                        $event->assignedAdmins->push($event->creator);
+                    }
+                }
+                return $event;
+            });
+            $admins = \App\Models\User::where('role', 'admin')->get(['userID', 'name', 'role']);
+            return Inertia::render('EventHistory', [
+                'events' => $events,
+                'admins' => $admins,
+            ]);
+        }
+
+        if ($user->role === 'admin') {
+            $events = Event::where(function ($query) use ($user) {
+                $query->where('created_by', $user->userID)
+                      ->orWhereHas('assignedAdmins', fn($q) => $q->where('event_admins.userID', $user->userID))
+                      ->orWhereHas('creator', fn($q) => $q->where('role', 'user'));
+            })->get();
+
+            return Inertia::render('EventHistory', [
+                'events' => $events,
+            ]);
+        }
+
+        // Regular user index for history (view all events active and closed)
+        $userID = $user->userID;
+        $events = Event::with(['rsvps' => function($q) use ($userID) {
+            $q->where('userID', $userID)
+              ->where('status', '!=', 'cancelled');
+        }])->get();
+
+        return Inertia::render('EventHistory', [
+            'events' => $events,
+        ]);
+    }
+
     public function add(){
         return Inertia::render('Admin/Event/ACreateEvent');
     }
@@ -52,10 +114,12 @@ class EventController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'date' => 'required|date',
+            'start_date' => 'required|date|after_or_equal:today',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'start_time' => 'required',
+            'end_time' => 'required',
             'location' => 'required|string',
             'image' => 'image|max:2048',
-            'time' => 'required',
             'layoutImage' => 'image|max:2048',
             'seat_limit' => 'required|numeric|min:0',
         ]); 
@@ -93,10 +157,13 @@ class EventController extends Controller
         $event = Event::FindorFail($id);
           $user  = $request->user();
 
-        // yang bole update ialah superadmin, admin yang created, atau admin yang diassignkan
+        $isOrganizerEvent = $event->creator->role === 'user';
+        
+        // yang bole update ialah superadmin, admin yang created, admin yang diassignkan, atau admin uruskan event organizer
         if ($user->role !== 'superadmin'
             && $event->created_by !== $user->userID
             && !$event->assignedAdmins()->where('userID', $user->userID)->exists()
+            && !($user->role === 'admin' && $isOrganizerEvent)
         ) {
             abort(403);
         }
@@ -106,10 +173,12 @@ class EventController extends Controller
             [
                 'title' => 'required|string|max:255',
                 'description' => 'required|string',
-                'date' => 'required|date',
+                'start_date' => 'required|date|after_or_equal:today',
+                'end_date' => 'required|date|after_or_equal:start_date',
+                'start_time' => 'required',
+                'end_time' => 'required',
                 'location' => 'required|string',
                 'image' => 'nullable|image|max:2048',
-                'time' => 'required',
                 'layoutImage' => 'nullable|image|max:2048',
                 'seat_limit' => 'required|numeric|min:0',
             ]
@@ -151,11 +220,13 @@ class EventController extends Controller
     public function delete(Event $event, Request $request){
           $user  = $request->user();
 
-        // Only allow if superadmin, creator, or assigned admin
+        $isOrganizerEvent = $event->creator->role === 'user';
+
+        // yang bole delete ialah superadmin, admin yang created, admin yang diassignkan, atau admin uruskan event organizer
         if ($user->role !== 'superadmin'
             && $event->created_by !== $user->userID
             && !$event->assignedAdmins()->where('userID', $user->userID)->exists()
-            
+            && !($user->role === 'admin' && $isOrganizerEvent)
         ) {
             abort(403);
         }
@@ -199,6 +270,10 @@ class EventController extends Controller
         $validated = $request->validate([
             'userID' => 'required|exists:users,userID',
         ]);
+
+        if ($event->created_by == $validated['userID']) {
+            return back()->withErrors(['userID' => 'Cannot remove the creator of the event.']);
+        }
 
         // detach untuk delete admin tu as admin  untuk event tu
         $event->assignedAdmins()->detach($validated['userID']);

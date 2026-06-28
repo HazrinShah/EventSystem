@@ -1,11 +1,11 @@
 <template>
     <div class="flex items-center justify-between border-b px-6 py-4">
         <div>
-            <h1 class="text-xl font-semibold">Admin Management</h1>
-            <p class="text-sm text-muted-foreground">Create, update and deactivate admin accounts</p>
+            <h1 class="text-xl font-semibold">User Management</h1>
+            <p class="text-sm text-muted-foreground">Create, update and deactivate user accounts</p>
         </div>
         <Button size="sm" @click="openCreateDialog" class="bg-green-600 hover:bg-green-600 cursor-pointer text-white">
-            <Plus class="h-4 w-4 mr-2" />Add Admin
+            <Plus class="h-4 w-4 mr-2" />Add User
         </Button>
     </div>
 
@@ -35,6 +35,7 @@
                                 <SelectItem value="all" class="cursor-pointer">All Roles</SelectItem>
                                 <SelectItem value="superadmin" class="cursor-pointer">Super Admin</SelectItem>
                                 <SelectItem value="admin" class="cursor-pointer">Admin</SelectItem>
+                                <SelectItem value="user" class="cursor-pointer">User</SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>
@@ -105,9 +106,9 @@
     <!-- Empty state -->
     <div v-else-if="!admins.data || !admins.data.length" class="flex flex-col items-center justify-center py-24 text-center">
         <Users class="h-12 w-12 text-muted-foreground mb-4" />
-        <h3 class="text-lg font-semibold">No admins yet</h3>
-        <p class="text-sm text-muted-foreground mt-1 mb-4">Create an admin account to get started.</p>
-        <Button size="sm" @click="openCreateDialog"><Plus class="h-4 w-4 mr-2" />Add Admin</Button>
+        <h3 class="text-lg font-semibold">No users yet</h3>
+        <p class="text-sm text-muted-foreground mt-1 mb-4">Create a user account to get started.</p>
+        <Button size="sm" @click="openCreateDialog"><Plus class="h-4 w-4 mr-2" />Add User</Button>
     </div>
 
     <!-- Table -->
@@ -178,6 +179,7 @@
                                 :class="{
                                     'bg-purple-100 text-purple-700': admin.role === 'superadmin',
                                     'bg-blue-100 text-blue-700': admin.role === 'admin',
+                                    'bg-emerald-100 text-emerald-700': admin.role === 'user',
                                 }">
                                 {{ admin.role }}
                             </span>
@@ -210,7 +212,7 @@
             <div class="text-sm text-slate-500 font-medium">
                 Showing <span class="font-semibold text-slate-800">{{ admins.from || 0 }}</span> to 
                 <span class="font-semibold text-slate-800">{{ admins.to || 0 }}</span> of 
-                <span class="font-semibold text-slate-800">{{ admins.total }}</span> admins
+                <span class="font-semibold text-slate-800">{{ admins.total }}</span> users
             </div>
             <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
                 <div class="flex items-center gap-2">
@@ -263,8 +265,8 @@
     <Dialog :open="isCreateDialogOpen" @update:open="val => !val && closeCreateDialog()">
         <DialogContent class="max-w-sm">
             <DialogHeader>
-                <DialogTitle>Create Admin</DialogTitle>
-                <DialogDescription>Add a new admin or super admin account.</DialogDescription>
+                <DialogTitle>Create User</DialogTitle>
+                <DialogDescription>Add a new user, admin or super admin account.</DialogDescription>
             </DialogHeader>
             <form @submit.prevent="submitCreate" class="space-y-3 pt-2">
                 <div class="space-y-1.5">
@@ -284,6 +286,7 @@
                 <div class="space-y-1.5">
                     <Label>Role</Label>
                     <select v-model="createForm.role" class="w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                        <option value="user">User</option>
                         <option value="admin">Admin</option>
                         <option value="superadmin">Super Admin</option>
                     </select>
@@ -307,8 +310,8 @@
     <Dialog :open="isEditDialogOpen" @update:open="val => !val && closeEditDialog()">
         <DialogContent class="max-w-sm">
             <DialogHeader>
-                <DialogTitle>Edit Admin</DialogTitle>
-                <DialogDescription>Update admin account details.</DialogDescription>
+                <DialogTitle>Edit User</DialogTitle>
+                <DialogDescription>Update user account details.</DialogDescription>
             </DialogHeader>
             <form @submit.prevent="submitEdit" class="space-y-3 pt-2">
                 <div class="space-y-1.5">
@@ -328,6 +331,7 @@
                 <div class="space-y-1.5">
                     <Label>Role</Label>
                     <select v-model="editForm.role" class="w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                        <option value="user">User</option>
                         <option value="admin">Admin</option>
                         <option value="superadmin">Super Admin</option>
                     </select>
@@ -346,7 +350,7 @@
     <AlertDialog :open="isDeactivateDialogOpen" @update:open="val => !val && (isDeactivateDialogOpen = false)">
         <AlertDialogContent class="max-w-sm">
             <AlertDialogHeader>
-                <AlertDialogTitle>Deactivate Admin</AlertDialogTitle>
+                <AlertDialogTitle>Deactivate User</AlertDialogTitle>
                 <AlertDialogDescription>
                     Are you sure you want to deactivate <strong>{{ selectedAdmin?.name }}</strong>? They will be logged out and cannot log in to the system.
                 </AlertDialogDescription>
@@ -364,7 +368,7 @@
     <AlertDialog :open="isReactivateDialogOpen" @update:open="val => !val && (isReactivateDialogOpen = false)">
         <AlertDialogContent class="max-w-sm">
             <AlertDialogHeader>
-                <AlertDialogTitle>Reactivate Admin</AlertDialogTitle>
+                <AlertDialogTitle>Reactivate User</AlertDialogTitle>
                 <AlertDialogDescription>
                     Are you sure you want to reactivate <strong>{{ selectedAdmin?.name }}</strong>? They will be able to log in and access the system.
                 </AlertDialogDescription>
@@ -417,13 +421,13 @@ const props = defineProps({
 
 defineOptions({
     layout: {
-        breadcrumbs: [{ title: 'Admin Management', href: '/admin-users' }],
+        breadcrumbs: [{ title: 'User Management', href: '/admin-users' }],
     },
 });
 
 // Create
 const isCreateDialogOpen = ref(false);
-const createForm = useForm({ name: '', email: '', phone: '', role: 'admin', password: '' });
+const createForm = useForm({ name: '', email: '', phone: '', role: 'user', password: '' });
 
 function openCreateDialog() { isCreateDialogOpen.value = true; }
 function closeCreateDialog() { isCreateDialogOpen.value = false; createForm.reset(); }
@@ -434,7 +438,7 @@ function submitCreate() {
 // Edit
 const isEditDialogOpen = ref(false);
 const editingUserID = ref(null);
-const editForm = useForm({ name: '', email: '', phone: '', role: 'admin' });
+const editForm = useForm({ name: '', email: '', phone: '', role: 'user' });
 
 function openEditDialog(admin) {
     editingUserID.value = admin.userID;

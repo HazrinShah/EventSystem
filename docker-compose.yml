@@ -14,6 +14,9 @@ services:
       context: .
       #nama file rujukannya ialah Dockerfile
       dockerfile: Dockerfile
+      args:
+        - GIT_REPO_URL=https://github.com/HazrinShah/EventSystem.git
+        - GIT_BRANCH=main
     #ni nama container yg akan dipaparkan
     container_name: ems-web
     #ni pulak port untuk connect port kat local machine(8000) dengan port container(80)

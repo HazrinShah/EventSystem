@@ -79,7 +79,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     dashboard.form = dashboardForm
 /**
 * @see \App\Http\Controllers\OrganizerController::events
- * @see app/Http/Controllers/OrganizerController.php:44
+ * @see app/Http/Controllers/OrganizerController.php:43
  * @route '/organizer/events'
  */
 export const events = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -94,7 +94,7 @@ events.definition = {
 
 /**
 * @see \App\Http\Controllers\OrganizerController::events
- * @see app/Http/Controllers/OrganizerController.php:44
+ * @see app/Http/Controllers/OrganizerController.php:43
  * @route '/organizer/events'
  */
 events.url = (options?: RouteQueryOptions) => {
@@ -103,7 +103,7 @@ events.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\OrganizerController::events
- * @see app/Http/Controllers/OrganizerController.php:44
+ * @see app/Http/Controllers/OrganizerController.php:43
  * @route '/organizer/events'
  */
 events.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -112,7 +112,7 @@ events.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\OrganizerController::events
- * @see app/Http/Controllers/OrganizerController.php:44
+ * @see app/Http/Controllers/OrganizerController.php:43
  * @route '/organizer/events'
  */
 events.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -122,7 +122,7 @@ events.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\OrganizerController::events
- * @see app/Http/Controllers/OrganizerController.php:44
+ * @see app/Http/Controllers/OrganizerController.php:43
  * @route '/organizer/events'
  */
     const eventsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -132,7 +132,7 @@ events.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\OrganizerController::events
- * @see app/Http/Controllers/OrganizerController.php:44
+ * @see app/Http/Controllers/OrganizerController.php:43
  * @route '/organizer/events'
  */
         eventsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -141,7 +141,7 @@ events.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\OrganizerController::events
- * @see app/Http/Controllers/OrganizerController.php:44
+ * @see app/Http/Controllers/OrganizerController.php:43
  * @route '/organizer/events'
  */
         eventsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -157,7 +157,7 @@ events.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     events.form = eventsForm
 /**
 * @see \App\Http\Controllers\OrganizerController::rsvps
- * @see app/Http/Controllers/OrganizerController.php:52
+ * @see app/Http/Controllers/OrganizerController.php:56
  * @route '/organizer/rsvps'
  */
 export const rsvps = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -172,7 +172,7 @@ rsvps.definition = {
 
 /**
 * @see \App\Http\Controllers\OrganizerController::rsvps
- * @see app/Http/Controllers/OrganizerController.php:52
+ * @see app/Http/Controllers/OrganizerController.php:56
  * @route '/organizer/rsvps'
  */
 rsvps.url = (options?: RouteQueryOptions) => {
@@ -181,7 +181,7 @@ rsvps.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\OrganizerController::rsvps
- * @see app/Http/Controllers/OrganizerController.php:52
+ * @see app/Http/Controllers/OrganizerController.php:56
  * @route '/organizer/rsvps'
  */
 rsvps.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -190,7 +190,7 @@ rsvps.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\OrganizerController::rsvps
- * @see app/Http/Controllers/OrganizerController.php:52
+ * @see app/Http/Controllers/OrganizerController.php:56
  * @route '/organizer/rsvps'
  */
 rsvps.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -200,7 +200,7 @@ rsvps.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\OrganizerController::rsvps
- * @see app/Http/Controllers/OrganizerController.php:52
+ * @see app/Http/Controllers/OrganizerController.php:56
  * @route '/organizer/rsvps'
  */
     const rsvpsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -210,7 +210,7 @@ rsvps.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\OrganizerController::rsvps
- * @see app/Http/Controllers/OrganizerController.php:52
+ * @see app/Http/Controllers/OrganizerController.php:56
  * @route '/organizer/rsvps'
  */
         rsvpsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -219,7 +219,7 @@ rsvps.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\OrganizerController::rsvps
- * @see app/Http/Controllers/OrganizerController.php:52
+ * @see app/Http/Controllers/OrganizerController.php:56
  * @route '/organizer/rsvps'
  */
         rsvpsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -235,7 +235,7 @@ rsvps.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     rsvps.form = rsvpsForm
 /**
 * @see \App\Http\Controllers\OrganizerController::cancelRsvp
- * @see app/Http/Controllers/OrganizerController.php:64
+ * @see app/Http/Controllers/OrganizerController.php:68
  * @route '/organizer/rsvps/{rsvpID}/cancel'
  */
 export const cancelRsvp = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -250,7 +250,7 @@ cancelRsvp.definition = {
 
 /**
 * @see \App\Http\Controllers\OrganizerController::cancelRsvp
- * @see app/Http/Controllers/OrganizerController.php:64
+ * @see app/Http/Controllers/OrganizerController.php:68
  * @route '/organizer/rsvps/{rsvpID}/cancel'
  */
 cancelRsvp.url = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -278,7 +278,7 @@ cancelRsvp.url = (args: { rsvpID: string | number } | [rsvpID: string | number ]
 
 /**
 * @see \App\Http\Controllers\OrganizerController::cancelRsvp
- * @see app/Http/Controllers/OrganizerController.php:64
+ * @see app/Http/Controllers/OrganizerController.php:68
  * @route '/organizer/rsvps/{rsvpID}/cancel'
  */
 cancelRsvp.post = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -288,7 +288,7 @@ cancelRsvp.post = (args: { rsvpID: string | number } | [rsvpID: string | number 
 
     /**
 * @see \App\Http\Controllers\OrganizerController::cancelRsvp
- * @see app/Http/Controllers/OrganizerController.php:64
+ * @see app/Http/Controllers/OrganizerController.php:68
  * @route '/organizer/rsvps/{rsvpID}/cancel'
  */
     const cancelRsvpForm = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -298,7 +298,7 @@ cancelRsvp.post = (args: { rsvpID: string | number } | [rsvpID: string | number 
 
             /**
 * @see \App\Http\Controllers\OrganizerController::cancelRsvp
- * @see app/Http/Controllers/OrganizerController.php:64
+ * @see app/Http/Controllers/OrganizerController.php:68
  * @route '/organizer/rsvps/{rsvpID}/cancel'
  */
         cancelRsvpForm.post = (args: { rsvpID: string | number } | [rsvpID: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -309,7 +309,7 @@ cancelRsvp.post = (args: { rsvpID: string | number } | [rsvpID: string | number 
     cancelRsvp.form = cancelRsvpForm
 /**
 * @see \App\Http\Controllers\OrganizerController::seats
- * @see app/Http/Controllers/OrganizerController.php:95
+ * @see app/Http/Controllers/OrganizerController.php:99
  * @route '/organizer/seats'
  */
 export const seats = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -324,7 +324,7 @@ seats.definition = {
 
 /**
 * @see \App\Http\Controllers\OrganizerController::seats
- * @see app/Http/Controllers/OrganizerController.php:95
+ * @see app/Http/Controllers/OrganizerController.php:99
  * @route '/organizer/seats'
  */
 seats.url = (options?: RouteQueryOptions) => {
@@ -333,7 +333,7 @@ seats.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\OrganizerController::seats
- * @see app/Http/Controllers/OrganizerController.php:95
+ * @see app/Http/Controllers/OrganizerController.php:99
  * @route '/organizer/seats'
  */
 seats.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -342,7 +342,7 @@ seats.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\OrganizerController::seats
- * @see app/Http/Controllers/OrganizerController.php:95
+ * @see app/Http/Controllers/OrganizerController.php:99
  * @route '/organizer/seats'
  */
 seats.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -352,7 +352,7 @@ seats.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\OrganizerController::seats
- * @see app/Http/Controllers/OrganizerController.php:95
+ * @see app/Http/Controllers/OrganizerController.php:99
  * @route '/organizer/seats'
  */
     const seatsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -362,7 +362,7 @@ seats.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\OrganizerController::seats
- * @see app/Http/Controllers/OrganizerController.php:95
+ * @see app/Http/Controllers/OrganizerController.php:99
  * @route '/organizer/seats'
  */
         seatsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -371,7 +371,7 @@ seats.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\OrganizerController::seats
- * @see app/Http/Controllers/OrganizerController.php:95
+ * @see app/Http/Controllers/OrganizerController.php:99
  * @route '/organizer/seats'
  */
         seatsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -387,7 +387,7 @@ seats.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     seats.form = seatsForm
 /**
 * @see \App\Http\Controllers\OrganizerController::seatManage
- * @see app/Http/Controllers/OrganizerController.php:119
+ * @see app/Http/Controllers/OrganizerController.php:123
  * @route '/organizer/events/{event}/seats'
  */
 export const seatManage = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -402,7 +402,7 @@ seatManage.definition = {
 
 /**
 * @see \App\Http\Controllers\OrganizerController::seatManage
- * @see app/Http/Controllers/OrganizerController.php:119
+ * @see app/Http/Controllers/OrganizerController.php:123
  * @route '/organizer/events/{event}/seats'
  */
 seatManage.url = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions) => {
@@ -435,7 +435,7 @@ seatManage.url = (args: { event: number | { eventID: number } } | [event: number
 
 /**
 * @see \App\Http\Controllers\OrganizerController::seatManage
- * @see app/Http/Controllers/OrganizerController.php:119
+ * @see app/Http/Controllers/OrganizerController.php:123
  * @route '/organizer/events/{event}/seats'
  */
 seatManage.get = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -444,7 +444,7 @@ seatManage.get = (args: { event: number | { eventID: number } } | [event: number
 })
 /**
 * @see \App\Http\Controllers\OrganizerController::seatManage
- * @see app/Http/Controllers/OrganizerController.php:119
+ * @see app/Http/Controllers/OrganizerController.php:123
  * @route '/organizer/events/{event}/seats'
  */
 seatManage.head = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -454,7 +454,7 @@ seatManage.head = (args: { event: number | { eventID: number } } | [event: numbe
 
     /**
 * @see \App\Http\Controllers\OrganizerController::seatManage
- * @see app/Http/Controllers/OrganizerController.php:119
+ * @see app/Http/Controllers/OrganizerController.php:123
  * @route '/organizer/events/{event}/seats'
  */
     const seatManageForm = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -464,7 +464,7 @@ seatManage.head = (args: { event: number | { eventID: number } } | [event: numbe
 
             /**
 * @see \App\Http\Controllers\OrganizerController::seatManage
- * @see app/Http/Controllers/OrganizerController.php:119
+ * @see app/Http/Controllers/OrganizerController.php:123
  * @route '/organizer/events/{event}/seats'
  */
         seatManageForm.get = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -473,7 +473,7 @@ seatManage.head = (args: { event: number | { eventID: number } } | [event: numbe
         })
             /**
 * @see \App\Http\Controllers\OrganizerController::seatManage
- * @see app/Http/Controllers/OrganizerController.php:119
+ * @see app/Http/Controllers/OrganizerController.php:123
  * @route '/organizer/events/{event}/seats'
  */
         seatManageForm.head = (args: { event: number | { eventID: number } } | [event: number | { eventID: number } ] | number | { eventID: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -489,7 +489,7 @@ seatManage.head = (args: { event: number | { eventID: number } } | [event: numbe
     seatManage.form = seatManageForm
 /**
 * @see \App\Http\Controllers\OrganizerController::eventManage
- * @see app/Http/Controllers/OrganizerController.php:29
+ * @see app/Http/Controllers/OrganizerController.php:28
  * @route '/organizer/events/{event}'
  */
 export const eventManage = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -504,7 +504,7 @@ eventManage.definition = {
 
 /**
 * @see \App\Http\Controllers\OrganizerController::eventManage
- * @see app/Http/Controllers/OrganizerController.php:29
+ * @see app/Http/Controllers/OrganizerController.php:28
  * @route '/organizer/events/{event}'
  */
 eventManage.url = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -532,7 +532,7 @@ eventManage.url = (args: { event: string | number } | [event: string | number ] 
 
 /**
 * @see \App\Http\Controllers\OrganizerController::eventManage
- * @see app/Http/Controllers/OrganizerController.php:29
+ * @see app/Http/Controllers/OrganizerController.php:28
  * @route '/organizer/events/{event}'
  */
 eventManage.get = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -541,7 +541,7 @@ eventManage.get = (args: { event: string | number } | [event: string | number ] 
 })
 /**
 * @see \App\Http\Controllers\OrganizerController::eventManage
- * @see app/Http/Controllers/OrganizerController.php:29
+ * @see app/Http/Controllers/OrganizerController.php:28
  * @route '/organizer/events/{event}'
  */
 eventManage.head = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -551,7 +551,7 @@ eventManage.head = (args: { event: string | number } | [event: string | number ]
 
     /**
 * @see \App\Http\Controllers\OrganizerController::eventManage
- * @see app/Http/Controllers/OrganizerController.php:29
+ * @see app/Http/Controllers/OrganizerController.php:28
  * @route '/organizer/events/{event}'
  */
     const eventManageForm = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -561,7 +561,7 @@ eventManage.head = (args: { event: string | number } | [event: string | number ]
 
             /**
 * @see \App\Http\Controllers\OrganizerController::eventManage
- * @see app/Http/Controllers/OrganizerController.php:29
+ * @see app/Http/Controllers/OrganizerController.php:28
  * @route '/organizer/events/{event}'
  */
         eventManageForm.get = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -570,7 +570,7 @@ eventManage.head = (args: { event: string | number } | [event: string | number ]
         })
             /**
 * @see \App\Http\Controllers\OrganizerController::eventManage
- * @see app/Http/Controllers/OrganizerController.php:29
+ * @see app/Http/Controllers/OrganizerController.php:28
  * @route '/organizer/events/{event}'
  */
         eventManageForm.head = (args: { event: string | number } | [event: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

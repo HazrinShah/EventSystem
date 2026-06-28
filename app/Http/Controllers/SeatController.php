@@ -22,7 +22,8 @@ class SeatController extends Controller
       if ($user->role !== 'superadmin') {
         $query->where(function ($q) use ($user) {
             $q->where('created_by', $user->userID)
-              ->orWhereHas('assignedAdmins', fn($q2) => $q2->where('event_admins.userID', $user->userID));
+              ->orWhereHas('assignedAdmins', fn($q2) => $q2->where('event_admins.userID', $user->userID))
+              ->orWhereHas('creator', fn($q2) => $q2->where('role', 'user'));
         });
     }
 
