@@ -14,9 +14,6 @@ services:
       context: .
       #nama file rujukannya ialah Dockerfile
       dockerfile: Dockerfile
-      args:
-        - GIT_REPO_URL=https://github.com/HazrinShah/EventSystem.git
-        - GIT_BRANCH=main
     #ni nama container yg akan dipaparkan
     container_name: ems-web
     #ni pulak port untuk connect port kat local machine(8000) dengan port container(80)
@@ -37,7 +34,7 @@ services:
 
   db:
     #takyah buat dari 0, dowl terus dari dockerhub
-    image: mysql:8.0.42
+    image: mysql:8.0
     container_name: ems-db
     ports:
       #kenapa guna 33060 untuk port machine ? tak pakai 3306 je ?
