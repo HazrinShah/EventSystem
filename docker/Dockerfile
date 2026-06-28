@@ -80,5 +80,11 @@ RUN mkdir -p /etc/mysql/conf.d && \
     echo "[client]" > /etc/mysql/conf.d/skip-ssl.cnf && \
     echo "ssl-verify-server-cert=FALSE" >> /etc/mysql/conf.d/skip-ssl.cnf
 
+# Salin dan daftarkan fail entrypoint
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["entrypoint.sh"]
+
 
 

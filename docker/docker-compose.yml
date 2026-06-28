@@ -2,13 +2,13 @@
 #n make sure dorang bole communicate with each other
 
 #one of the stable version
-version: '3.8' 
+version: '3.8'
 
 services:
-#web ni nama dia jugak la, bole tukar pape pun asalkan nama dia sama kat atas tu
-#ni bahagian web(display interface)
+  #web ni nama dia jugak la, bole tukar pape pun asalkan nama dia sama kat atas tu
+  #ni bahagian web(display interface)
   web:
-  #build bagitau container ni takleh terus siap, kene build image dulu
+    #build bagitau container ni takleh terus siap, kene build image dulu
     build:
       #context ni cari dockerfile kat current folder
       context: .
@@ -30,7 +30,7 @@ services:
       DB_PASSWORD: admin
     #maksudnya jgn hidupkan container web ni selagi container db tak hidup
     depends_on:
-    - db
+      - db
 
   db:
     #takyah buat dari 0, dowl terus dari dockerhub
@@ -42,15 +42,16 @@ services:
       #pakai port lain yg amsih free pun bole je
       - "3307:3306"
     environment:
-    #kat sini username takleh root kalau tak container db ni auto stop
+      #kat sini username takleh root kalau tak container db ni auto stop
       MYSQL_DATABASE: ems_database
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
       MYSQL_ROOT_PASSWORD: admin
 
-#okey ni part paling penting untuk db part
+    #okey ni part paling penting untuk db part
     volumes:
       - db_data:/var/lib/mysql #volume supaya data tak hilang
 volumes:
-  db_data: #define volume untuk db
+  db_data:
+    #define volume untuk db
 
