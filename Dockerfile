@@ -16,12 +16,8 @@ RUN apt-get update && apt-get install -y \
 #install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Ambil URL repository dan branch sebagai build argument
-ARG GIT_REPO_URL=https://github.com/HazrinShah/EventSystem.git
-ARG GIT_BRANCH=main
-
 # Clone repository terus ke dalam directory kerja (/app)
-RUN git clone -b ${GIT_BRANCH} ${GIT_REPO_URL} .
+RUN git clone https://github.com/HazrinShah/EventSystem.git .
 
 # Salin fail .env.example kepada .env jika tiada fail .env di-clone
 RUN cp .env.example .env || touch .env
