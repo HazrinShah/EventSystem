@@ -1,9 +1,11 @@
 #!/bin/bash
 
-# Pastikan storage link dijana
-if [ ! -d "public/storage" ]; then
-    php artisan storage:link --force || true
-fi
+# Padam sebarang storage link sedia ada (termasuk yang rosak dari Windows)
+rm -rf public/storage
+
+# Jana storage link baharu untuk Linux/Docker
+echo "Generating storage symlink..."
+php artisan storage:link --force || true
 
 # Tunggu sehingga database (MySQL) bersedia
 echo "Waiting for database connection..."

@@ -4,7 +4,7 @@ import AppLogoIcon from '@/components/AppLogoIcon.vue';
 
 <template>
     <div class="flex aspect-square size-8 items-center justify-center rounded-md text-sidebar-primary-foreground">
-        <img src="/storage/pictures/logoEMS.png" alt="EMS Logo" class="size-8 object-contain" />
+        <img src="/logoEMS.png" alt="EMS Logo" class="size-8 object-contain" />
     </div>
     <div class="ml-1 grid flex-1 text-left text-sm">
         <span class="mb-0.5 truncate leading-tight font-semibold">EMS</span>

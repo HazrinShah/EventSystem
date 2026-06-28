@@ -20,7 +20,7 @@ defineProps<{
                         :href="home()"
                         class="flex flex-col items-center gap-2 font-medium"
                     >
-                    <img src="/storage/pictures/logoEMS.png" alt="" class="h-21 w-auto rounded-md">
+                    <img src="/logoEMS.png" alt="" class="h-21 w-auto rounded-md">
                     </Link>
 
                     <div class="space-y-1 text-center">
