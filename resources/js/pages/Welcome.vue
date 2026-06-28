@@ -26,7 +26,7 @@ const dashboardHref = computed(() => '/dashboard')
             <header class="bg-white/70 backdrop-blur-md shadow-sm border-b border-gray-200">
                 <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
                     <div class="flex items-center">
-                        <img src="/storage/pictures/logoEMS.png" alt="logoEMS" class="h-16 w-auto">
+                        <img src="/logoEMS.png" alt="logoEMS" class="h-16 w-auto">
                     </div>
                     <nav class="flex items-center gap-4">
                         <Link v-if="$page.props.auth.user" :href="dashboardHref" class="text-sm font-medium text-gray-700 hover:text-indigo-600 transition">

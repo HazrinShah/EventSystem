@@ -31,6 +31,8 @@ services:
     #maksudnya jgn hidupkan container web ni selagi container db tak hidup
     depends_on:
       - db
+    volumes:
+      - web_storage:/var/www/html/storage
 
   db:
     #takyah buat dari 0, dowl terus dari dockerhub
@@ -53,5 +55,6 @@ services:
       - db_data:/var/lib/mysql #volume supaya data tak hilang
 volumes:
   db_data:
+  web_storage:
     #define volume untuk db
 
