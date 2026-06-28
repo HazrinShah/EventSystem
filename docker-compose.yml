@@ -37,7 +37,7 @@ services:
 
   db:
     #takyah buat dari 0, dowl terus dari dockerhub
-    image: mysql:8.0
+    image: mysql:8.0.42
     container_name: ems-db
     ports:
       #kenapa guna 33060 untuk port machine ? tak pakai 3306 je ?
