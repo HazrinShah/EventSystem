@@ -1,21 +1,20 @@
 <template>
-    <div class="min-h-[calc(100vh-65px)] bg-slate-50/50 pb-10">
-        <!-- Header -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-6 py-8 md:px-10 border-b border-slate-100 bg-white">
-            <div>
-                <h1 class="text-3xl font-bold tracking-tight text-slate-900">Events Directory</h1>
-                <p class="text-sm text-slate-500 mt-1 font-medium">Manage all events and assign organizers</p>
-            </div>
-            <Link href="/add-events">
-                <button class="cursor-pointer flex items-center justify-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-indigo-700 transition-colors shadow-md shadow-indigo-600/20 w-full sm:w-auto">
-                    <Plus class="h-4 w-4" />
-                    Create New Event
-                </button>
-            </Link>
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b px-6 py-4">
+        <div>
+            <h1 class="text-xl font-semibold">Events Directory</h1>
+            <p class="text-sm text-muted-foreground">Manage all events and assign organizers</p>
         </div>
+        <Link href="/add-events">
+            <button class="cursor-pointer flex items-center justify-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-indigo-700 transition-colors shadow-md shadow-indigo-600/20 w-full sm:w-auto">
+                <Plus class="h-4 w-4" />
+                Create New Event
+            </button>
+        </Link>
+    </div>
 
+    <div class="p-6">
         <!-- Empty state -->
-        <div v-if="!events.length" class="flex flex-col items-center justify-center py-32 text-center px-4">
+        <div v-if="!events.length" class="flex flex-col items-center justify-center py-24 text-center px-4">
             <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-5">
                 <CalendarX class="h-10 w-10 text-slate-400" />
             </div>
@@ -30,7 +29,7 @@
         </div>
 
         <!-- Cards grid -->
-        <section v-else class="grid grid-cols-1 gap-6 p-6 md:p-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <section v-else class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <Card v-for="event in events" :key="event.eventID" class="group flex flex-col overflow-hidden border border-slate-200/60 shadow-sm bg-white hover:shadow-xl hover:border-slate-300/80 transition-all duration-300 rounded-2xl relative">
                 
                 <!-- Image Area -->

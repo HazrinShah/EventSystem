@@ -1,46 +1,45 @@
 <template>
-    <div class="min-h-[calc(100vh-65px)] bg-slate-50/50 pb-10">
-        <!-- Header -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-6 py-8 md:px-10 border-b border-slate-100 bg-white">
-            <div>
-                <h1 class="text-3xl font-bold tracking-tight text-slate-900">Events History</h1>
-                <p class="text-sm text-slate-500 mt-1 font-medium">Archive of all past and current events</p>
-            </div>
-            
-            <!-- Filters -->
-            <div class="flex items-center gap-2 bg-slate-100 p-1 rounded-xl self-start sm:self-center">
-                <button
-                    @click="filterStatus = 'all'"
-                    :class="[
-                        'px-4 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer',
-                        filterStatus === 'all' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-900'
-                    ]"
-                >
-                    All
-                </button>
-                <button
-                    @click="filterStatus = 'open'"
-                    :class="[
-                        'px-4 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer',
-                        filterStatus === 'open' ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-500 hover:text-slate-900'
-                    ]"
-                >
-                    Open
-                </button>
-                <button
-                    @click="filterStatus = 'closed'"
-                    :class="[
-                        'px-4 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer',
-                        filterStatus === 'closed' ? 'bg-white text-slate-700 shadow-sm' : 'text-slate-500 hover:text-slate-900'
-                    ]"
-                >
-                    Closed
-                </button>
-            </div>
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b px-6 py-4">
+        <div>
+            <h1 class="text-xl font-semibold">Events History</h1>
+            <p class="text-sm text-muted-foreground">Archive of all past and current events</p>
         </div>
+        
+        <!-- Filters -->
+        <div class="flex items-center gap-2 bg-slate-100 p-1 rounded-xl self-start sm:self-center">
+            <button
+                @click="filterStatus = 'all'"
+                :class="[
+                    'px-4 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer',
+                    filterStatus === 'all' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-900'
+                ]"
+            >
+                All
+            </button>
+            <button
+                @click="filterStatus = 'open'"
+                :class="[
+                    'px-4 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer',
+                    filterStatus === 'open' ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-500 hover:text-slate-900'
+                ]"
+            >
+                Open
+            </button>
+            <button
+                @click="filterStatus = 'closed'"
+                :class="[
+                    'px-4 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer',
+                    filterStatus === 'closed' ? 'bg-white text-slate-700 shadow-sm' : 'text-slate-500 hover:text-slate-900'
+                ]"
+            >
+                Closed
+            </button>
+        </div>
+    </div>
 
+    <div class="p-6">
         <!-- Empty state -->
-        <div v-if="filteredEvents.length === 0" class="flex flex-col items-center justify-center py-32 text-center px-4">
+        <div v-if="filteredEvents.length === 0" class="flex flex-col items-center justify-center py-24 text-center px-4">
             <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-5">
                 <History class="h-10 w-10 text-slate-400" />
             </div>
@@ -49,7 +48,7 @@
         </div>
 
         <!-- Cards grid -->
-        <section v-else class="grid grid-cols-1 gap-6 p-6 md:p-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <section v-else class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <Card v-for="event in filteredEvents" :key="event.eventID" class="group flex flex-col overflow-hidden border border-slate-200/60 shadow-sm bg-white hover:shadow-xl hover:border-slate-300/80 transition-all duration-300 rounded-2xl relative">
                 
                 <!-- Image Area -->

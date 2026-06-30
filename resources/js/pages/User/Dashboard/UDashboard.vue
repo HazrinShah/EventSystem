@@ -92,7 +92,7 @@ defineOptions({
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-lg font-semibold tracking-tight">Your Upcoming Events</h3>
                 <Link href="/uevents" class="text-sm font-medium text-primary hover:underline">
-                    <button class="cursor-pointer flex items-center justify-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-indigo-700 transition-colors shadow-md shadow-indigo-600/20 w-full sm:w-auto">
+                    <button class="cursor-pointer flex items-center justify-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-blue-700 transition-colors shadow-md shadow-blue-600/20 w-full sm:w-auto">
                         <Calendar class="h-4 w-4" />
                         View all events
                     </button>
@@ -129,7 +129,7 @@ defineOptions({
                 </div>
                 <h4 class="text-base font-medium">No upcoming events</h4>
                 <p class="text-sm text-muted-foreground mt-1 mb-6 max-w-sm">You haven't RSVP'd to any upcoming events yet. Discover what's happening and secure your spot!</p>
-                <Link href="/uevents" class=" bg-blue-600 text-white hover:text-white hover:bg-blue-600 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 py-2 shadow-sm">
+                <Link href="/uevents" class="bg-blue-600 text-white hover:bg-blue-700 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-6 py-2 shadow-sm">
                     Browse Events
                 </Link>
             </div>

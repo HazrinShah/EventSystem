@@ -22,6 +22,9 @@ php artisan migrate --force
 echo "Running seeders..."
 php artisan db:seed --force
 
+# Pastikan ownership storage dan cache adalah milik www-data (sangat penting untuk volume)
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
 # Jalankan Apache dalam foreground (untuk kekalkan container bernyawa)
 echo "Starting Apache Web Server..."
 exec apache2-foreground
